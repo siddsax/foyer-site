@@ -5,14 +5,12 @@ import Main from "./Components/main/Main";
 import Sidebar from "./Components/sidebar/Sidebar";
 import SignIn from "./Components/signin";
 import Header from "./Components/header";
-import { db, auth } from "./firebase.js";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { onAuthStateChanged } from "firebase/auth";
-import { getDatabase, ref, set, child, get } from "firebase/database";
-
+import "./firebase";
+import firebase from "firebase";
 function App() {
   var loading_db = false;
-  const [user, loading_auth, error] = useAuthState(auth);
+  const [user, loading_auth, error] = useAuthState(firebase.auth());
   const [notes, setNotes] = useState(
     localStorage.notes ? JSON.parse(localStorage.notes) : []
   );
@@ -34,14 +32,15 @@ function App() {
     if (user) {
       console.log("++++++++++++++", `Users/${user.uid}`);
       loading_db = true;
-      const db = getDatabase();
-      const dbRef = ref(db);
-      set(ref(db, "Users/" + user.uid), {
-        accessToken: user.accessToken,
-        email: user.email,
-        photoURL: user.photoURL,
-        Name: user.displayName,
-      });
+      firebase
+        .database()
+        .ref("Users/" + user.uid)
+        .set({
+          email: user.email,
+          photoURL: user.photoURL,
+          Name: user.displayName,
+        });
+
       // get(child(dbRef, `Users/${user.uid}`))
       //   .then((snapshot) => {
       //     if (snapshot.exists()) {

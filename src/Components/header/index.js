@@ -1,13 +1,14 @@
 import React from "react";
 import { Box, Button } from "@mui/material";
-import { getAuth, signOut } from "firebase/auth";
+import firebase from "firebase";
 import "./header.css";
 import logo from "../../assets/images/logo.png";
 
 const Header = (props) => {
-  const auth = getAuth();
   const signOutCall = async () => {
-    signOut(auth)
+    firebase
+      .auth()
+      .signOut()
       .then(() => {
         console.log("Signed Out");
       })
