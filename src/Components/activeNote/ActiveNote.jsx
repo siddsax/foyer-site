@@ -1,6 +1,6 @@
 import ReactMarkdown from "react-markdown";
 
-const Main = ({ activeNote, onUpdateNote }) => {
+const ActiveNote = ({ activeNote, onUpdateNote }) => {
   const onEditField = (field, value) => {
     onUpdateNote({
       ...activeNote,
@@ -39,4 +39,4 @@ const Main = ({ activeNote, onUpdateNote }) => {
   );
 };
 
-export default Main;
+export default ActiveNote;
