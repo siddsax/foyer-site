@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRoute } from "react";
 import "./App.css";
-import SignIn from "./Components/signin";
+import SignIn from "./Components/signin/SignIn";
 import { useAuthState } from "react-firebase-hooks/auth";
 import firebase from "./firebase";
-import NotesPage from "./Pages/NotesPage";
+import NotesPage from "./Pages/NotesPage/NotesPage";
 // import firebase from "firebase";
+// import "./serverside.jsx";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 function App() {
   var loading_db = false;

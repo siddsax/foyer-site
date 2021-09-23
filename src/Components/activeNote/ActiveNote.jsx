@@ -1,12 +1,16 @@
 import ReactMarkdown from "react-markdown";
 
-const ActiveNote = ({ activeNote, onUpdateNote }) => {
-  const onEditField = (field, value) => {
-    onUpdateNote({
+const ActiveNote = (props) => {
+  const { activeNote, onUpdateNote, onUpdateNoteDB } = props;
+
+  const onEditField = async (field, value) => {
+    const updateNote = {
       ...activeNote,
       [field]: value,
       lastModified: Date.now(),
-    });
+    };
+    onUpdateNote(updateNote);
+    onUpdateNoteDB(updateNote);
   };
 
   if (!activeNote) return <div className="no-active-note">No Active Note</div>;
