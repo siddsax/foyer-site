@@ -1,0 +1,14 @@
+.NotesListPage {
+  height: 100vh;
+  background-color: black;
+}
+.NotesListArea {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  overflow: scroll;
+  /* max-width: 30vw; */
+
+  align-content: center;
+  align-items: center;
+}

@@ -4,9 +4,11 @@ import SignIn from "./Components/signin/SignIn";
 import { useAuthState } from "react-firebase-hooks/auth";
 import firebase from "./firebase";
 import NotesPage from "./Pages/NotesPage/NotesPage";
+import NotesListPage from "./Pages/NotesListPage/NotesListPage";
 // import firebase from "firebase";
 // import "./serverside.jsx";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import NotePage from "./Pages/NotePage/NotePage";
 
 function App() {
   var loading_db = false;
@@ -53,9 +55,16 @@ function App() {
     );
   } else {
     return user ? (
-      <div>
-        <NotesPage user={user} />
-      </div>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <NotesListPage user={user} />
+          </Route>
+          <Route path="/note-*">
+            <NotePage user={user} />
+          </Route>
+        </Switch>
+      </Router>
     ) : (
       <SignIn />
     );
