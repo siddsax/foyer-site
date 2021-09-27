@@ -12,3 +12,20 @@
   align-content: center;
   align-items: center;
 }
+
+.modeSelectorArea {
+  display: flex;
+  height: 10%;
+  background-color: tomato;
+  justify-content: center;
+  align-items: flex-end;
+  align-content: center;
+}
+
+.buttonArea {
+  /* display: flex; */
+  height: 50%;
+  width: 60%;
+  background-color: green;
+  /* margin-top: 30%; */
+}

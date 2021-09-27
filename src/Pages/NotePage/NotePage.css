@@ -15,17 +15,6 @@
   align-items: center;
 }
 
-.noteTitle {
-  display: flex;
-  color: grey;
-  font-weight: bold;
-}
-
-.noteHeader {
-  margin-top: 2%;
-  background-color: blue;
-}
-
 .noteArea {
   background-color: #282828;
   width: 80%;
@@ -35,4 +24,52 @@
   margin-bottom: 5%;
   overflow: scroll;
   border-radius: 10px;
+}
+
+.noteHeaderArea {
+  /* background-color: red; */
+  display: flex;
+  flex-direction: row;
+  font-size: 30px;
+  margin-top: 2%;
+
+  margin-left: 10pt;
+  margin-right: 10pt;
+  align-items: flex-end;
+  /* align-content: flex-end;
+  justify-content: flex-end; */
+}
+
+.noteTitle {
+  color: white;
+  font-weight: 200;
+  margin-left: 10pt;
+}
+
+.date {
+  display: flex;
+  /* background-color: blue; */
+  color: gray;
+  font-size: 15px;
+  margin-left: 30px;
+  margin-bottom: 7px;
+}
+
+.headerUnderline {
+  margin-left: 10pt;
+  margin-right: 10pt;
+}
+
+.Editor {
+  display: flex;
+  color: blue;
+  margin-left: 20px;
+  /* background-color: blue; */
+  height: 90%;
+  overflow: scroll;
+}
+
+.editorBox {
+  margin: 10pt;
+  color: white;
 }

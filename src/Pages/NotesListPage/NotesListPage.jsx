@@ -56,6 +56,9 @@ const NotesListPage = (props) => {
   return (
     <div className="NotesListPage">
       <Header />
+      <div className="modeSelectorArea">
+        <div className="buttonArea"></div>
+      </div>
       <div className="NotesListArea">
         <NotesList notes={notes} />
       </div>
