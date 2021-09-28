@@ -9,12 +9,18 @@ import firebase from "../../firebase";
 // import debounce from "../../helpers";
 import { debounce } from "debounce";
 import "./NotesListPage.css";
+import newNotes from "../../assets/images/newNotes.png";
+import Button from "@mui/material/Button";
+import { useHistory } from "react-router-dom";
 
 const NotesListPage = (props) => {
   const { user } = props;
   const db = firebase.firestore();
   const [notes, setNotes] = useState([]);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [showNotes, setShowNotes] = useState(true);
+  const history = useHistory();
+
   var lastVisible = useRef(0);
 
   const fillNotes = (querySnapshot) => {
@@ -22,6 +28,25 @@ const NotesListPage = (props) => {
       await setNotes((oldArray) => [...oldArray, doc.data()]);
     });
     lastVisible.current = querySnapshot.docs[querySnapshot.docs.length - 1];
+  };
+
+  const addNote = async () => {
+    const uid = uuid();
+    const newNote = {
+      id: uid,
+      title: "Untitled Note",
+      body: '[{"type":"paragraph","children":[{"text":""}]}]',
+      lastModified: Date.now(),
+      createdAt: Date.now(),
+    };
+    await db
+      .collection("Users")
+      .doc(`${user.uid}`)
+      .collection("Notes")
+      .doc(`${uid}`)
+      .set(newNote);
+    history.push(`/note-${uid}`);
+    // const handleOnClick = useCallback(() => history.push(`/note-${uid}`), [history]);
   };
 
   const fetchNotes = () => {
@@ -57,11 +82,39 @@ const NotesListPage = (props) => {
     <div className="NotesListPage">
       <Header />
       <div className="modeSelectorArea">
-        <div className="buttonArea"></div>
+        <div className="buttonArea">
+          <label class="switch">
+            <input
+              type="checkbox"
+              id="togBtn"
+              onChange={() => {
+                setShowNotes((prevValue) => !prevValue);
+              }}
+            />
+            <div class="slider round">
+              <span class="on">Notes</span>
+              <span class="off">Action Items</span>
+            </div>
+          </label>
+
+          <div className="newNote">
+            <Button
+              variant="contained"
+              onClick={addNote}
+              style={{ backgroundColor: "#EEBC1D", color: "Black" }}
+            >
+              New Note
+            </Button>
+          </div>
+        </div>
       </div>
-      <div className="NotesListArea">
-        <NotesList notes={notes} />
-      </div>
+      {showNotes ? (
+        <div className="NotesListArea">
+          <NotesList notes={notes} />
+        </div>
+      ) : (
+        <div>asasas</div>
+      )}
     </div>
   );
 };

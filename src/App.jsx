@@ -47,28 +47,32 @@ function App() {
     }
   }, [user]);
 
-  if (loading_auth || loading_db) {
-    return (
-      <div>
-        <h1>Loading</h1>
-      </div>
-    );
-  } else {
-    return user ? (
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <NotesListPage user={user} />
-          </Route>
-          <Route path="/note-*">
-            <NotePage user={user} />
-          </Route>
-        </Switch>
-      </Router>
-    ) : (
-      <SignIn />
-    );
-  }
+  // ################################################################# //
+  var gapi = window.gapi;
+
+  return <div>asa</div>;
+  // if (loading_auth || loading_db) {
+  //   return (
+  //     <div>
+  //       <h1>Loading</h1>
+  //     </div>
+  //   );
+  // } else {
+  //   return user ? (
+  //     <Router>
+  //       <Switch>
+  //         <Route exact path="/">
+  //           <NotesListPage user={user} />
+  //         </Route>
+  //         <Route path="/note-*">
+  //           <NotePage user={user} />
+  //         </Route>
+  //       </Switch>
+  //     </Router>
+  //   ) : (
+  //     <SignIn />
+  //   );
+  // }
 }
 
 export default App;

@@ -16,16 +16,115 @@
 .modeSelectorArea {
   display: flex;
   height: 10%;
-  background-color: tomato;
+
   justify-content: center;
   align-items: flex-end;
   align-content: center;
 }
-
+.modeSelectorButton {
+  display: flex;
+}
 .buttonArea {
-  /* display: flex; */
+  display: flex;
   height: 50%;
   width: 60%;
-  background-color: green;
-  /* margin-top: 30%; */
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.switch {
+  justify-content: space-between;
+  /* margin-right: 45%; */
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #282828;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  opacity: 50%;
+  position: absolute;
+  content: "";
+  height: 80%;
+  width: 50%;
+  left: 3%;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #282828;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(89%);
+  -ms-transform: translateX(89%);
+  transform: translateX(89%);
+}
+
+/*------ ADDED CSS ---------*/
+/* .on {
+  display: block;
+} */
+
+.on {
+  color: white;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 25%;
+  font-size: 15px;
+  font-family: Verdana, sans-serif;
+}
+.off {
+  color: white;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 75%;
+  font-size: 15px;
+  font-family: Verdana, sans-serif;
+}
+
+/* input:checked + .slider .on {
+  display: block;
+} */
+
+/* input:checked + .slider .off {
+  display: block;
+} */
+
+/*--------- END --------*/
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 5px;
+}
+
+.slider.round:before {
+  border-radius: 5px;
+}
+
+.newNote {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }

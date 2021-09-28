@@ -46,6 +46,12 @@
   margin-left: 10pt;
 }
 
+.dateArea {
+  justify-content: flex-end;
+  display: flex;
+  width: 100%;
+}
+
 .date {
   display: flex;
   /* background-color: blue; */

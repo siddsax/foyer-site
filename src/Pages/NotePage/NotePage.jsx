@@ -94,12 +94,14 @@ const NotePage = (props) => {
                 defaultValue={activeNote.title}
               />
 
-              <text className="date">
-                {dateFormat(
-                  new Date(activeNote.createdAt),
-                  "ddd, mmm dS, yy, h:MM TT"
-                )}
-              </text>
+              <div className="dateArea">
+                <text className="date">
+                  {dateFormat(
+                    new Date(activeNote.createdAt),
+                    "ddd, mmm dS, yy, h:MM TT"
+                  )}
+                </text>
+              </div>
             </div>
             <hr className="headerUnderline"></hr>
             <div className="editorBox">
