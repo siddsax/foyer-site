@@ -2846,6 +2846,11 @@
   "resolved" "https://registry.npmjs.org/@types/node/-/node-14.14.31.tgz"
   "version" "14.14.31"
 
+"@types/node@^9.6.39":
+  "integrity" "sha512-/aKAdg5c8n468cYLy2eQrcR5k6chlbNwZNGUj3TboyPa2hcO2QAJcfymlqPzMiRj8B6nYKXjzQz36minFE0RwQ=="
+  "resolved" "https://registry.npmjs.org/@types/node/-/node-9.6.61.tgz"
+  "version" "9.6.61"
+
 "@types/normalize-package-data@^2.4.0":
   "integrity" "sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw=="
   "resolved" "https://registry.npmjs.org/@types/normalize-package-data/-/normalize-package-data-2.4.1.tgz"
@@ -12120,6 +12125,13 @@
   "integrity" "sha512-eqhj8O5t/9nzGS/DfCGQX9goqbxTP2T/qrY2B13s4rx/VIJ4Bx3WnZgqxEVA0Y/mWZBh7gOlXSPdRGbxBq5d8g=="
   "resolved" "https://registry.npmjs.org/react-firebase-hooks/-/react-firebase-hooks-3.0.4.tgz"
   "version" "3.0.4"
+
+"react-google-calendar-api@^1.4.0":
+  "integrity" "sha512-ZE2AsoysL9euqHUmjWugU4+dubgMEdhqu6URbSNGax5m89CpqcppwQk2PlQqrHE+kxhUBR43uVjFdoMCfWbJCA=="
+  "resolved" "https://registry.npmjs.org/react-google-calendar-api/-/react-google-calendar-api-1.4.0.tgz"
+  "version" "1.4.0"
+  dependencies:
+    "@types/node" "^9.6.39"
 
 "react-input-autosize@^2.2.1":
   "integrity" "sha512-jQJgYCA3S0j+cuOwzuCd1OjmBmnZLdqQdiLKRYrsMMzbjUrVDS5RvJUDwJqA7sKuksDuzFtm6hZGKFu7Mjk5aw=="
