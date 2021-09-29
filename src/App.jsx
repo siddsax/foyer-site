@@ -11,6 +11,7 @@ import { listUpcomingEvents } from "./Components/GCalendarAPI/APIHelpers";
 
 function App() {
   const [user, loading, error] = useAuthState(firebase.auth());
+  const [events, setEvents] = useState(null);
   const [loading2, setLoading] = useState(true);
   const [user2, setUser] = useState(null);
   var loading_db = false;
@@ -23,6 +24,7 @@ function App() {
   window.$gapi = gapi;
 
   useEffect(async () => {
+    console.log(user, "=====");
     if (user) {
       console.log(user);
       loading_db = true;
@@ -50,8 +52,13 @@ function App() {
         });
 
       loading_db = false;
+      listUpcomingEvents(10, setEvents);
     }
   }, [user]);
+
+  useEffect(() => {
+    console.log(events);
+  }, [events]);
 
   if (loading || loading_db) {
     return <div>Loading </div>;
