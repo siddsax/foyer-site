@@ -1,82 +1,60 @@
-import { useEffect, useState, useRoute } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
-import SignIn from "./Components/signin/SignIn";
 import { useAuthState } from "react-firebase-hooks/auth";
 import firebase from "./firebase";
-import NotesPage from "./Pages/NotesPage/NotesPage";
 import NotesListPage from "./Pages/NotesListPage/NotesListPage";
-// import firebase from "firebase";
-// import "./serverside.jsx";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import NotePage from "./Pages/NotePage/NotePage";
-import { getAppBarUtilityClass } from "@mui/material";
 import { Box, Button } from "@mui/material";
-import ApiCalendar from "react-google-calendar-api";
+import GCalendarAPI from "./Components/GCalendarAPI/GCalendarAPI";
+import { listUpcomingEvents } from "./Components/GCalendarAPI/APIHelpers";
 
 function App() {
-  // var loading_db = false;
-  // const [user, loading_auth, error] = useAuthState(firebase.auth());
+  const [user, loading, error] = useAuthState(firebase.auth());
+  const [loading2, setLoading] = useState(true);
+  const [user2, setUser] = useState(null);
+  var loading_db = false;
 
-  // useEffect(async () => {
-  //   if (user) {
-  //     loading_db = true;
-  //     const db = firebase.firestore();
-  //     var docRef = db.collection("Users").doc(`${user.uid}`);
-  //     docRef
-  //       .get()
-  //       .then((doc) => {
-  //         if (doc.exists) {
-  //         } else {
-  //           db.collection("Users")
-  //             .doc(`${user.uid}`)
-  //             .set({
-  //               email: user.email,
-  //               photoURL: user.photoURL,
-  //               Name: user.displayName,
-  //             })
-  //             .then(() => {
-  //               console.log("Document successfully written!");
-  //             });
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.log("Error getting document:", error);
-  //       });
+  const { gapi, signOut, signIn } = GCalendarAPI({
+    setLoading: setLoading,
+    setUser: setUser,
+  });
 
-  //     loading_db = false;
-  //   }
-  //   if (loading_auth) {
-  //     loading_db = true;
-  //   }
-  // }, [user]);
-  var gapi = window.gapi;
-  var CLIENT_ID =
-    "780614249083-ep3ui53ihi9gnj9jbohml4bai7qfdka6.apps.googleusercontent.com";
-  var API_KEY = "AIzaSyBarNMFYvA5ChtKvyQCWmmjLweGqRfEauE";
+  window.$gapi = gapi;
 
-  var DISCOVERY_DOCS = [
-    "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
-  ];
+  useEffect(async () => {
+    if (user) {
+      console.log(user);
+      loading_db = true;
+      const db = firebase.firestore();
+      var docRef = db.collection("Users").doc(`${user.uid}`);
+      docRef
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+          } else {
+            db.collection("Users")
+              .doc(`${user.uid}`)
+              .set({
+                email: user.email,
+                photoURL: user.photoURL,
+                Name: user.displayName,
+              })
+              .then(() => {
+                console.log("Document successfully written!");
+              });
+          }
+        })
+        .catch((error) => {
+          console.log("Error getting document:", error);
+        });
 
-  // Authorization scopes required by the API; multiple scopes can be
-  // included, separated by spaces.
-  var SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
+      loading_db = false;
+    }
+  }, [user]);
 
-  const listEvents = () => {
-    console.log(ApiCalendar.getBasicUserProfile());
-    console.log(ApiCalendar);
-    if (ApiCalendar.sign)
-      ApiCalendar.listUpcomingEvents(10).then(({ result }: any) => {
-        console.log(result.items);
-      });
-  };
-
-  if (loading_auth || loading_db) {
-    return (
-      <div>
-        <h1>Loading</h1>
-      </div>
-    );
+  if (loading || loading_db) {
+    return <div>Loading </div>;
   } else {
     return user ? (
       <Router>
@@ -90,14 +68,27 @@ function App() {
         </Switch>
       </Router>
     ) : (
-      <SignIn />
+      <div>
+        <Button onClick={signIn}>Sign in with Google</Button>
+      </div>
     );
+    // } else {
+    //   return (
+    //     <div>
+    //       {user ? (
+    //         <div>
+    //           Signed In, {user.Se}
+    //           <Button onClick={signOut}> Sign Out</Button>
+    //         </div>
+    //       ) : (
+    //         <div>
+    //           Not Signed In
+    //           <Button onClick={signIn}> Sign In</Button>
+    //         </div>
+    //       )}
+    //     </div>
+    //   );
   }
 }
 
 export default App;
-
-// var gapi = window.gapi;
-// var CLIENT_ID =
-//   "780614249083-ep3ui53ihi9gnj9jbohml4bai7qfdka6.apps.googleusercontent.com";
-// var API_KEY = "AIzaSyBarNMFYvA5ChtKvyQCWmmjLweGqRfEauE";

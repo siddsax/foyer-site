@@ -8,16 +8,14 @@ import { Link } from "react-router-dom";
 
 const Header = (props) => {
   const signOutCall = async () => {
-    firebase
-      .auth()
+    window.$gapi.auth2
+      .getAuthInstance()
       .signOut()
       .then(() => {
-        console.log("Signed Out");
-      })
-      .catch(async (error) => {
-        console.log("Error");
+        firebase.auth().signOut();
       });
   };
+
   return (
     <Box className="header">
       <Link to="/">
