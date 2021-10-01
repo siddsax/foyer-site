@@ -118,13 +118,13 @@
   background-color: red;
 }
 
-Body {
+.Calendar {
   font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans",
     "Helvetica Neue", Arial, sans-serif;
   font-size: 100%;
   margin: 10px;
   color: #333;
-  background-color: #cecece;
+  /* background-color: #cecece; */
 }
 
 div.calendarDate {
