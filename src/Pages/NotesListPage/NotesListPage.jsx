@@ -47,7 +47,6 @@ const NotesListPage = (props) => {
       .doc(`${uid}`)
       .set(newNote);
     history.push(`/note-${uid}`);
-    // const handleOnClick = useCallback(() => history.push(`/note-${uid}`), [history]);
   };
 
   const fetchNotes = () => {
