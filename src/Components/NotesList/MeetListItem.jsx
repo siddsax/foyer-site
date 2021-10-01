@@ -16,25 +16,29 @@ const MeetListItem = (props) => {
   const addMeetNote = async () => {
     const uid = uuid();
 
+    const attendeesEmails = [];
+
+    for (let i = 0; i < meet.attendees.length; i++) {
+      attendeesEmails.push(meet.attendees[i].email);
+    }
+
     const newNote = {
       id: uid,
       title: meet.title,
       body: '[{"type":"paragraph","children":[{"text":""}]}]',
       lastModified: Date.now(),
-      // createdAt: Date.now(),
-      createdAt: meet.createdAt,
-      hangoutLink: meet.hangoutLink,
+      createdAt:
+        typeof meet.createdAt === "undefined" ? Date.now() : meet.createdAt,
+      hangoutLink:
+        typeof meet.hangoutLink === "undefined" ? null : meet.hangoutLink,
       meetId: meet.id,
       attendees: meet.attendees,
       end: meet.end,
+      creator: user.uid,
+      access: attendeesEmails,
     };
     console.log(newNote, "++++");
-    await db
-      .collection("Users")
-      .doc(`${user.uid}`)
-      .collection("Notes")
-      .doc(`${uid}`)
-      .set(newNote);
+    await db.collection("Notes").doc(`${uid}`).set(newNote);
     history.push(`/note-${uid}`);
     // const handleOnClick = useCallback(() => history.push(`/note-${uid}`), [history]);
   };

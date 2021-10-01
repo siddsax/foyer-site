@@ -39,13 +39,10 @@ const NotesListPage = (props) => {
       body: '[{"type":"paragraph","children":[{"text":""}]}]',
       lastModified: Date.now(),
       createdAt: Date.now(),
+      creator: user.uid,
+      access: [user.email],
     };
-    await db
-      .collection("Users")
-      .doc(`${user.uid}`)
-      .collection("Notes")
-      .doc(`${uid}`)
-      .set(newNote);
+    await db.collection("Notes").doc(`${uid}`).set(newNote);
     history.push(`/note-${uid}`);
   };
 
@@ -56,9 +53,8 @@ const NotesListPage = (props) => {
     setTimeout(() => setIsButtonDisabled(false), 300);
 
     const ref = db
-      .collection("Users")
-      .doc(`${user.uid}`)
       .collection("Notes")
+      .where("access", "array-contains", user.email)
       .orderBy("createdAt", "desc");
 
     if (lastVisible.current == 0) {

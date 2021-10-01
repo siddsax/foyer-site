@@ -18,15 +18,11 @@ const NotePage = (props) => {
   const db = firebase.firestore();
 
   const onUpdateNoteDB = (title, content) => {
-    db.collection("Users")
-      .doc(`${user.uid}`)
-      .collection("Notes")
-      .doc(`${activeNoteID}`)
-      .update({
-        title: title,
-        body: content,
-        lastModified: Date.now(),
-      });
+    db.collection("Notes").doc(`${activeNoteID}`).update({
+      title: title,
+      body: content,
+      lastModified: Date.now(),
+    });
   };
 
   const debouncedOnUpdateNoteDB = useCallback(
@@ -37,11 +33,7 @@ const NotePage = (props) => {
   const getActiveNote = async () => {
     var activeNote = null;
 
-    var docRef = db
-      .collection("Users")
-      .doc(`${user.uid}`)
-      .collection("Notes")
-      .doc(`${activeNoteID}`);
+    var docRef = db.collection("Notes").doc(`${activeNoteID}`);
 
     docRef
       .get()
