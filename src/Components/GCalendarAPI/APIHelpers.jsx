@@ -1,14 +1,3 @@
-// gapi.client.init({ ...googleClientConfig }).then(() => {
-//   gapi.client.load("calendar", "v3", () => {
-//     gapi.client.calendar.events
-//       .list({ ...calendarRequestParams })
-//       .then(function (response) {
-//         let events = response.result.items;
-//         /* do something with events */
-//       });
-//   });
-// });
-
 const listUpcomingEvents = (maxResults, setEvents) => {
   if (window.$gapi) {
     console.log("1", window.$gapi);

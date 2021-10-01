@@ -7,11 +7,9 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import NotePage from "./Pages/NotePage/NotePage";
 import { Box, Button } from "@mui/material";
 import GCalendarAPI from "./Components/GCalendarAPI/GCalendarAPI";
-import { listUpcomingEvents } from "./Components/GCalendarAPI/APIHelpers";
 
 function App() {
   const [user, loading, error] = useAuthState(firebase.auth());
-  const [events, setEvents] = useState(null);
   const [loading2, setLoading] = useState(true);
   const [user2, setUser] = useState(null);
   var loading_db = false;
@@ -24,9 +22,7 @@ function App() {
   window.$gapi = gapi;
 
   useEffect(async () => {
-    console.log(user, "=====");
     if (user) {
-      console.log(user);
       loading_db = true;
       const db = firebase.firestore();
       var docRef = db.collection("Users").doc(`${user.uid}`);
@@ -52,13 +48,13 @@ function App() {
         });
 
       loading_db = false;
-      listUpcomingEvents(10, setEvents);
+      // listUpcomingEvents(10, setEvents);
     }
   }, [user]);
 
-  useEffect(() => {
-    console.log(events);
-  }, [events]);
+  // useEffect(() => {
+  //   console.log(events);
+  // }, [events]);
 
   if (loading || loading_db) {
     return <div>Loading </div>;

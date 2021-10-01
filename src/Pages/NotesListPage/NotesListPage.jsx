@@ -4,7 +4,7 @@ import ActiveNote from "../../Components/activeNote/ActiveNote";
 import Sidebar from "../../Components/sidebar/Sidebar";
 import Header from "../../Components/header/header";
 import NotesList from "../../Components/NotesList/NotesList";
-
+import { listUpcomingEvents } from "../../Components/GCalendarAPI/APIHelpers";
 import firebase from "../../firebase";
 // import debounce from "../../helpers";
 import { debounce } from "debounce";
@@ -17,6 +17,7 @@ const NotesListPage = (props) => {
   const { user } = props;
   const db = firebase.firestore();
   const [notes, setNotes] = useState([]);
+  const [meetings, setMeetings] = useState(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [showNotes, setShowNotes] = useState(true);
   const history = useHistory();
@@ -51,7 +52,7 @@ const NotesListPage = (props) => {
 
   const fetchNotes = () => {
     // **** here's the timeout ****
-    const paginateNumber = 6;
+    const paginateNumber = 7;
     setIsButtonDisabled(true);
     setTimeout(() => setIsButtonDisabled(false), 300);
 
@@ -75,12 +76,15 @@ const NotesListPage = (props) => {
   };
 
   useEffect(() => {
+    listUpcomingEvents(10, setMeetings);
     fetchNotes();
   }, []);
 
   return (
     <div className="NotesListPage">
+      {/* Overall header */}
       <Header />
+      {/* Buttons header */}
       <div className="modeSelectorArea">
         <div className="buttonArea">
           <label class="switch">
@@ -108,9 +112,11 @@ const NotesListPage = (props) => {
           </div>
         </div>
       </div>
+
+      {/* Content Area */}
       {showNotes ? (
         <div className="NotesListArea">
-          <NotesList notes={notes} />
+          <NotesList notes={notes} meetings={meetings} />
         </div>
       ) : (
         <div>asasas</div>

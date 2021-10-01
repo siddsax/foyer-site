@@ -15,10 +15,12 @@
 }
 
 .DateArea {
+  /* background-color: pink; */
   display: flex;
+  /* align-content: center; */
   align-items: center;
-  justify-content: center;
-  width: 20%;
+  /* justify-content: center; */
+  width: 40%;
   min-width: 150px;
 }
 
@@ -29,6 +31,24 @@
   min-width: 300px;
   width: 100%;
   align-items: center;
+}
+
+.ovf1 {
+  /* align-items: center;
+  justify-content: center;
+  align-content: center;
+  background-color: pink;
+  overflow: scroll;
+  width: 100%; */
+}
+
+.ovf2 {
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  background-color: green;
+  /* overflow: scroll; */
+  width: 100%;
 }
 
 .Note {
@@ -42,16 +62,34 @@
   border: 1px solid transparent;
 }
 
+.buttonMeetingNote {
+  display: flex;
+  height: 70%;
+  width: 100%;
+  align-items: center;
+  background-color: rgb(136, 88, 88);
+  border-radius: 5px;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+}
+
 .NoteTitle {
   margin-left: 10px;
   color: gray;
 }
 
-.DateTime {
-  /* background-color: gray; */
+.DateTimeArea {
+  display: flex;
+  width: 100%;
   color: #cfcfcf;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
   font-weight: bold;
 }
+
+/* .DateTime {
+} */
 
 .monthName {
   /* color: #cfcfcf; */
@@ -71,8 +109,67 @@
 
 .Calendar {
   display: flex;
-  width: 40%;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
+  width: 3em;
+}
+
+.calendarImage {
+  width: 10px;
+  display: flex;
+  background-color: red;
+}
+
+Body {
+  font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans",
+    "Helvetica Neue", Arial, sans-serif;
+  font-size: 100%;
+  margin: 10px;
+  color: #333;
+  background-color: #cecece;
+}
+
+div.calendarDate {
+  font-size: 1em;
+  display: block;
+  position: relative;
+  width: 3em;
+  height: 3em;
+  background-color: gray;
+  border-radius: 0.7em;
+  -moz-border-radius: 0.7em;
+  /* box-shadow: 0 1px 0 #bdbdbd, 0 2px 0 #fff, 0 3px 0 #bdbdbd, 0 4px 0 #fff,
+    0 5px 0 #bdbdbd, 0 0 0 1px #bdbdbd; */
+  overflow: hidden;
+}
+
+div.calendarDate * {
+  display: block;
+  width: 100%;
+  font-size: 0.6em;
+  font-weight: bold;
+  font-style: normal;
+  text-align: center;
+}
+
+div.calendarDate strong {
+  position: absolute;
+  top: 0;
+  padding: 0.4em 0;
+  color: #282828;
+  background-color: #eebc1d;
+}
+
+/* div.calendarDate em {
+  position: absolute;
+  bottom: 0em;
+  color: #282828;
+  padding-top: 0.2em;
+  height: 3em;
+  background-color: #eebc1d;
+} */
+
+div.calendarDate span {
+  font-size: 1em;
+  letter-spacing: -0.05em;
+  padding-top: 0.7em;
+  color: #2f2f2f;
 }
