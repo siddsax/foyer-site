@@ -27,45 +27,41 @@ const Header = (props) => {
 
   return (
     <div className="header">
-      <Link to="/">
-        <img src={logo} className="logo" />
-      </Link>
-      <div className="searchBar">
-        <Icon name="search" color="darkgrey" />
-        <input type="text" placeholder="Search" className="searchBox" />
-      </div>
-      <div className="signOut">
-        <div className="container">
-          <div className="menu-container">
-            <button onClick={onClick} className="menu-trigger">
-              <img
-                src={user.photoURL}
-                alt="User avatar"
-                className="profilePic"
-              />
-            </button>
-            <nav
-              ref={dropdownRef}
-              className={`menu ${isActive ? "active" : "inactive"}`}
-            >
-              <ul>
-                <li>
-                  <a href="#" onClick={signOutCall}>
-                    Sign Out
-                  </a>
-                </li>
-              </ul>
-            </nav>
+      <div className="headerInner">
+        <Link to="/">
+          <img src={logo} className="logo" />
+        </Link>
+        <div className="searchBar">
+          <div className="searchBarInner">
+            <input type="text" placeholder="Search" className="searchBox" />
+          </div>
+        </div>
+        <div className="signOut">
+          <div className="container">
+            <div className="menu-container">
+              <button onClick={onClick} className="menu-trigger">
+                <img
+                  src={user.photoURL}
+                  alt="User avatar"
+                  className="profilePic"
+                />
+              </button>
+              <nav
+                ref={dropdownRef}
+                className={`menu ${isActive ? "active" : "inactive"}`}
+              >
+                <ul>
+                  <li>
+                    <a href="#" onClick={signOutCall}>
+                      Sign Out
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
           </div>
         </div>
       </div>
-      {/* <Button
-          variant="contained"
-          onClick={signOutCall}
-          style={{ backgroundColor: "#282828", color: "grey" }}
-        >
-          <text className="signOutText"> Sign Out</text>
-        </Button> */}
     </div>
   );
 };
