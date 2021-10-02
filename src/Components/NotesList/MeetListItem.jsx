@@ -65,8 +65,8 @@ const MeetListItem = (props) => {
 
       <div className="NoteArea">
         <button onClick={addMeetNote} className="buttonMeetingNote">
-          <div>
-            <text className="NoteTitle">{meet.title}</text>
+          <div className="NoteTitleArea">
+            <text>{meet.title}</text>
           </div>
         </button>
         {/* </Link> */}

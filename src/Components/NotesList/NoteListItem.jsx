@@ -32,8 +32,8 @@ const NoteListItem = (props) => {
           className="Note"
           style={{ textDecoration: "none" }}
         >
-          <div>
-            <text className="NoteTitle">{note.title}</text>
+          <div className="NoteTitleArea">
+            <text>{note.title}</text>
           </div>
         </Link>
       </div>

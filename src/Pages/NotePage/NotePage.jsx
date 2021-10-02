@@ -69,28 +69,32 @@ const NotePage = (props) => {
         <div className="notePage">
           <div className="noteArea">
             <div className="noteHeaderArea">
-              <EditText
-                className="noteTitle"
-                style={{
-                  padding: "0px",
-                  margin: "0px",
-                  width: "50%",
-                  "background-color": "#282828",
-                  outline: "none",
-                  "border-width": "0px",
-                  height: "40px",
-                }}
-                onSave={(input) => {
-                  updateTitle(input.value);
-                }}
-                defaultValue={activeNote.title}
-              />
+              <div className="noteTitleArea">
+                <EditText
+                  className="noteTitle"
+                  style={{
+                    padding: "0px",
+                    margin: "0px",
+                    width: "100%",
+                    "background-color": "#282828",
+                    outline: "none",
+                    "border-width": "0px",
+                    // height: "40px",
+                    overflow: "hidden",
+                    // "text-overflow": "fade",
+                  }}
+                  onSave={(input) => {
+                    updateTitle(input.value);
+                  }}
+                  defaultValue={activeNote.title}
+                />
+              </div>
 
               <div className="dateArea">
                 <text className="date">
                   {dateFormat(
                     new Date(activeNote.createdAt),
-                    "ddd, mmm dS, yy, h:MM TT"
+                    "ddd, mmm d, h:MM TT"
                   )}
                 </text>
               </div>

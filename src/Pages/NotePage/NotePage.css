@@ -15,10 +15,19 @@
   align-items: center;
 }
 
+.noteTitleArea {
+  background-color: burlywood;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .noteArea {
   background-color: #282828;
   width: 80%;
-  min-width: 500px;
+  min-width: 420px;
   height: 75%;
   margin-top: 5%;
   margin-bottom: 5%;
@@ -27,38 +36,47 @@
 }
 
 .noteHeaderArea {
-  /* background-color: red; */
   display: flex;
   flex-direction: row;
   font-size: 30px;
   margin-top: 2%;
-
   margin-left: 10pt;
-  margin-right: 10pt;
-  align-items: flex-end;
-  /* align-content: flex-end;
-  justify-content: flex-end; */
+  align-items: center;
+  justify-content: center;
+  align-content: center;
 }
 
 .noteTitle {
+  background-color: yellow;
+  display: flex;
+  position: relative;
   color: white;
   font-weight: 200;
-  margin-left: 10pt;
+  /* margin-left: 10pt; */
 }
 
 .dateArea {
   justify-content: flex-end;
-  display: flex;
-  width: 100%;
+  width: 100px;
+  /* max-width: 100px;
+  min-width: 100px; */
+}
+
+@media only screen and (max-width: 500px) {
+  /* .dateArea {
+    display: none;
+  } */
+  .noteTitle {
+    align-content: center;
+    align-items: center;
+    font-size: 17px;
+  }
 }
 
 .date {
   display: flex;
-  /* background-color: blue; */
   color: gray;
   font-size: 15px;
-  margin-left: 30px;
-  margin-bottom: 7px;
 }
 
 .headerUnderline {
