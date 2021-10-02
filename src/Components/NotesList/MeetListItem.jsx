@@ -37,7 +37,6 @@ const MeetListItem = (props) => {
       creator: user.uid,
       access: attendeesEmails,
     };
-    console.log(newNote, "++++");
     await db.collection("Notes").doc(`${uid}`).set(newNote);
     history.push(`/note-${uid}`);
     // const handleOnClick = useCallback(() => history.push(`/note-${uid}`), [history]);

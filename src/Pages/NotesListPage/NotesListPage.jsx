@@ -16,11 +16,12 @@ import { useHistory } from "react-router-dom";
 const NotesListPage = (props) => {
   const { user } = props;
   const db = firebase.firestore();
-  const [notes, setNotes] = useState([]);
+  var [notes, setNotes] = useState([]);
   const [meetings, setMeetings] = useState(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [showNotes, setShowNotes] = useState(true);
   const history = useHistory();
+  const [loading, setLoading] = useState(true);
 
   var lastVisible = useRef(0);
 
@@ -75,6 +76,37 @@ const NotesListPage = (props) => {
     fetchNotes();
   }, []);
 
+  useEffect(() => {
+    if (meetings && loading) {
+      console.log("!! = !!", loading);
+      for (let i = 0; i < meetings.length; i++) {
+        var done = 0;
+        for (let j = 0; j < notes.length; j++) {
+          if (notes[j].meetId == meetings[i].id) {
+            done = 1;
+          }
+        }
+        if (!done) {
+          var meet = {
+            noNoteYet: true,
+            createdAt: Date.parse(meetings[i].start.dateTime),
+            hangoutLink: meetings[i].hangoutLink,
+            id: meetings[i].id,
+            title: meetings[i].summary,
+            attendees: meetings[i].attendees,
+            end: Date.parse(meetings[i].end.dateTime),
+          };
+          notes.push(meet);
+        }
+      }
+
+      notes = notes.slice().sort((a, b) => a.createdAt - b.createdAt);
+      console.log(notes);
+
+      setLoading(false);
+    }
+  }, [meetings]);
+
   return (
     <div className="NotesListPage">
       <Header />
@@ -109,7 +141,7 @@ const NotesListPage = (props) => {
       {/* Content Area */}
       {showNotes ? (
         <div className="NotesListArea">
-          <NotesList notes={notes} meetings={meetings} />
+          <NotesList notes={notes} loading={loading} />
         </div>
       ) : (
         <div>asasas</div>
