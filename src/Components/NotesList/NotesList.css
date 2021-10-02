@@ -1,7 +1,7 @@
 .NoteItem {
   display: flex;
   flex-direction: row;
-  /* min-width: 500px; */
+  min-width: 420px;
   /* max-width: 800px; */
   width: 60%;
   height: 50px;
@@ -15,11 +15,8 @@
 }
 
 .DateArea {
-  /* background-color: pink; */
   display: flex;
-  /* align-content: center; */
   align-items: center;
-  /* justify-content: center; */
   width: 40%;
   min-width: 150px;
 }
@@ -28,25 +25,14 @@
   display: flex;
   width: 100%;
   margin-left: 5%;
-  min-width: 300px;
   width: 100%;
   align-items: center;
-}
-
-.ovf1 {
-  /* align-items: center;
-  justify-content: center;
-  align-content: center;
-  background-color: pink;
-  overflow: scroll;
-  width: 100%; */
 }
 
 .ovf2 {
   align-items: center;
   justify-content: center;
   align-content: center;
-  background-color: green;
   /* overflow: scroll; */
   width: 100%;
 }

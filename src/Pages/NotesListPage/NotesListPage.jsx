@@ -77,9 +77,7 @@ const NotesListPage = (props) => {
 
   return (
     <div className="NotesListPage">
-      {/* Overall header */}
       <Header />
-      {/* Buttons header */}
       <div className="modeSelectorArea">
         <div className="buttonArea">
           <label class="switch">
