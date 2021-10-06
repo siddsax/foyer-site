@@ -66,7 +66,10 @@ function App() {
             <NotesListPage user={user} />
           </Route>
           <Route path="/note-*">
-            <NotePage user={user} />
+            <NotePage user={user} fromMeeting={false} />
+          </Route>
+          <Route path="/meetid-*">
+            <NotePage user={user} fromMeeting={true} />
           </Route>
         </Switch>
       </Router>

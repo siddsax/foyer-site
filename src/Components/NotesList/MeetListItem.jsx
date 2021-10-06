@@ -3,44 +3,15 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import "./NotesList.css";
 import { formatAMPM } from "./helper";
 import { useAuthState } from "react-firebase-hooks/auth";
-import uuid from "react-uuid";
 import { useHistory } from "react-router-dom";
 import firebase from "../../firebase";
+import { addMeetNote } from "../Helpers/BackendHelpers";
 
 const MeetListItem = (props) => {
   const { meet } = props;
   const [user, loading, error] = useAuthState(firebase.auth());
   const history = useHistory();
   const db = firebase.firestore();
-
-  const addMeetNote = async () => {
-    const uid = uuid();
-
-    const attendeesEmails = [];
-
-    for (let i = 0; i < meet.attendees.length; i++) {
-      attendeesEmails.push(meet.attendees[i].email);
-    }
-
-    const newNote = {
-      id: uid,
-      title: meet.title,
-      body: '[{"type":"paragraph","children":[{"text":""}]}]',
-      lastModified: Date.now(),
-      createdAt:
-        typeof meet.createdAt === "undefined" ? Date.now() : meet.createdAt,
-      hangoutLink:
-        typeof meet.hangoutLink === "undefined" ? null : meet.hangoutLink,
-      meetId: meet.id,
-      attendees: meet.attendees,
-      end: meet.end,
-      creator: user.uid,
-      access: attendeesEmails,
-    };
-    await db.collection("Notes").doc(`${uid}`).set(newNote);
-    history.push(`/note-${uid}`);
-    // const handleOnClick = useCallback(() => history.push(`/note-${uid}`), [history]);
-  };
 
   return (
     <div className="NoteItemArea">
@@ -58,13 +29,18 @@ const MeetListItem = (props) => {
         </div>
         <div className="DateTimeArea">
           <text className="DateTime">
-            {formatAMPM(new Date(meet.createdAt))}
+            {meet.noTime ? null : formatAMPM(new Date(meet.createdAt))}
           </text>
         </div>
       </div>
 
       <div className="NoteArea">
-        <button onClick={addMeetNote} className="buttonMeetingNote">
+        <button
+          onClick={() => {
+            addMeetNote({ meet: meet, db: db, history: history, user: user });
+          }}
+          className="buttonMeetingNote"
+        >
           <div className="NoteTitleArea">
             <text>{meet.title}</text>
           </div>

@@ -1,5 +1,5 @@
 import Header from "../../Components/header/header";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { color, display, flexbox } from "@mui/system";
 import "./NotePage.css";
@@ -8,17 +8,23 @@ import dateFormat from "dateformat";
 import EditorFoyer from "../../Components/Editor/Editor";
 import { EditText } from "react-edit-text";
 import { debounce } from "debounce";
+import { listUpcomingEvents } from "../../Components/GCalendarAPI/APIHelpers";
+import { useHistory } from "react-router-dom";
+import { addMeetNote } from "../../Components/Helpers/BackendHelpers";
+import { formatMeeting } from "../../Components/Helpers/GeneralHelpers";
 
 const NotePage = (props) => {
-  const { user } = props;
+  const { user, fromMeeting } = props;
   const location = useLocation();
-  const activeNoteID = location.pathname.split("note-")[1];
+  var activeNoteID = useRef(null);
   const [activeNote, setActiveNote] = useState(null);
+  const [meetings, setMeetings] = useState(null);
+  const history = useHistory();
 
   const db = firebase.firestore();
 
   const onUpdateNoteDB = (title, content) => {
-    db.collection("Notes").doc(`${activeNoteID}`).update({
+    db.collection("Notes").doc(`${activeNoteID.current}`).update({
       title: title,
       body: content,
       lastModified: Date.now(),
@@ -33,7 +39,7 @@ const NotePage = (props) => {
   const getActiveNote = async () => {
     var activeNote = null;
 
-    var docRef = db.collection("Notes").doc(`${activeNoteID}`);
+    var docRef = db.collection("Notes").doc(`${activeNoteID.current}`);
 
     docRef
       .get()
@@ -53,9 +59,76 @@ const NotePage = (props) => {
       });
   };
 
+  const getMeetingNote = async (props) => {
+    const { meetHangoutID } = props;
+    var activeNote = "No Meeting";
+
+    var docRef = db
+      .collection("Notes")
+      .where("hangoutLink", "==", `https://meet.google.com/${meetHangoutID}`);
+
+    docRef
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log("Document exists", doc.data());
+          activeNote = doc.data();
+          activeNoteID.current = activeNote.id;
+        });
+        setActiveNote(activeNote);
+      })
+      .catch((error) => {
+        console.log("Error getting document:", error);
+        setActiveNote("No Meeting");
+      });
+  };
+
   useEffect(() => {
-    getActiveNote();
+    if (!fromMeeting) {
+      activeNoteID.current = location.pathname.split("note-")[1];
+      getActiveNote();
+    } else {
+      getMeetingNote({
+        meetHangoutID: location.pathname.split("meetid-")[1],
+      });
+    }
   }, []);
+
+  useEffect(() => {
+    if (activeNote == "No Meeting" && fromMeeting) {
+      console.log("&&&&&");
+      listUpcomingEvents(10, setMeetings);
+    }
+  }, [activeNote]);
+
+  useEffect(() => {
+    var found = 0;
+    var uriHangoutID = location.pathname.split("meetid-")[1];
+    if (meetings) {
+      for (let i = 0; i < meetings.length; i++) {
+        if (meetings[i].hangoutLink) {
+          const meetHangoutID = meetings[i].hangoutLink.split("/").slice(-1)[0];
+          if (meetHangoutID == uriHangoutID) {
+            found = 1;
+            var meet = formatMeeting({ meetingCalendar: meetings[i] });
+            addMeetNote({
+              meet: meet,
+              db: db,
+              history: history,
+              user: user,
+            }).then((note) => {
+              activeNoteID.current = note.id;
+              setActiveNote(note);
+            });
+            break;
+          }
+        }
+      }
+      if (!found) {
+        history.push(`/`);
+      }
+    }
+  }, [meetings]);
 
   const updateTitle = (value) => {
     console.log(value);
@@ -65,7 +138,7 @@ const NotePage = (props) => {
   return (
     <div>
       <Header />
-      {activeNote ? (
+      {activeNote != null && activeNote != "No Meeting" ? (
         <div className="notePage">
           <div className="noteArea">
             <div className="noteHeaderArea">
@@ -110,7 +183,9 @@ const NotePage = (props) => {
           </div>
         </div>
       ) : (
-        <></>
+        <div>
+          <text>Loading</text>
+        </div>
       )}
     </div>
   );

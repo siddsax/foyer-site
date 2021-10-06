@@ -12,6 +12,7 @@ import "./NotesListPage.css";
 import newNotes from "../../assets/images/newNotes.png";
 import Button from "@mui/material/Button";
 import { useHistory } from "react-router-dom";
+import { formatMeeting } from "../../Components/Helpers/GeneralHelpers";
 
 const NotesListPage = (props) => {
   const { user } = props;
@@ -78,7 +79,6 @@ const NotesListPage = (props) => {
 
   useEffect(() => {
     if (meetings && loading) {
-      console.log("!! = !!", loading);
       for (let i = 0; i < meetings.length; i++) {
         var done = 0;
         for (let j = 0; j < notes.length; j++) {
@@ -87,21 +87,12 @@ const NotesListPage = (props) => {
           }
         }
         if (!done) {
-          var meet = {
-            noNoteYet: true,
-            createdAt: Date.parse(meetings[i].start.dateTime),
-            hangoutLink: meetings[i].hangoutLink,
-            id: meetings[i].id,
-            title: meetings[i].summary,
-            attendees: meetings[i].attendees,
-            end: Date.parse(meetings[i].end.dateTime),
-          };
+          const meet = formatMeeting({ meetingCalendar: meetings[i] });
           notes.push(meet);
         }
       }
 
       notes = notes.slice().sort((a, b) => a.createdAt - b.createdAt);
-      console.log(notes);
 
       setLoading(false);
     }
