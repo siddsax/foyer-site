@@ -4,7 +4,7 @@ import firebase from "../../firebase";
 const Config = require("../../apiGoogleconfig.json");
 
 export default function GCalendarAPI(props) {
-  var { setLoading, setUser } = props;
+  // var { setLoading, setUser } = props;
   var gapi = window.gapi;
 
   const handleClientLoad = () => {
@@ -27,8 +27,8 @@ export default function GCalendarAPI(props) {
     );
     firebase.auth().signInWithCredential(credentials);
 
-    await setUser(currentUser.getBasicProfile());
-    setLoading(false);
+    // await setUser(currentUser.getBasicProfile());
+    // setLoading(false);
   };
 
   const initClient = () => {
@@ -41,18 +41,18 @@ export default function GCalendarAPI(props) {
   };
 
   const signIn = async () => {
-    setLoading(true);
+    // setLoading(true);
     gapi.auth2.getAuthInstance().signIn().then(initUser);
   };
 
   const signOut = async () => {
-    await setLoading(true);
-    await setUser(null);
+    // await setLoading(true);
+    // await setUser(null);
     gapi.auth2
       .getAuthInstance()
       .signOut()
       .then(() => {
-        setLoading(false);
+        // setLoading(false);
         firebase.auth().signOut();
       });
   };

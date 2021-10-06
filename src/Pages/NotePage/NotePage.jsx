@@ -95,7 +95,7 @@ const NotePage = (props) => {
   }, []);
 
   useEffect(() => {
-    if (activeNote == "No Meeting" && fromMeeting) {
+    if (activeNote === "No Meeting" && fromMeeting) {
       console.log("&&&&&");
       listUpcomingEvents(10, setMeetings);
     }
@@ -108,7 +108,7 @@ const NotePage = (props) => {
       for (let i = 0; i < meetings.length; i++) {
         if (meetings[i].hangoutLink) {
           const meetHangoutID = meetings[i].hangoutLink.split("/").slice(-1)[0];
-          if (meetHangoutID == uriHangoutID) {
+          if (meetHangoutID === uriHangoutID) {
             found = 1;
             var meet = formatMeeting({ meetingCalendar: meetings[i] });
             addMeetNote({
@@ -138,7 +138,7 @@ const NotePage = (props) => {
   return (
     <div>
       <Header />
-      {activeNote != null && activeNote != "No Meeting" ? (
+      {activeNote !== null && activeNote !== "No Meeting" ? (
         <div className="notePage">
           <div className="noteArea">
             <div className="noteHeaderArea">

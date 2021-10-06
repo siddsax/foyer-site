@@ -59,7 +59,7 @@ const NotesListPage = (props) => {
       .where("access", "array-contains", user.email)
       .orderBy("createdAt", "desc");
 
-    if (lastVisible.current == 0) {
+    if (lastVisible.current === 0) {
       ref.limit(paginateNumber).get().then(fillNotes);
     } else if (lastVisible.current != null) {
       ref
@@ -82,7 +82,7 @@ const NotesListPage = (props) => {
       for (let i = 0; i < meetings.length; i++) {
         var done = 0;
         for (let j = 0; j < notes.length; j++) {
-          if (notes[j].meetId == meetings[i].id) {
+          if (notes[j].meetId === meetings[i].id) {
             done = 1;
           }
         }

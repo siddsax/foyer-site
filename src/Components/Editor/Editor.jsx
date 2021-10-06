@@ -1,5 +1,5 @@
-import { cx, css } from "emotion";
-import React, { useEffect, useCallback, useMemo, useState } from "react";
+import { css } from "emotion";
+import { useEffect, useCallback, useMemo, useState } from "react";
 import isHotkey from "is-hotkey";
 import { Editable, withReact, useSlate, Slate } from "slate-react";
 import {
@@ -11,7 +11,7 @@ import {
 } from "slate";
 import { withHistory } from "slate-history";
 
-import { Button, Icon, Toolbar } from "./Editorhelpers";
+import { Button, Toolbar } from "./Editorhelpers";
 import firebase from "../../firebase";
 
 import FormatBoldIcon from "@mui/icons-material/FormatBold";
