@@ -12,6 +12,14 @@ import { listUpcomingEvents } from "../../Components/GCalendarAPI/APIHelpers";
 import { useHistory } from "react-router-dom";
 import { addMeetNote } from "../../Components/Helpers/BackendHelpers";
 import { formatMeeting } from "../../Components/Helpers/GeneralHelpers";
+import { css } from "@emotion/react";
+import HashLoader from "react-spinners/HashLoader";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 const NotePage = (props) => {
   const { user, fromMeeting } = props;
@@ -20,6 +28,7 @@ const NotePage = (props) => {
   const [activeNote, setActiveNote] = useState(null);
   const [meetings, setMeetings] = useState(null);
   const history = useHistory();
+  let [color, setColor] = useState("#049be4");
 
   const db = firebase.firestore();
 
@@ -182,7 +191,12 @@ const NotePage = (props) => {
         </div>
       ) : (
         <div>
-          <text>Loading</text>
+          <HashLoader
+            color={color}
+            loading={activeNote !== null && activeNote !== "No Meeting"}
+            css={override}
+            size={50}
+          />
         </div>
       )}
     </div>

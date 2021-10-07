@@ -19,9 +19,6 @@ const NoteListItem = (props) => {
           {new Date(note.createdAt).getDate()}
         </text>
       </div>
-      {/* <div className="DateTimeArea">
-        <text className="DateTime">{formatAMPM(new Date(note.createdAt))}</text>
-      </div> */}
 
       <div className="NoteArea">
         <Link

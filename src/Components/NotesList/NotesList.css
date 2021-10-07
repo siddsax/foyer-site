@@ -59,23 +59,24 @@
   display: flex;
   height: 80%;
   width: 100%;
-  /* align-items: center; */
   background-color: var(--third-object-color);
   border-radius: 5px;
-  /* box-sizing: border-box; */
-  /* border: 1px solid transparent; */
   margin-left: 10px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .buttonMeetingNote {
   display: flex;
+  height: 80%;
   width: 100%;
-  align-items: center;
+  background-color: var(--third-object-color-2);
   border-radius: 5px;
+  margin-left: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
   box-sizing: border-box;
   border: 1px solid transparent;
-
+  align-items: center;
   overflow: hidden;
 }
 

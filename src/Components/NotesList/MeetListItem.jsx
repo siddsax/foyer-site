@@ -7,6 +7,8 @@ import { useHistory } from "react-router-dom";
 import firebase from "../../firebase";
 import { addMeetNote } from "../Helpers/BackendHelpers";
 
+var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
 const MeetListItem = (props) => {
   const { meet } = props;
   const [user, loading, error] = useAuthState(firebase.auth());
@@ -15,23 +17,13 @@ const MeetListItem = (props) => {
 
   return (
     <div className="NoteItemArea">
-      <div className="DateArea">
-        <div className="Calendar">
-          <div class="calendarDate">
-            <em>Sat</em>
-            <strong>
-              {new Intl.DateTimeFormat("en-US", { month: "short" }).format(
-                new Date(meet.createdAt)
-              )}
-            </strong>
-            <span>{new Date(meet.createdAt).getDate()}</span>
-          </div>
-        </div>
-        <div className="DateTimeArea">
-          <text className="DateTime">
-            {meet.noTime ? null : formatAMPM(new Date(meet.createdAt))}
-          </text>
-        </div>
+      <div class="calendarDateArea">
+        <text className="calendarDay">
+          {weekdays[new Date(meet.createdAt).getDay()]}
+        </text>
+        <text className="calendarDate">
+          {new Date(meet.createdAt).getDate()}
+        </text>
       </div>
 
       <div className="NoteArea">
@@ -42,10 +34,17 @@ const MeetListItem = (props) => {
           className="buttonMeetingNote"
         >
           <div className="NoteTitleArea">
-            <text>{meet.title}</text>
+            <text className="NoteTitleText">{meet.title}</text>
+          </div>
+          <div className="DateTimeArea">
+            {meet.end ? (
+              <text className="DateTime">
+                {formatAMPM(new Date(meet.createdAt))} {" - "}
+                {formatAMPM(new Date(meet.end))}
+              </text>
+            ) : null}
           </div>
         </button>
-        {/* </Link> */}
       </div>
     </div>
   );
