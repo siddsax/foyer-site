@@ -4,6 +4,22 @@ import MeetListItem from "./MeetListItem";
 import "./NotesList.css";
 import { css } from "@emotion/react";
 import HashLoader from "react-spinners/HashLoader";
+import calendar from "../../assets/images/calendar.png";
+
+const monthArray = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 const override = css`
   display: block;
@@ -15,6 +31,11 @@ const NotesList = (props) => {
   // let [color, setColor] = useState("#ffffff");
   let [color, setColor] = useState("#049be4");
 
+  useEffect(() => {
+    console.log(loading, "++++++");
+    console.log(notes);
+  }, [loading]);
+
   return (
     <div className="allNotesPage">
       {loading ? (
@@ -22,13 +43,27 @@ const NotesList = (props) => {
       ) : (
         <div className="allNotes">
           {notes.map((note, i) => (
-            <div className="NoteItem">
-              {note.noNoteYet ? (
-                <MeetListItem meet={note} />
+            <>
+              {note.firstOfMonth ? (
+                <div className="monthAreaBar">
+                  <div className="monthArea">
+                    <img src={calendar}></img>
+                    <text className="monthName">
+                      {monthArray[new Date(note.createdAt).getMonth()]}
+                    </text>
+                  </div>
+                </div>
               ) : (
-                <NoteListItem note={note} />
+                <></>
               )}
-            </div>
+              <div className="NoteItem">
+                {note.noNoteYet ? (
+                  <MeetListItem meet={note} />
+                ) : (
+                  <NoteListItem note={note} />
+                )}
+              </div>
+            </>
           ))}
         </div>
       )}

@@ -23,6 +23,7 @@ const NotesListPage = (props) => {
   const [showNotes, setShowNotes] = useState(true);
   const history = useHistory();
   const [loading, setLoading] = useState(true);
+  const [sorted, setSorted] = useState(false);
 
   var lastVisible = useRef(0);
 
@@ -78,25 +79,62 @@ const NotesListPage = (props) => {
   }, []);
 
   useEffect(() => {
-    if (meetings && loading) {
-      for (let i = 0; i < meetings.length; i++) {
-        var done = 0;
-        for (let j = 0; j < notes.length; j++) {
-          if (notes[j].meetId === meetings[i].id) {
-            done = 1;
+    const addMeetings = async () => {
+      if (meetings && loading) {
+        for (let i = 0; i < meetings.length; i++) {
+          var done = 0;
+          for (let j = 0; j < notes.length; j++) {
+            if (notes[j].meetId === meetings[i].id) {
+              done = 1;
+            }
+          }
+          if (!done) {
+            const meet = formatMeeting({ meetingCalendar: meetings[i] });
+            await setNotes((prevValue) => [...prevValue, meet]);
           }
         }
-        if (!done) {
-          const meet = formatMeeting({ meetingCalendar: meetings[i] });
-          notes.push(meet);
+
+        // await setNotes(notes.slice().sort((a, b) => a.createdAt - b.createdAt));
+        await setNotes((prevValue) => {
+          return prevValue.slice().sort((a, b) => a.createdAt - b.createdAt);
+        });
+
+        setSorted(true);
+      }
+    };
+    addMeetings();
+  }, [meetings]);
+
+  useEffect(() => {
+    const setFirstMonthNote = async () => {
+      for (let j = 0; j < notes.length; j++) {
+        var d1, d2;
+        if (j > 0) {
+          d1 = new Date(notes[j].createdAt).getMonth();
+          d2 = new Date(notes[j - 1].createdAt).getMonth();
+        } else {
+          d1 = 0;
+          d2 = 1;
+        }
+
+        console.log(d1, d2, "_____________");
+        if (d1 !== d2) {
+          console.log(d1, d2, "_______+++______");
+          // notes[j].firstOfMonth = true;
+          await setNotes((prevValue) => {
+            prevValue[j].firstOfMonth = true;
+            return prevValue;
+          });
         }
       }
-
-      notes = notes.slice().sort((a, b) => a.createdAt - b.createdAt);
-
       setLoading(false);
+    };
+
+    if (sorted) {
+      console.log(sorted);
+      setFirstMonthNote();
     }
-  }, [meetings]);
+  }, [sorted]);
 
   return (
     <div className="NotesListPage">
@@ -129,13 +167,12 @@ const NotesListPage = (props) => {
         </div>
       </div>
 
-      {/* Content Area */}
       {showNotes ? (
         <div className="NotesListArea">
           <NotesList notes={notes} loading={loading} />
         </div>
       ) : (
-        <div>asasas</div>
+        <div></div>
       )}
     </div>
   );
