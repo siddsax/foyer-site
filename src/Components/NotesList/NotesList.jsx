@@ -7,28 +7,23 @@ const NotesList = (props) => {
   var { notes, loading } = props;
 
   return (
-    <>
+    <div className="allNotesPage">
       {loading ? (
         <></>
       ) : (
-        <>
+        <div className="allNotes">
           {notes.map((note, i) => (
-            <>
+            <div className="NoteItem">
               {note.noNoteYet ? (
-                <div className="NoteItem">
-                  <MeetListItem meet={note} />
-                </div>
+                <MeetListItem meet={note} />
               ) : (
-                // <></>
-                <div className="NoteItem">
-                  <NoteListItem note={note} />
-                </div>
+                <NoteListItem note={note} />
               )}
-            </>
+            </div>
           ))}
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 

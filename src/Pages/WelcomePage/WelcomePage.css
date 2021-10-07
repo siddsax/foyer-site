@@ -3,7 +3,7 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #049be4;
+  background-color: var(--third-object-color);
 }
 
 .welcomePageBackground {

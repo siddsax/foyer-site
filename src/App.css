@@ -30,12 +30,16 @@ body,
   --second-object-color: #bdc3c7;
   --first-text-color: black;
   --second-text-color: white;
+  --third-object-color: #049be4;
 }
 
 /* :root {
   --main-bg-color: black;
   --first-object-color: #282828;
   --second-object-color: white;
+  --first-text-color: white;
+  --second-text-color: black;
+  --third-object-color: 
 } */
 
 button {

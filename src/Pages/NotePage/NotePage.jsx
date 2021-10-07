@@ -147,7 +147,7 @@ const NotePage = (props) => {
                     padding: "0px",
                     margin: "0px",
                     width: "100%",
-                    "background-color": "#282828",
+                    // "background-color": "#282828",
                     outline: "none",
                     "border-width": "0px",
                     // height: "40px",

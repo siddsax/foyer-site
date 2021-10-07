@@ -6,7 +6,7 @@
 } */
 
 .notePage {
-  background-color: black;
+  background-color: var(--main-bg-color);
   display: flex;
   height: 100vh;
   flex-direction: column;
@@ -16,7 +16,6 @@
 }
 
 .noteTitleArea {
-  background-color: burlywood;
   display: flex;
   align-content: center;
   justify-content: center;
@@ -25,7 +24,7 @@
 }
 
 .noteArea {
-  background-color: #282828;
+  background-color: var(--first-object-color);
   width: 80%;
   min-width: 420px;
   height: 75%;
@@ -33,6 +32,7 @@
   margin-bottom: 5%;
   overflow: scroll;
   border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .noteHeaderArea {
@@ -47,11 +47,11 @@
 }
 
 .noteTitle {
-  background-color: yellow;
+  /* background-color: yellow; */
   display: flex;
   position: relative;
-  color: white;
-  font-weight: 200;
+  color: var(--first-text-color);
+  font-weight: 500;
   /* margin-left: 10pt; */
 }
 
@@ -70,6 +70,10 @@
     align-content: center;
     align-items: center;
     font-size: 17px;
+    display: flex;
+    position: relative;
+    color: var(--first-text-color);
+    font-weight: 500;
   }
 }
 
@@ -95,5 +99,6 @@
 
 .editorBox {
   margin: 10pt;
-  color: white;
+  /* color: white; */
+  color: var(--first-text-color);
 }
