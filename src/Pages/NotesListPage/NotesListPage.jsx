@@ -108,23 +108,30 @@ const NotesListPage = (props) => {
   useEffect(() => {
     const setFirstMonthNote = async () => {
       for (let j = 0; j < notes.length; j++) {
-        var d1, d2;
+        var m1, m2, d1, d2;
         if (j > 0) {
-          d1 = new Date(notes[j].createdAt).getMonth();
-          d2 = new Date(notes[j - 1].createdAt).getMonth();
+          m1 = new Date(notes[j].createdAt).getMonth();
+          m2 = new Date(notes[j - 1].createdAt).getMonth();
         } else {
-          d1 = 0;
-          d2 = 1;
+          m1 = 0;
+          m2 = 1;
         }
 
-        console.log(d1, d2, "_____________");
-        if (d1 !== d2) {
-          console.log(d1, d2, "_______+++______");
-          // notes[j].firstOfMonth = true;
+        if (m1 !== m2) {
           await setNotes((prevValue) => {
             prevValue[j].firstOfMonth = true;
+            prevValue[j].firstOfDay = true;
             return prevValue;
           });
+        } else {
+          d1 = new Date(notes[j].createdAt).getDay();
+          d2 = new Date(notes[j - 1].createdAt).getDay();
+          if (d1 !== d2) {
+            await setNotes((prevValue) => {
+              prevValue[j].firstOfDay = true;
+              return prevValue;
+            });
+          }
         }
       }
       setLoading(false);
