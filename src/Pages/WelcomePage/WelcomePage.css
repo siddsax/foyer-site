@@ -49,6 +49,9 @@
   align-items: center;
   align-content: center;
   justify-content: center;
+  font-family: Inter, sans-serif;
+  font-size: 50px;
+  font-weight: bolder;
 }
 
 .signInTitleBox {
@@ -61,14 +64,6 @@
   justify-content: center;
 }
 
-.signInTitle {
-  opacity: 1;
-  font-size: 50px;
-  font-weight: bolder;
-  opacity: 100%;
-  color: black;
-  font-family: Inter, sans-serif;
-}
 .subHeadingArea {
   display: flex;
   align-content: center;

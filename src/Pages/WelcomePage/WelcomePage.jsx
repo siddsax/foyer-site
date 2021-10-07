@@ -20,9 +20,6 @@ const WelcomePage = (props) => {
               <text className="subHeading">Get more out of your meetings.</text>
             </div>
           </div>
-          {/* <div className="logoArea">
-            <img src={logo} className="logo"></img>
-          </div> */}
           <div className="signInButton">
             <Button onClick={signIn} variant="contained">
               Sign in with Google

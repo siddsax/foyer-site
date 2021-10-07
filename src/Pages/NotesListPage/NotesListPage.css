@@ -59,7 +59,7 @@
 }
 
 .slider:before {
-  opacity: 50%;
+  /* opacity: 50%; */
   position: absolute;
   content: "";
   height: 80%;
