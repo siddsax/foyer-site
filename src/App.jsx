@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import "./App.css";
 import { useAuthState } from "react-firebase-hooks/auth";
 import firebase from "./firebase";
@@ -6,11 +6,11 @@ import NotesListPage from "./Pages/NotesListPage/NotesListPage";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NotePage from "./Pages/NotePage/NotePage";
 import GCalendarAPI from "./Components/GCalendarAPI/GCalendarAPI";
-import { Button } from "@mui/material";
+import WelcomePage from "./Pages/WelcomePage/WelcomePage";
 
 function App() {
   const [user, loading, error] = useAuthState(firebase.auth());
-  var loading_db = false;
+  const loading_db = useRef(false);
 
   const { gapi, signOut, signIn } = GCalendarAPI();
 
@@ -19,7 +19,7 @@ function App() {
   useEffect(() => {
     const checkUserDB = async () => {
       if (user) {
-        loading_db = true;
+        loading_db.current = true;
         const db = firebase.firestore();
         var docRef = db.collection("Users").doc(`${user.uid}`);
         docRef
@@ -43,14 +43,18 @@ function App() {
             console.log("Error getting document:", error);
           });
 
-        loading_db = false;
+        loading_db.current = false;
       }
     };
     checkUserDB();
   }, [user]);
 
-  if (loading || loading_db) {
-    return <div>Loading </div>;
+  useEffect(() => {
+    console.log(loading, loading_db.current, "++");
+  }, [loading, loading_db]);
+
+  if (loading || loading_db.current) {
+    return <div> </div>;
   } else {
     return user ? (
       <Router>
@@ -67,9 +71,7 @@ function App() {
         </Switch>
       </Router>
     ) : (
-      <div>
-        <Button onClick={signIn}>Sign in with Google</Button>
-      </div>
+      <WelcomePage signIn={signIn} />
     );
   }
 }

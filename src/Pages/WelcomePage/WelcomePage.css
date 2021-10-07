@@ -1,0 +1,117 @@
+.welcomePage {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #049be4;
+}
+
+.welcomePageBackground {
+  width: 100%;
+  height: 100vh;
+  /* background-color: rgb(202, 202, 181); */
+  margin: 30px;
+  background-image: url("../../assets/images/welcomePage.png");
+  background-size: 120vh;
+  background-repeat: no-repeat;
+}
+
+.signInBoxArea {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  /* background-color: red; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signInBox {
+  /* opacity: 0.5; */
+  position: absolute;
+  height: 70vh;
+  width: 30vw;
+  min-width: 420px;
+  /* background-color: rgb(255, 249, 172, 0.5); */
+  background-color: rgb(77, 105, 123, 0.5);
+  /* background-color: #4d5e7b; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 40px;
+}
+
+.signInTitleArea {
+  /* margin-top: 30%; */
+  width: 100%;
+  height: 20%;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.signInTitleBox {
+  width: 95%;
+  border-radius: 15px;
+  background-color: rgba(165, 178, 187, 0.5);
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.signInTitle {
+  opacity: 1;
+  font-size: 50px;
+  font-weight: bolder;
+  opacity: 100%;
+  color: black;
+  font-family: Inter, sans-serif;
+}
+.subHeadingArea {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  font-weight: 400;
+  font-family: Inter, sans-serif;
+}
+
+.subHeadingTitleBox {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  background-color: rgba(165, 178, 187, 0.5);
+  width: 60%;
+  border-radius: 5px;
+}
+
+/* .logoArea {
+  margin-top: 10%;
+  width: 100%;
+  height: 15%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+.logo {
+  border-radius: 10px;
+  height: 100%;
+  width: auto;
+  background-color: royalblue;
+} */
+
+.signInButton {
+  margin-top: 10%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.footer {
+  left: 0;
+  bottom: 0;
+  position: absolute;
+  font-size: 10px;
+}

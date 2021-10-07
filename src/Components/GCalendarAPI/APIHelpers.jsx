@@ -1,9 +1,5 @@
 const listUpcomingEvents = (maxResults, setEvents) => {
   if (window.$gapi) {
-    console.log("1", window.$gapi);
-    console.log("2", window.$gapi.client);
-    console.log("3", window.$gapi.client.calendar);
-
     window.$gapi.client.load("calendar", "v3", () => {
       var newDateObj = new Date(new Date().getTime() - 120 * 60000);
       return window.$gapi.client.calendar.events
@@ -28,7 +24,6 @@ const listUpcomingEvents = (maxResults, setEvents) => {
 
 const getMeetDetails = (eventID, setEvent) => {
   if (window.$gapi) {
-    console.log(eventID);
     window.$gapi.client.load("calendar", "v3", () => {
       return window.$gapi.client.calendar.events
         .get({

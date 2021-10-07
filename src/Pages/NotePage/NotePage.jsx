@@ -96,7 +96,6 @@ const NotePage = (props) => {
 
   useEffect(() => {
     if (activeNote === "No Meeting" && fromMeeting) {
-      console.log("&&&&&");
       listUpcomingEvents(10, setMeetings);
     }
   }, [activeNote]);
@@ -131,7 +130,6 @@ const NotePage = (props) => {
   }, [meetings]);
 
   const updateTitle = (value) => {
-    console.log(value);
     onUpdateNoteDB(value, activeNote.body);
   };
 

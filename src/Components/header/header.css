@@ -1,9 +1,10 @@
+/* @value --main-color from "../../App.css"; */
+
 .header {
   display: flex;
   width: 100%;
   height: 60px;
-  background: #020202;
-  /* background: blue; */
+  background-color: var(--main-bg-color);
   align-items: center;
   justify-content: center;
 }
@@ -11,7 +12,6 @@
 .headerInner {
   width: 80%;
   display: flex;
-  /* background-color: red; */
   flex-flow: row;
   align-items: center;
   justify-content: center;
@@ -25,7 +25,6 @@
 }
 
 .searchBar {
-  /* background-color: yellow; */
   display: flex;
   width: 100%;
 }
@@ -56,7 +55,6 @@
   .headerInner {
     width: 100%;
     display: flex;
-    /* background-color: red; */
     flex-flow: row;
     align-items: center;
     justify-content: center;
@@ -65,14 +63,18 @@
 }
 
 .searchBox {
-  /* width: 80%; */
-  /* height: 50%; */
-  /* background-color: green; */
   flex-grow: initial;
-  background-color: #282828;
+  background-color: var(--first-object-color);
   border: 1px solid transparent;
   border-radius: 8px;
+  /* transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
+
+/* .searchBox:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+} */
 
 input[type="text"] {
   width: 100%;
@@ -82,10 +84,8 @@ input[type="text"] {
 }
 
 .signOut {
-  /* background-color: teal; */
   display: flex;
   margin: 1%;
-  /* width: 10%; */
   align-items: center;
   align-content: center;
   justify-content: center;
