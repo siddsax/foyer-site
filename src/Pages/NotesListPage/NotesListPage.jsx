@@ -134,7 +134,14 @@ const NotesListPage = (props) => {
         d2 = new Date(notes[j - 1].createdAt).getDay();
         if (d1 !== d2) {
           await setNotes((prevValue) => {
+            prevValue[j].firstOfMonth = false;
             prevValue[j].firstOfDay = true;
+            return prevValue;
+          });
+        } else {
+          await setNotes((prevValue) => {
+            prevValue[j].firstOfMonth = false;
+            prevValue[j].firstOfDay = false;
             return prevValue;
           });
         }
@@ -176,6 +183,7 @@ const NotesListPage = (props) => {
     if (!loadingTop) {
       window.setTimeout(() => {
         container.scrollTop = offset;
+        // This is to bold the date, if its today
         if (match) {
           container.childNodes[0].childNodes[0].childNodes[
             indx + 1
@@ -186,13 +194,11 @@ const NotesListPage = (props) => {
             "rgba(0, 0, 0, 0.16)";
         }
 
+        // Add the hr element to segregate today with yesterday
         var el = document.createElement("span");
 
         el.innerHTML = "<hr style='height:5px;' color='black'>";
-        insertAfter(
-          container.childNodes[0].childNodes[0].childNodes[indx + 1],
-          el
-        );
+        insertAfter(container.childNodes[0].childNodes[0].childNodes[indx], el);
       }, 0);
     }
     setLoading(false);
