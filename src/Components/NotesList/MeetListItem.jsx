@@ -14,10 +14,19 @@ const MeetListItem = (props) => {
   const [user, loading, error] = useAuthState(firebase.auth());
   const history = useHistory();
   const db = firebase.firestore();
+  var calendarDateAreaClass;
+  if (meet) {
+    console.log(meet.todayStart);
+    if (meet.todayStart) {
+      calendarDateAreaClass = "calendarDateAreaB";
+    } else {
+      calendarDateAreaClass = "calendarDateArea";
+    }
+  }
 
   return (
     <div className="NoteItemArea">
-      <div class="calendarDateArea">
+      <div class={calendarDateAreaClass}>
         <text className="calendarDay">
           {weekdays[new Date(meet.createdAt).getDay()]}
         </text>

@@ -9,9 +9,17 @@ var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 const NoteListItem = (props) => {
   const { note } = props;
+  var calendarDateAreaClass;
+  if (note) {
+    if (note.todayStart) {
+      calendarDateAreaClass = "calendarDateAreaB";
+    } else {
+      calendarDateAreaClass = "calendarDateArea";
+    }
+  }
   return (
     <div className="NoteItemArea">
-      <div class="calendarDateArea">
+      <div class={calendarDateAreaClass}>
         {note.firstOfDay ? (
           <>
             <text className="calendarDay">

@@ -152,24 +152,19 @@ const NotesListPage = (props) => {
       var dt = new Date().getDay();
       offset += offsetNoteArea;
 
-      if (mt === m1 && dt === d1) {
-        indx = j;
-        match = 1;
-        // await setNotes((prevValue) => {
-        //   prevValue[j].todayStart = true;
-        //   return prevValue;
-        // });
-        break;
-      }
+      if (!loadingTop) {
+        if (mt === m1 && dt === d1 && indx === -1) {
+          indx = j;
+          match = 1;
+          await setNotes((prevValue) => {
+            prevValue[j].todayStart = true;
+            return prevValue;
+          });
+        }
 
-      if (mt < m1) {
-        indx = j; // The chosen point is ahead
-        break;
-      }
-
-      if (mt === m1 && dt < d1) {
-        indx = j; // The chosen point is ahead
-        break;
+        if ((mt < m1 || (mt === m1 && dt < d1)) && indx === -1) {
+          indx = j; // The chosen point is ahead
+        }
       }
     }
 
@@ -183,22 +178,6 @@ const NotesListPage = (props) => {
     if (!loadingTop) {
       window.setTimeout(() => {
         container.scrollTop = offset;
-        // This is to bold the date, if its today
-        if (match) {
-          container.childNodes[0].childNodes[0].childNodes[
-            indx + 1
-          ].childNodes[0].childNodes[0].style.fontWeight = 600;
-          container.childNodes[0].childNodes[0].childNodes[
-            indx + 1
-          ].childNodes[0].childNodes[0].style.backgroundColor =
-            "rgba(0, 0, 0, 0.16)";
-        }
-
-        // Add the hr element to segregate today with yesterday
-        var el = document.createElement("span");
-
-        el.innerHTML = "<hr style='height:5px;' color='black'>";
-        insertAfter(container.childNodes[0].childNodes[0].childNodes[indx], el);
       }, 0);
     }
     setLoading(false);
