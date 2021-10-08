@@ -2,16 +2,6 @@
   height: 100vh;
   background-color: var(--main-bg-color);
 }
-.NotesListArea {
-  margin-top: 30px;
-  display: flex;
-  height: 70vh;
-  flex-direction: column;
-  overflow: scroll;
-  margin-bottom: 40px;
-  align-content: center;
-  align-items: center;
-}
 
 .modeSelectorArea {
   display: flex;
@@ -130,4 +120,23 @@ input:checked + .slider:before {
   display: flex;
   justify-content: flex-end;
   width: 100%;
+}
+
+.NotesListArea {
+  margin-top: 30px;
+  display: flex;
+  height: 70vh;
+  flex-direction: column;
+  /* overflow: scroll; */
+  margin-bottom: 40px;
+  align-content: center;
+  align-items: center;
+
+  /* New stuff */
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.NotesListArea::-webkit-scrollbar {
+  display: none;
 }

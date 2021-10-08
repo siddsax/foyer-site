@@ -1,18 +1,25 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import uuid from "react-uuid";
-import ActiveNote from "../../Components/activeNote/ActiveNote";
-import Sidebar from "../../Components/sidebar/Sidebar";
 import Header from "../../Components/header/header";
 import NotesList from "../../Components/NotesList/NotesList";
 import { listUpcomingEvents } from "../../Components/GCalendarAPI/APIHelpers";
 import firebase from "../../firebase";
-// import debounce from "../../helpers";
-import { debounce } from "debounce";
 import "./NotesListPage.css";
-import newNotes from "../../assets/images/newNotes.png";
 import Button from "@mui/material/Button";
 import { useHistory } from "react-router-dom";
 import { formatMeeting } from "../../Components/Helpers/GeneralHelpers";
+import PuffLoader from "react-spinners/PuffLoader";
+import { css } from "@emotion/react";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
+
+function insertAfter(referenceNode, newNode) {
+  referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
 
 const NotesListPage = (props) => {
   const { user } = props;
@@ -23,15 +30,36 @@ const NotesListPage = (props) => {
   const [showNotes, setShowNotes] = useState(true);
   const history = useHistory();
   const [loading, setLoading] = useState(true);
+  const [loadingTop, setLoadingTop] = useState(false);
   const [sorted, setSorted] = useState(false);
-
+  const container = document.querySelector(".NotesListArea");
   var lastVisible = useRef(0);
+  var offsetForToday = useRef(null);
+
+  var offsetNoteArea = 60;
+  var offsetMonthArea = 50;
+
+  const handleScroll = () => {
+    let triggerHeight = container.scrollTop + container.offsetHeight;
+    if (triggerHeight >= container.scrollHeight) {
+      console.log("Bottom");
+    }
+    if (container.scrollTop == 0) {
+      setLoadingTop(true);
+      console.log("Top");
+      fetchNotes();
+    }
+  };
 
   const fillNotes = (querySnapshot) => {
     querySnapshot.forEach(async (doc) => {
-      await setNotes((oldArray) => [...oldArray, doc.data()]);
+      await setNotes((oldArray) => [doc.data(), ...oldArray]);
     });
     lastVisible.current = querySnapshot.docs[querySnapshot.docs.length - 1];
+    if (lastVisible.current == null) {
+      // Add some kind of rebound effect!!!!
+      setLoadingTop(false);
+    }
   };
 
   const addNote = async () => {
@@ -49,7 +77,7 @@ const NotesListPage = (props) => {
     history.push(`/note-${uid}`);
   };
 
-  const fetchNotes = () => {
+  const fetchNotes = async () => {
     // **** here's the timeout ****
     const paginateNumber = 7;
     setIsButtonDisabled(true);
@@ -61,16 +89,114 @@ const NotesListPage = (props) => {
       .orderBy("createdAt", "desc");
 
     if (lastVisible.current === 0) {
+      console.log("Start, ++");
       ref.limit(paginateNumber).get().then(fillNotes);
     } else if (lastVisible.current != null) {
+      console.log("mid, ++");
       ref
         .startAfter(lastVisible.current)
         .limit(paginateNumber)
         .get()
         .then(fillNotes);
     } else {
+      console.log("End, ++");
       console.log("At the end of things");
+      setLoadingTop(false);
     }
+    console.log("Out, ++");
+  };
+
+  const setFirstMonthNote = async () => {
+    // 50, 60
+    var indx = -1;
+    var offset = 0;
+    var match = 0;
+
+    for (let j = 0; j < notes.length; j++) {
+      var m1, m2, d1, d2;
+      if (j > 0) {
+        m1 = new Date(notes[j].createdAt).getMonth();
+        m2 = new Date(notes[j - 1].createdAt).getMonth();
+      } else {
+        m1 = new Date(notes[j].createdAt).getMonth();
+        m2 = m1 - 1;
+      }
+
+      if (m1 !== m2) {
+        await setNotes((prevValue) => {
+          prevValue[j].firstOfMonth = true;
+          prevValue[j].firstOfDay = true;
+          return prevValue;
+        });
+        offset += offsetMonthArea;
+      } else {
+        d1 = new Date(notes[j].createdAt).getDay();
+        d2 = new Date(notes[j - 1].createdAt).getDay();
+        if (d1 !== d2) {
+          await setNotes((prevValue) => {
+            prevValue[j].firstOfDay = true;
+            return prevValue;
+          });
+        }
+      }
+
+      // For the purpose of reaching the correct scroll point
+      var mt = new Date().getMonth();
+      var dt = new Date().getDay();
+      offset += offsetNoteArea;
+
+      if (mt === m1 && dt === d1) {
+        indx = j;
+        match = 1;
+        // await setNotes((prevValue) => {
+        //   prevValue[j].todayStart = true;
+        //   return prevValue;
+        // });
+        break;
+      }
+
+      if (mt < m1) {
+        indx = j; // The chosen point is ahead
+        break;
+      }
+
+      if (mt === m1 && dt < d1) {
+        indx = j; // The chosen point is ahead
+        break;
+      }
+    }
+
+    offsetForToday.current = offset;
+
+    // for (let k = 0; k < notes.length; k++) {
+
+    // }
+    container.addEventListener("scroll", handleScroll);
+    console.log(offset, "This is the place where we start scrolling!!!");
+    if (!loadingTop) {
+      window.setTimeout(() => {
+        container.scrollTop = offset;
+        if (match) {
+          container.childNodes[0].childNodes[0].childNodes[
+            indx + 1
+          ].childNodes[0].childNodes[0].style.fontWeight = 600;
+          container.childNodes[0].childNodes[0].childNodes[
+            indx + 1
+          ].childNodes[0].childNodes[0].style.backgroundColor =
+            "rgba(0, 0, 0, 0.16)";
+        }
+
+        var el = document.createElement("span");
+
+        el.innerHTML = "<hr style='height:5px;' color='black'>";
+        insertAfter(
+          container.childNodes[0].childNodes[0].childNodes[indx + 1],
+          el
+        );
+      }, 0);
+    }
+    setLoading(false);
+    setLoadingTop(false);
   };
 
   useEffect(() => {
@@ -106,42 +232,17 @@ const NotesListPage = (props) => {
   }, [meetings]);
 
   useEffect(() => {
-    const setFirstMonthNote = async () => {
-      for (let j = 0; j < notes.length; j++) {
-        var m1, m2, d1, d2;
-        if (j > 0) {
-          m1 = new Date(notes[j].createdAt).getMonth();
-          m2 = new Date(notes[j - 1].createdAt).getMonth();
-        } else {
-          m1 = 0;
-          m2 = 1;
-        }
-
-        if (m1 !== m2) {
-          await setNotes((prevValue) => {
-            prevValue[j].firstOfMonth = true;
-            prevValue[j].firstOfDay = true;
-            return prevValue;
-          });
-        } else {
-          d1 = new Date(notes[j].createdAt).getDay();
-          d2 = new Date(notes[j - 1].createdAt).getDay();
-          if (d1 !== d2) {
-            await setNotes((prevValue) => {
-              prevValue[j].firstOfDay = true;
-              return prevValue;
-            });
-          }
-        }
-      }
-      setLoading(false);
-    };
-
     if (sorted) {
       console.log(sorted);
       setFirstMonthNote();
     }
   }, [sorted]);
+
+  useEffect(() => {
+    if (loadingTop) {
+      setFirstMonthNote();
+    }
+  }, [notes]);
 
   return (
     <div className="NotesListPage">
@@ -176,10 +277,22 @@ const NotesListPage = (props) => {
 
       {showNotes ? (
         <div className="NotesListArea">
+          {loadingTop ? (
+            <>
+              <PuffLoader
+                color={"#049be4"}
+                loading={loadingTop}
+                css={override}
+                size={50}
+              />
+            </>
+          ) : (
+            <></>
+          )}
           <NotesList notes={notes} loading={loading} />
         </div>
       ) : (
-        <div></div>
+        <div></div> // For action items
       )}
     </div>
   );
