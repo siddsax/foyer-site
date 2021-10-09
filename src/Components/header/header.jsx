@@ -26,43 +26,49 @@ const Header = (props) => {
   };
 
   return (
-    <div className="header">
-      <div className="headerInner">
-        <Link to="/">
-          <img src={logo} className="logo" />
-        </Link>
-        <div className="searchBar">
-          <div className="searchBarInner">
-            <input type="text" placeholder="Search" className="searchBox" />
-          </div>
-        </div>
-        <div className="signOut">
-          <div className="container">
-            <div className="menu-container">
-              <button onClick={onClick} className="menu-trigger">
-                <img
-                  src={user.photoURL}
-                  alt="User avatar"
-                  className="profilePic"
-                />
-              </button>
-              <nav
-                ref={dropdownRef}
-                className={`menu ${isActive ? "active" : "inactive"}`}
-              >
-                <ul>
-                  <li>
-                    <a href="#" onClick={signOutCall}>
-                      Sign Out
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+    <>
+      {user.photoURL ? (
+        <div className="header">
+          <div className="headerInner">
+            <Link to="/">
+              <img src={logo} className="logo" />
+            </Link>
+            <div className="searchBar">
+              <div className="searchBarInner">
+                <input type="text" placeholder="Search" className="searchBox" />
+              </div>
+            </div>
+            <div className="signOut">
+              <div className="container">
+                <div className="menu-container">
+                  <button onClick={onClick} className="menu-trigger">
+                    <img
+                      src={user.photoURL}
+                      alt="User avatar"
+                      className="profilePic"
+                    />
+                  </button>
+                  <nav
+                    ref={dropdownRef}
+                    className={`menu ${isActive ? "active" : "inactive"}`}
+                  >
+                    <ul>
+                      <li>
+                        <a href="#" onClick={signOutCall}>
+                          Sign Out
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 

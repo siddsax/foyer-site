@@ -16,7 +16,7 @@
 }
 .buttonArea {
   display: flex;
-  min-width: 420px;
+  min-width: 400px;
   height: 50%;
   width: 60%;
   justify-content: flex-start;

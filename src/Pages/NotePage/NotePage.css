@@ -24,9 +24,11 @@
 }
 
 .noteArea {
+  margin-left: 10px;
+  margin-right: 10px;
   background-color: var(--first-object-color);
   width: 80%;
-  min-width: 420px;
+  min-width: 380px;
   height: 75%;
   margin-top: 5%;
   margin-bottom: 5%;

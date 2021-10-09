@@ -17,6 +17,7 @@ function App() {
   window.$gapi = gapi;
 
   useEffect(() => {
+    console.log(user, "++++++++");
     const checkUserDB = async () => {
       if (user) {
         loading_db.current = true;

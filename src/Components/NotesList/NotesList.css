@@ -9,7 +9,7 @@
 .allNotes {
   flex-direction: column;
   height: 80vh;
-  min-width: 420px;
+  min-width: 400px;
   width: 60vw;
   /* overflow: scroll; */
   /* display: flex; */
