@@ -16,7 +16,6 @@ const MeetListItem = (props) => {
   const db = firebase.firestore();
   var calendarDateAreaClass;
   if (meet) {
-    console.log(meet.todayStart);
     if (meet.todayStart) {
       calendarDateAreaClass = "calendarDateAreaB";
     } else {

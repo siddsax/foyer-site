@@ -8,7 +8,10 @@ import dateFormat from "dateformat";
 import EditorFoyer from "../../Components/Editor/Editor";
 import { EditText } from "react-edit-text";
 import { debounce } from "debounce";
-import { listUpcomingEvents } from "../../Components/GCalendarAPI/APIHelpers";
+import {
+  listUpcomingEvents,
+  getMeetDetails,
+} from "../../Components/GCalendarAPI/APIHelpers";
 import { useHistory } from "react-router-dom";
 import { addMeetNote } from "../../Components/Helpers/BackendHelpers";
 import { formatMeeting } from "../../Components/Helpers/GeneralHelpers";
@@ -104,8 +107,13 @@ const NotePage = (props) => {
   }, []);
 
   useEffect(() => {
+    var uriHangoutID = location.pathname.split("meetid-")[1];
     if (activeNote === "No Meeting" && fromMeeting) {
-      listUpcomingEvents(10, setMeetings);
+      if (uriHangoutID.split("-").length > 1) {
+        listUpcomingEvents(10, setMeetings);
+      } else {
+        getMeetDetails({ eventId: uriHangoutID, setEvent: setMeetings });
+      }
     }
   }, [activeNote]);
 
@@ -113,24 +121,40 @@ const NotePage = (props) => {
     var found = 0;
     var uriHangoutID = location.pathname.split("meetid-")[1];
     if (meetings) {
-      for (let i = 0; i < meetings.length; i++) {
-        if (meetings[i].hangoutLink) {
-          const meetHangoutID = meetings[i].hangoutLink.split("/").slice(-1)[0];
-          if (meetHangoutID === uriHangoutID) {
-            found = 1;
-            var meet = formatMeeting({ meetingCalendar: meetings[i] });
-            addMeetNote({
-              meet: meet,
-              db: db,
-              history: history,
-              user: user,
-            }).then((note) => {
-              activeNoteID.current = note.id;
-              setActiveNote(note);
-            });
-            break;
+      if (uriHangoutID.split("-").length > 1) {
+        for (let i = 0; i < meetings.length; i++) {
+          if (meetings[i].hangoutLink) {
+            const meetHangoutID = meetings[i].hangoutLink
+              .split("/")
+              .slice(-1)[0];
+            if (meetHangoutID === uriHangoutID) {
+              found = 1;
+              var meet = formatMeeting({ meetingCalendar: meetings[i] });
+              addMeetNote({
+                meet: meet,
+                db: db,
+                history: history,
+                user: user,
+              }).then((note) => {
+                activeNoteID.current = note.id;
+                setActiveNote(note);
+              });
+              break;
+            }
           }
         }
+      } else {
+        found = 1;
+        var meet = formatMeeting({ meetingCalendar: meetings });
+        addMeetNote({
+          meet: meet,
+          db: db,
+          history: history,
+          user: user,
+        }).then((note) => {
+          activeNoteID.current = note.id;
+          setActiveNote(note);
+        });
       }
       if (!found) {
         history.push(`/`);

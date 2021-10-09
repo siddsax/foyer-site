@@ -22,17 +22,21 @@ const listUpcomingEvents = (maxResults, setEvents) => {
   }
 };
 
-const getMeetDetails = (eventID, setEvent) => {
+const getMeetDetails = (props) => {
+  const { eventId, setEvent } = props;
   if (window.$gapi) {
     window.$gapi.client.load("calendar", "v3", () => {
       return window.$gapi.client.calendar.events
         .get({
           calendarId: "primary",
-          eventID: eventID,
+          eventId: eventId,
         })
         .then((response) => {
           const event = response.result;
           setEvent(event);
+        })
+        .catch((er) => {
+          console.log(er);
         });
     });
   } else {
