@@ -34,10 +34,10 @@ const NotesListPage = (props) => {
   const [sorted, setSorted] = useState(false);
   const container = document.querySelector(".NotesListArea");
   var lastVisible = useRef(0);
-  var offsetForToday = useRef(null);
+  var scrollHeightOld = useRef(0);
 
-  var offsetNoteArea = 7;
-  var offsetMonthArea = 50;
+  var offsetNoteArea = 80;
+  var offsetMonthArea = 30;
 
   const handleScroll = () => {
     let triggerHeight = container.scrollTop + container.offsetHeight;
@@ -45,8 +45,8 @@ const NotesListPage = (props) => {
       console.log("Bottom");
     }
     if (container.scrollTop == 0) {
+      scrollHeightOld.current = container.scrollHeight;
       setLoadingTop(true);
-      console.log("Top");
       fetchNotes();
     }
   };
@@ -89,21 +89,17 @@ const NotesListPage = (props) => {
       .orderBy("createdAt", "desc");
 
     if (lastVisible.current === 0) {
-      console.log("Start, ++");
       ref.limit(paginateNumber).get().then(fillNotes);
     } else if (lastVisible.current != null) {
-      console.log("mid, ++");
       ref
         .startAfter(lastVisible.current)
         .limit(paginateNumber)
         .get()
         .then(fillNotes);
     } else {
-      console.log("End, ++");
       console.log("At the end of things");
       setLoadingTop(false);
     }
-    console.log("Out, ++");
   };
 
   const setFirstMonthNote = async () => {
@@ -128,7 +124,9 @@ const NotesListPage = (props) => {
           prevValue[j].firstOfDay = true;
           return prevValue;
         });
-        offset += offsetMonthArea;
+        if (indx === -1) {
+          offset += offsetMonthArea;
+        }
       } else {
         d1 = new Date(notes[j].createdAt).getDay();
         d2 = new Date(notes[j - 1].createdAt).getDay();
@@ -150,8 +148,6 @@ const NotesListPage = (props) => {
       // For the purpose of reaching the correct scroll point
       var mt = new Date().getMonth();
       var dt = new Date().getDay();
-      offset += offsetNoteArea;
-
       if (!loadingTop) {
         if (mt === m1 && dt === d1 && indx === -1) {
           indx = j;
@@ -166,18 +162,21 @@ const NotesListPage = (props) => {
           indx = j; // The chosen point is ahead
         }
       }
+
+      if (indx === -1) {
+        offset += offsetNoteArea;
+      }
     }
 
-    offsetForToday.current = offset;
-
-    // for (let k = 0; k < notes.length; k++) {
-
-    // }
     container.addEventListener("scroll", handleScroll);
     console.log(offset, "This is the place where we start scrolling!!!");
     if (!loadingTop) {
       window.setTimeout(() => {
         container.scrollTop = offset;
+      }, 0);
+    } else {
+      window.setTimeout(() => {
+        container.scrollTop = container.scrollHeight - scrollHeightOld.current;
       }, 0);
     }
     setLoading(false);
@@ -218,7 +217,6 @@ const NotesListPage = (props) => {
 
   useEffect(() => {
     if (sorted) {
-      console.log(sorted);
       setFirstMonthNote();
     }
   }, [sorted]);
