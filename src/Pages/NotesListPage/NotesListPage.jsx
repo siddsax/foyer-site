@@ -36,7 +36,7 @@ const NotesListPage = (props) => {
   var lastVisible = useRef(0);
   var offsetForToday = useRef(null);
 
-  var offsetNoteArea = 60;
+  var offsetNoteArea = 7;
   var offsetMonthArea = 50;
 
   const handleScroll = () => {
