@@ -17,10 +17,23 @@
 
 .noteTitleArea {
   display: flex;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
+  position: relative;
   width: 100%;
+}
+
+.inputTitle {
+  padding: "0px";
+  width: "100%";
+  background-color: var(--first-object-color);
+  outline: none;
+  overflow: hidden;
+  border: none;
+  margin-left: -20px;
+  margin-top: -4px;
+  margin-bottom: -2px;
+  /* position: absolute; */
+  /* left: 0px;
+  top: 0px; */
 }
 
 .noteArea {
@@ -49,7 +62,7 @@
 }
 
 .noteTitle {
-  /* background-color: yellow; */
+  background-color: var(--first-object-color);
   display: flex;
   position: relative;
   color: var(--first-text-color);
@@ -104,3 +117,5 @@
   /* color: white; */
   color: var(--first-text-color);
 }
+
+/* background-color: var(--first-object-color); */

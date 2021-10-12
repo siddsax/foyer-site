@@ -17,6 +17,8 @@ import { addMeetNote } from "../../Components/Helpers/BackendHelpers";
 import { formatMeeting } from "../../Components/Helpers/GeneralHelpers";
 import { css } from "@emotion/react";
 import HashLoader from "react-spinners/HashLoader";
+import * as colors from "../../App.css";
+import EditableText from "./EditableText";
 
 const override = css`
   display: block;
@@ -32,10 +34,10 @@ const NotePage = (props) => {
   const [meetings, setMeetings] = useState(null);
   const history = useHistory();
   let [color, setColor] = useState("#049be4");
-
   const db = firebase.firestore();
 
   const onUpdateNoteDB = (title, content) => {
+    console.log("Updating");
     db.collection("Notes").doc(`${activeNoteID.current}`).update({
       title: title,
       body: content,
@@ -44,7 +46,7 @@ const NotePage = (props) => {
   };
 
   const debouncedOnUpdateNoteDB = useCallback(
-    debounce(onUpdateNoteDB, 1500),
+    debounce(onUpdateNoteDB, 500),
     []
   );
 
@@ -163,7 +165,7 @@ const NotePage = (props) => {
   }, [meetings]);
 
   const updateTitle = (value) => {
-    onUpdateNoteDB(value, activeNote.body);
+    debouncedOnUpdateNoteDB(value, activeNote.body);
   };
 
   return (
@@ -174,23 +176,10 @@ const NotePage = (props) => {
           <div className="noteArea">
             <div className="noteHeaderArea">
               <div className="noteTitleArea">
-                <EditText
-                  className="noteTitle"
-                  style={{
-                    padding: "0px",
-                    margin: "0px",
-                    width: "100%",
-                    // "background-color": "#282828",
-                    outline: "none",
-                    "border-width": "0px",
-                    // height: "40px",
-                    overflow: "hidden",
-                    // "text-overflow": "fade",
-                  }}
-                  onSave={(input) => {
-                    updateTitle(input.value);
-                  }}
-                  defaultValue={activeNote.title}
+                <EditableText
+                  value={activeNote.title}
+                  editClassName="inputTitle"
+                  updateTitle={updateTitle}
                 />
               </div>
 

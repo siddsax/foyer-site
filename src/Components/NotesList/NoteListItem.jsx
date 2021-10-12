@@ -11,7 +11,7 @@ const NoteListItem = (props) => {
   const { note } = props;
   var calendarDateAreaClass;
   if (note) {
-    if (note.todayStart) {
+    if (note.todayStart == 1) {
       calendarDateAreaClass = "calendarDateAreaB";
     } else {
       calendarDateAreaClass = "calendarDateArea";

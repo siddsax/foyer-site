@@ -56,7 +56,11 @@ const NotesList = (props) => {
               ) : (
                 <></>
               )}
-              {note.todayStart ? <hr className="todayLine"></hr> : <></>}
+              {note.todayStart == 1 || note.todayStart == 2 ? (
+                <hr className="todayLine"></hr>
+              ) : (
+                <></>
+              )}
               <div className="NoteItem">
                 {note.noNoteYet ? (
                   <MeetListItem meet={note} />

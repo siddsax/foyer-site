@@ -44,7 +44,7 @@ const NotesListPage = (props) => {
     if (triggerHeight >= container.scrollHeight) {
       console.log("Bottom");
     }
-    if (container.scrollTop == 0) {
+    if (container.scrollTop == 0 && loadingTop == false) {
       scrollHeightOld.current = container.scrollHeight;
       setLoadingTop(true);
       fetchNotes();
@@ -160,6 +160,10 @@ const NotesListPage = (props) => {
 
         if ((mt < m1 || (mt === m1 && dt < d1)) && indx === -1) {
           indx = j; // The chosen point is ahead
+          await setNotes((prevValue) => {
+            prevValue[j].todayStart = 2;
+            return prevValue;
+          });
         }
       }
 
@@ -169,7 +173,6 @@ const NotesListPage = (props) => {
     }
 
     container.addEventListener("scroll", handleScroll);
-    console.log(offset, "This is the place where we start scrolling!!!");
     if (!loadingTop) {
       window.setTimeout(() => {
         container.scrollTop = offset;
