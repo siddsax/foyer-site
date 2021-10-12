@@ -26,12 +26,18 @@ const MeetListItem = (props) => {
   return (
     <div className="NoteItemArea">
       <div class={calendarDateAreaClass}>
-        <text className="calendarDay">
-          {weekdays[new Date(meet.createdAt).getDay()]}
-        </text>
-        <text className="calendarDate">
-          {new Date(meet.createdAt).getDate()}
-        </text>
+        {meet.firstOfDay ? (
+          <>
+            <text className="calendarDay">
+              {weekdays[new Date(meet.createdAt).getDay()]}
+            </text>
+            <text className="calendarDate">
+              {new Date(meet.createdAt).getDate()}
+            </text>
+          </>
+        ) : (
+          <></>
+        )}
       </div>
 
       <div className="NoteArea">

@@ -10,7 +10,17 @@ const firebaseConfig = {
   measurementId: "G-GQV12WQ37B",
 };
 
-firebase.initializeApp(firebaseConfig);
+const firebaseConfigDev = {
+  apiKey: "AIzaSyByg4K4k0MAa3OKF0w6KXx_i4robouunFw",
+  authDomain: "foyer-dev.firebaseapp.com",
+  projectId: "foyer-dev",
+  storageBucket: "foyer-dev.appspot.com",
+  messagingSenderId: "125825527013",
+  appId: "1:125825527013:web:514889ae719294dff0780c",
+  measurementId: "G-8WPXHG7VTR",
+};
+
+firebase.initializeApp(firebaseConfigDev);
 
 firebase
   .firestore()

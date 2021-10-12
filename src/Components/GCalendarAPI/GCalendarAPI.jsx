@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import firebase from "../../firebase";
 
-const Config = require("../../apiGoogleconfig.json");
+var Config;
+var dev = 1;
+
+if (dev) {
+  Config = require("../../apiGoogleconfigDev.json");
+} else {
+  Config = require("../../apiGoogleconfig.json");
+}
 
 export default function GCalendarAPI(props) {
   // var { setLoading, setUser } = props;

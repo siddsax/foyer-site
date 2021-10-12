@@ -1,3 +1,10 @@
+.loader {
+  height: 100vh;
+  align-content: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 /* .notePage {
   background-color: #000000;
   display: flex;
@@ -15,27 +22,6 @@
   align-items: center;
 }
 
-.noteTitleArea {
-  display: flex;
-  position: relative;
-  width: 100%;
-}
-
-.inputTitle {
-  padding: "0px";
-  width: "100%";
-  background-color: var(--first-object-color);
-  outline: none;
-  overflow: hidden;
-  border: none;
-  margin-left: -20px;
-  margin-top: -4px;
-  margin-bottom: -2px;
-  /* position: absolute; */
-  /* left: 0px;
-  top: 0px; */
-}
-
 .noteArea {
   margin-left: 10px;
   margin-right: 10px;
@@ -43,8 +29,8 @@
   width: 80%;
   min-width: 380px;
   height: 75%;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  margin-top: 20px;
+  margin-bottom: 20px;
   overflow: scroll;
   border-radius: 10px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -59,6 +45,27 @@
   align-items: center;
   justify-content: center;
   align-content: center;
+}
+
+.noteTitleArea {
+  display: flex;
+  position: relative;
+  width: 90%;
+}
+
+.inputTitle {
+  padding: "0px";
+  width: 90%;
+  background-color: var(--first-object-color);
+  outline: none;
+  overflow: hidden;
+  border: none;
+  margin-left: -20px;
+  margin-top: -4px;
+  margin-bottom: -2px;
+  /* position: absolute; */
+  /* left: 0px;
+  top: 0px; */
 }
 
 .noteTitle {
@@ -118,4 +125,22 @@
   color: var(--first-text-color);
 }
 
-/* background-color: var(--first-object-color); */
+.shareNoteButtonArea {
+  width: 100%;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 30%;
+  min-width: 380px;
+  margin-bottom: 5%;
+}
+
+@media only screen and (max-width: 500px) {
+  .shareNoteButtonArea {
+    width: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 80%;
+    min-width: 380px;
+    margin-bottom: 5%;
+  }
+}

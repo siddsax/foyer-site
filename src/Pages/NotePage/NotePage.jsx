@@ -1,24 +1,22 @@
 import Header from "../../Components/header/header";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { useLocation } from "react-router-dom";
 import { color, display, flexbox } from "@mui/system";
 import "./NotePage.css";
 import firebase from "../../firebase";
 import dateFormat from "dateformat";
 import EditorFoyer from "../../Components/Editor/Editor";
-import { EditText } from "react-edit-text";
 import { debounce } from "debounce";
 import {
   listUpcomingEvents,
   getMeetDetails,
 } from "../../Components/GCalendarAPI/APIHelpers";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { addMeetNote } from "../../Components/Helpers/BackendHelpers";
 import { formatMeeting } from "../../Components/Helpers/GeneralHelpers";
 import { css } from "@emotion/react";
 import HashLoader from "react-spinners/HashLoader";
-import * as colors from "../../App.css";
 import EditableText from "./EditableText";
+import PopupShare from "./shareAlert";
 
 const override = css`
   display: block;
@@ -201,15 +199,13 @@ const NotePage = (props) => {
               />
             </div>
           </div>
+          <div className="shareNoteButtonArea">
+            <PopupShare />
+          </div>
         </div>
       ) : (
-        <div>
-          <HashLoader
-            color={color}
-            loading={activeNote !== null && activeNote !== "No Meeting"}
-            css={override}
-            size={50}
-          />
+        <div className="loader">
+          <HashLoader color={color} loading={true} css={override} size={50} />
         </div>
       )}
     </div>

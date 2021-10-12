@@ -110,12 +110,14 @@ const NotesListPage = (props) => {
 
     for (let j = 0; j < notes.length; j++) {
       var m1, m2, d1, d2;
+      m1 = new Date(notes[j].createdAt).getMonth();
+      d1 = new Date(notes[j].createdAt).getDate();
       if (j > 0) {
-        m1 = new Date(notes[j].createdAt).getMonth();
         m2 = new Date(notes[j - 1].createdAt).getMonth();
+        d2 = new Date(notes[j - 1].createdAt).getDate();
       } else {
-        m1 = new Date(notes[j].createdAt).getMonth();
         m2 = m1 - 1;
+        d2 = d1 - 1;
       }
 
       if (m1 !== m2) {
@@ -128,8 +130,6 @@ const NotesListPage = (props) => {
           offset += offsetMonthArea;
         }
       } else {
-        d1 = new Date(notes[j].createdAt).getDay();
-        d2 = new Date(notes[j - 1].createdAt).getDay();
         if (d1 !== d2) {
           await setNotes((prevValue) => {
             prevValue[j].firstOfMonth = false;
@@ -147,7 +147,7 @@ const NotesListPage = (props) => {
 
       // For the purpose of reaching the correct scroll point
       var mt = new Date().getMonth();
-      var dt = new Date().getDay();
+      var dt = new Date().getDate();
       if (!loadingTop) {
         if (mt === m1 && dt === d1 && indx === -1) {
           indx = j;
