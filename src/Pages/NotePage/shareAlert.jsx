@@ -10,9 +10,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import copyIcon from "../../assets/icons/copyIcon.png";
 import emailIcon from "../../assets/icons/email.png";
 import { apiKey } from "../../sendgrid";
-
-const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey(apiKey);
+import firebase from "../../firebase";
 
 const ShareMethod = (props) => {
   const { icon, onClickFunction, text } = props;
@@ -28,27 +26,23 @@ const ShareMethod = (props) => {
   );
 };
 
-const PopupShare = () => {
+const PopupShare = (props) => {
+  const { noteContent, attendees, title } = props;
   const location = useLocation();
   const [copied, setCopied] = useState(false);
 
-  const onClickFunction = () => {
-    const message = {
-      to: "ss.siddharthasaxena@gmail.com",
-      from: "foyer.work@gmail.com",
-      subject: "Testing",
-      text: "Testing",
-      html: "<h1>Testing</h1>",
-    };
-
-    sgMail
-      .send(message)
-      .then(() => {
-        console.log("Email sent");
+  var genericMail = firebase.functions().httpsCallable("genericMail");
+  const onClickFunction = async () => {
+    console.log(noteContent, attendees, title);
+    genericMail({
+      noteContent: noteContent,
+      attendees: attendees,
+      title: title,
+    })
+      .then((result) => {
+        console.log("Notes Shared");
       })
-      .catch((error) => {
-        console.log("error", error);
-      });
+      .catch((error) => console.log("Error ; ", error));
 
     console.log("Clicked");
   };

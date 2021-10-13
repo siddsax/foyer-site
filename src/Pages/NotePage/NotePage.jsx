@@ -30,11 +30,17 @@ const NotePage = (props) => {
   var activeNoteID = useRef(null);
   const [activeNote, setActiveNote] = useState(null);
   const [meetings, setMeetings] = useState(null);
+  const [contentState, setContentState] = useState(null);
   const history = useHistory();
   let [color, setColor] = useState("#049be4");
   const db = firebase.firestore();
+  const [value, setValue] = useState(initialValue);
 
   const onUpdateNoteDB = (title, content) => {
+    setContentState(
+      document.getElementsByClassName("editorBox")[0].childNodes[2].innerHTML
+    );
+
     console.log("Updating");
     db.collection("Notes").doc(`${activeNoteID.current}`).update({
       title: title,
@@ -118,6 +124,14 @@ const NotePage = (props) => {
   }, [activeNote]);
 
   useEffect(() => {
+    if (activeNote !== null && activeNote !== "No Meeting") {
+      setContentState(
+        document.getElementsByClassName("editorBox")[0].childNodes[2].innerHTML
+      );
+    }
+  }, [value]);
+
+  useEffect(() => {
     var found = 0;
     var uriHangoutID = location.pathname.split("meetid-")[1];
     if (meetings) {
@@ -196,11 +210,17 @@ const NotePage = (props) => {
                 user={user}
                 note={activeNote}
                 updateDB={debouncedOnUpdateNoteDB}
+                value={value}
+                setValue={setValue}
               />
             </div>
           </div>
           <div className="shareNoteButtonArea">
-            <PopupShare />
+            <PopupShare
+              noteContent={contentState}
+              attendees={activeNote.access}
+              title={activeNote.title}
+            />
           </div>
         </div>
       ) : (
@@ -213,3 +233,10 @@ const NotePage = (props) => {
 };
 
 export default NotePage;
+
+const initialValue: Descendant[] = [
+  {
+    type: "paragraph",
+    children: [{ text: "This is editable " }],
+  },
+];
