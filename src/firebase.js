@@ -1,6 +1,9 @@
 import firebase from "firebase";
 
-const firebaseConfig = {
+const dev = 1;
+var firebaseConfig;
+
+var firebaseConfigProd = {
   apiKey: "AIzaSyBarNMFYvA5ChtKvyQCWmmjLweGqRfEauE",
   authDomain: "foyer-ba835.firebaseapp.com",
   projectId: "foyer-ba835",
@@ -9,7 +12,6 @@ const firebaseConfig = {
   appId: "1:780614249083:web:566cab2113efe820e610de",
   measurementId: "G-GQV12WQ37B",
 };
-
 const firebaseConfigDev = {
   apiKey: "AIzaSyByg4K4k0MAa3OKF0w6KXx_i4robouunFw",
   authDomain: "foyer-dev.firebaseapp.com",
@@ -20,7 +22,13 @@ const firebaseConfigDev = {
   measurementId: "G-8WPXHG7VTR",
 };
 
-firebase.initializeApp(firebaseConfigDev);
+if (dev) {
+  firebaseConfig = firebaseConfigDev;
+} else {
+  firebaseConfig = firebaseConfigProd;
+}
+
+firebase.initializeApp(firebaseConfig);
 
 firebase
   .firestore()

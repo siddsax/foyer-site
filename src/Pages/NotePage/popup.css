@@ -24,9 +24,6 @@
   position: relative;
   font-size: 14px;
   border: 3px dashed var(--ifm-link-color);
-  background-color: var(--first-object-color);
-  /* background-color: white; */
-  /* background-color: var(--first-object-color); */
   /* border-radius: 15px 15px 15px 15px; */
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
@@ -45,44 +42,56 @@
   font-size: 14px;
   text-align: center;
 }
-.modal {
+
+/* ---------------------- Custom -------------------- */
+
+.modalCustom {
   font-size: 12px;
   display: flex;
   flex-direction: column;
 }
-.modal > .header {
-  width: 100%;
-  border-bottom: 1px solid gray;
-  font-size: 18px;
-  text-align: center;
-  padding: 5px;
-  background-color: var(--first-object-color);
+.headerArea {
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  height: 30%;
 }
-.modal > .content {
+
+.closeButtonArea {
+  width: 100%;
+  cursor: pointer;
+  padding: 2px 5px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.closeButton {
+  border-radius: 18px;
+  border: 1px solid #cfcece;
+  font-size: 24px;
+  border: none;
+  color: rgba(61, 90, 128, 0.5);
+}
+
+.headerText {
+  width: 300px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #3d5a80;
+}
+.modalCustom > .content {
   width: 100%;
   padding: 10px 5px;
 }
-.modal > .actions {
+.modalCustom > .actions {
   margin: auto;
 }
-.modal > .actions {
+.modalCustom > .actions {
   width: 100%;
   padding: 10px 5px;
   text-align: center;
 }
 
-.modal > .close {
-  cursor: pointer;
-  position: absolute;
-  display: block;
-  padding: 2px 5px;
-  right: -10px;
-  top: -10px;
-  font-size: 24px;
-  border-radius: 18px;
-  border: 1px solid #cfcece;
-  background-color: var(--first-object-color);
-}
 .example-warper .example-warper-start {
   width: 100%;
   padding: 20px 5%;
@@ -112,9 +121,9 @@ html[data-theme="dark"] .menu-item:not(:first-child) {
 }
 
 .popup-content {
-  border-radius: 5px;
+  border-radius: 20px;
   padding: 0.5rem;
-  background-color: var(--first-object-color);
+  background-color: #e5e5e5;
 }
 
 /* a[href],
@@ -123,9 +132,9 @@ html[data-theme="dark"] .menu-item:not(:first-child) {
   select:not([disabled]),
   textarea:not([disabled]), */
 
-button:not([disabled]):focus-within {
+/* button:not([disabled]):focus-within {
   border: 2px solid #2196f3;
-}
+} */
 
 html[data-theme="dark"] .popup-content {
   background-color: rgb(41, 45, 62);
@@ -180,66 +189,80 @@ html[data-theme="light"] .popup-arrow {
   -webkit-animation: anvil 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
 }
 
-.shareMethodText {
-  font-family: "Roboto", Arial, sans-serif;
-  font-size: 15px;
-  height: 100%;
-  margin: 5px;
+.otherMethodsArea {
+  width: 100%;
+  height: 140px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
 }
 
-.shareMethodTextArea {
+.shareMethodItemArea {
+  height: 80%;
+  margin: 20px;
+  /* width: 100px; */
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+}
+
+.shareMethodItemText {
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.shareMethodLinkArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: rgba(61, 90, 128, 0.5);
+}
+
+.shareMethodLinkText {
+  margin-top: 5px;
+  font-family: "Roboto", Arial, sans-serif;
+  font-size: 12px;
+  height: 100%;
+  margin: 5px;
 }
 
 .shareUriBox {
   display: flex;
   flex-direction: row;
-  background-color: rgb(216, 216, 216);
+  align-items: center;
+  width: 100%;
+  /* background-color: rgb(216, 216, 216); */
   border-radius: 5px;
-  height: 25px;
+  height: 45px;
+  background-color: rgba(157, 157, 157, 0.1);
 }
 
 .shareUriBoxText {
-  display: flex;
-  font-size: 14px;
-  height: 25px;
-
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-
+  width: 100%;
+  font-size: 15px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.shareUriBoxText {
-  margin-left: 5px;
+  margin-left: 15px;
   margin-top: 5px;
   margin-bottom: 5px;
-  /* overflow: hidden; */
-  /* text-overflow: ellipsis; */
-  display: -webkit-box;
-  line-height: 16px; /* fallback */
-  max-height: 32px; /* fallback */
-  -webkit-line-clamp: 2; /* number of lines to show */
-  -webkit-box-orient: vertical;
-}
-.vl {
-  margin-left: 5px;
-  border-left: 2px solid black;
-  /* height: 500px; */
 }
 
 .copyTextButtonBox {
+  height: 100%;
+  width: 15%;
   display: flex;
   align-content: center;
   align-items: center;
 }
 .copyTextButtonImg {
+  height: 22px;
   margin-left: 5px;
-  width: 60%;
+  /* width: 60%; */
 }
 
 .copySpan {
@@ -257,5 +280,4 @@ html[data-theme="light"] .popup-arrow {
 
 .shareMethodGoogleBox {
   display: flex;
-  background-color: blue;
 }

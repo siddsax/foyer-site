@@ -2251,6 +2251,29 @@
     "estree-walker" "^1.0.1"
     "picomatch" "^2.2.2"
 
+"@sendgrid/client@^7.4.7":
+  "integrity" "sha512-Zh3H/nCyI2+MaAZW9KJpyk6JXfxE27W+mR636Hju/GX95SR7+uymeuLLJ3GtLvtapLTl8l6/0YoHjzlg65xtqg=="
+  "resolved" "https://registry.npmjs.org/@sendgrid/client/-/client-7.4.7.tgz"
+  "version" "7.4.7"
+  dependencies:
+    "@sendgrid/helpers" "^7.4.6"
+    "axios" "^0.21.4"
+
+"@sendgrid/helpers@^7.4.6":
+  "integrity" "sha512-Vvt4d60fkU/DPSwMyxXtlnbw4/B+5Y9eeYnygTxhmw8TNzUhdPphr7SaRSperWJ8P1VeQZzobvQNyMj5E7A3UA=="
+  "resolved" "https://registry.npmjs.org/@sendgrid/helpers/-/helpers-7.4.6.tgz"
+  "version" "7.4.6"
+  dependencies:
+    "deepmerge" "^4.2.2"
+
+"@sendgrid/mail@^7.4.7":
+  "integrity" "sha512-lGfXJBEx7PMQje/NsVsebF6MdP2ptHWjmuI4YANjReAQlIGq3Cqm4JLP5Fb4n5Bbr1LXLCM7R0gJo+/PT6ENKw=="
+  "resolved" "https://registry.npmjs.org/@sendgrid/mail/-/mail-7.4.7.tgz"
+  "version" "7.4.7"
+  dependencies:
+    "@sendgrid/client" "^7.4.7"
+    "@sendgrid/helpers" "^7.4.6"
+
 "@sinonjs/commons@^1.7.0":
   "integrity" "sha512-xkNcLAn/wZaX14RPlwizcKicDk9G3F8m2nU3L7Ukm5zBgTwiT0wsoFAHx9Jq56fJA1z/7uKGtCRu16sOUCLIHQ=="
   "resolved" "https://registry.npmjs.org/@sinonjs/commons/-/commons-1.8.3.tgz"
@@ -3841,7 +3864,7 @@
     "follow-redirects" "1.5.10"
     "is-buffer" "^2.0.2"
 
-"axios@^0.21.1":
+"axios@^0.21.1", "axios@^0.21.4":
   "integrity" "sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg=="
   "resolved" "https://registry.npmjs.org/axios/-/axios-0.21.4.tgz"
   "version" "0.21.4"
@@ -10306,6 +10329,11 @@
   "integrity" "sha512-Qe5OUajvqrqDSy6wrWFmMwfJ0jVgwiw4T3KqmbTcZ62qW0gQkheXYhcFM1+lOVcGUoRxcEcfyvFMAnDgaF1VWw=="
   "resolved" "https://registry.npmjs.org/node-releases/-/node-releases-1.1.75.tgz"
   "version" "1.1.75"
+
+"nodemailer@^6.7.0":
+  "integrity" "sha512-AtiTVUFHLiiDnMQ43zi0YgkzHOEWUkhDgPlBXrsDzJiJvB29Alo4OKxHQ0ugF3gRqRQIneCLtZU3yiUo7pItZw=="
+  "resolved" "https://registry.npmjs.org/nodemailer/-/nodemailer-6.7.0.tgz"
+  "version" "6.7.0"
 
 "nopt@~1.0.10":
   "integrity" "sha1-bd0hvSoxQXuScn3Vhfim83YI6+4="
