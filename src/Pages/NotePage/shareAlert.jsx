@@ -13,16 +13,15 @@ import { apiKey } from "../../sendgrid";
 import firebase from "../../firebase";
 
 const ShareMethod = (props) => {
-  const { icon, onClickFunction, text } = props;
+  const { icon, onClickFunction, text, closeAlert } = props;
   return (
     <div className="shareMethodItemArea">
-      <button onClick={onClickFunction}>
+      <button onClick={() => onClickFunction({ closeAlert: closeAlert })}>
         <img className="shareMethodItemIcon" src={icon} />
       </button>
 
       <div className="shareMethodItemText"> {text} </div>
     </div>
-    // <div className="shareMethodText"> {text}</div>
   );
 };
 
@@ -32,19 +31,22 @@ const PopupShare = (props) => {
   const [copied, setCopied] = useState(false);
 
   var genericMail = firebase.functions().httpsCallable("genericMail");
-  const onClickFunction = async () => {
-    console.log(noteContent, attendees, title);
+  const onClickFunctionMail = async (props) => {
+    const { closeAlert } = props;
+
     genericMail({
       noteContent: noteContent,
       attendees: attendees,
       title: title,
     })
-      .then((result) => {
+      .then(() => {
         console.log("Notes Shared");
       })
       .catch((error) => console.log("Error ; ", error));
 
     console.log("Clicked");
+    console.log(closeAlert);
+    closeAlert();
   };
 
   useEffect(() => {
@@ -86,7 +88,8 @@ const PopupShare = (props) => {
             <ShareMethod
               icon={emailIcon}
               text={"E-mail all invitees"}
-              onClickFunction={onClickFunction}
+              onClickFunction={onClickFunctionMail}
+              closeAlert={close}
             />
           </div>
           <div className="shareMethodLinkArea">
