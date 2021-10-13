@@ -6,7 +6,8 @@ import "./popup.css";
 import { useHistory, useLocation } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import copyIcon from "../../assets/icons/copyIcon.png";
 const shareNote = () => {
   console.log("aas");
 };
@@ -28,6 +29,15 @@ const ShareMethod = (props) => {
 
 const PopupShare = () => {
   const location = useLocation();
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (copied) {
+      setTimeout(() => {
+        setCopied(false);
+      }, 3000);
+    }
+  }, [copied]);
   return (
     <Popup
       trigger={
@@ -61,10 +71,36 @@ const PopupShare = () => {
               <div class="vl"></div>
 
               <div className="copyTextButtonBox">
-                <IconButton color="primary">
-                  <ContentCopyIcon />
-                </IconButton>
+                <CopyToClipboard
+                  text={window.location.href}
+                  onCopy={() => setCopied(true)}
+                >
+                  <button>
+                    <img className="copyTextButtonImg" src={copyIcon}></img>
+                  </button>
+                </CopyToClipboard>
+
+                {copied ? <span className="copySpan">Copied.</span> : null}
               </div>
+            </div>
+
+            <div className="shareMethodGoogleBox">
+              <div className="shareMethodGoogleText">
+                {" "}
+                Share Notes with participants via email
+              </div>
+
+              <Button
+                variant="contained"
+                style={{
+                  backgroundColor: "red",
+                  color: "Black",
+                  height: "10%",
+                  width: "20%",
+                }}
+              >
+                Share with Google
+              </Button>
             </div>
           </div>
           <div className="actions">

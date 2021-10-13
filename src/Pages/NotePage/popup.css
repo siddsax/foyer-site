@@ -183,7 +183,6 @@ html[data-theme="light"] .popup-arrow {
 .shareMethodText {
   font-family: "Roboto", Arial, sans-serif;
   font-size: 15px;
-  background-color: wheat;
   height: 100%;
   margin: 5px;
 }
@@ -228,10 +227,35 @@ html[data-theme="light"] .popup-arrow {
   -webkit-box-orient: vertical;
 }
 .vl {
+  margin-left: 5px;
   border-left: 2px solid black;
   /* height: 500px; */
 }
+
 .copyTextButtonBox {
-  width: 25%;
-  font-size: 10px;
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+.copyTextButtonImg {
+  margin-left: 5px;
+  width: 60%;
+}
+
+.copySpan {
+  color: black;
+  margin-left: 5px;
+}
+
+.shareMethodGoogleText {
+  font-family: "Roboto", Arial, sans-serif;
+  font-size: 15px;
+  height: 100%;
+  margin: 5px;
+  margin-top: 30px;
+}
+
+.shareMethodGoogleBox {
+  display: flex;
+  background-color: blue;
 }
