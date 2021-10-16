@@ -6,12 +6,15 @@ var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 const SearchListItem = (props) => {
   const { note } = props;
-  console.log(note, "+++++++++");
+  const pageReload = () => {
+    setTimeout(() => window.location.reload(), 10);
+  };
   return (
     <Link
       to={`/note-${note.id}`}
       // className="Note"
       style={{ textDecoration: "none" }}
+      onClick={pageReload}
     >
       <div className="searchListItem">
         <div className="type">{note.meetId ? "Meeting Note" : "Note"}</div>
