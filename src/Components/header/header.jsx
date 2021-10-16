@@ -9,6 +9,7 @@ import { DropdownMenu, MenuItem } from "react-bootstrap-dropdown-menu";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useDetectOutsideClick } from "./useDetectOutsideClick";
 import { useAuthState } from "react-firebase-hooks/auth";
+import Search from "../../Components/Search/Search";
 
 const Header = (props) => {
   const [user, loading, error] = useAuthState(firebase.auth());
@@ -35,7 +36,7 @@ const Header = (props) => {
             </Link>
             <div className="searchBar">
               <div className="searchBarInner">
-                <input type="text" placeholder="Search" className="searchBox" />
+                <Search user={user} />
               </div>
             </div>
             <div className="signOut">

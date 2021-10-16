@@ -32,7 +32,7 @@ const NotePage = (props) => {
   const [meetings, setMeetings] = useState(null);
   const [contentState, setContentState] = useState(null);
   const history = useHistory();
-  let [color, setColor] = useState("#049be4");
+  var color = "#049be4";
   const db = firebase.firestore();
   const [value, setValue] = useState(initialValue);
 
@@ -177,6 +177,7 @@ const NotePage = (props) => {
   }, [meetings]);
 
   const updateTitle = (value) => {
+    console.log(value, "++++++++++++++");
     debouncedOnUpdateNoteDB(value, activeNote.body);
   };
 

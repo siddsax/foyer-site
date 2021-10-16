@@ -23,6 +23,7 @@ function insertAfter(referenceNode, newNode) {
 
 const NotesListPage = (props) => {
   const { user } = props;
+  const [changeStateRender, setChangeStateRender] = useState(false);
   const db = firebase.firestore();
   var [notes, setNotes] = useState([]);
   const [meetings, setMeetings] = useState(null);
@@ -232,7 +233,7 @@ const NotesListPage = (props) => {
 
   return (
     <div className="NotesListPage">
-      <Header />
+      <Header setChangeStateRender={setChangeStateRender} />
       <div className="modeSelectorArea">
         <div className="buttonArea">
           <label class="switch">
