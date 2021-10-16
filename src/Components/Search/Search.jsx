@@ -4,7 +4,7 @@ import firebase from "../../firebase";
 import "./Search.css";
 import search from "../../assets/icons/search.png";
 import { debounce } from "debounce";
-import HashLoader from "react-spinners/HashLoader";
+import PulseLoader from "react-spinners/PulseLoader";
 import { css } from "@emotion/react";
 import SearchListItem from "./SearchListItem";
 
@@ -26,7 +26,7 @@ const contentStyle = {
 
 const containsRegex = async (props) => {
   var foundNothing = 1;
-  const { notes, regex, setResultNotes } = props;
+  const { notes, regex, setResultNotes, setLoading } = props;
   await setResultNotes([]);
   for (var i = 0; i < notes.length; i++) {
     if (notes[i].title.toLowerCase().search(regex) > -1) {
@@ -34,6 +34,8 @@ const containsRegex = async (props) => {
       foundNothing = 0;
     }
   }
+  setLoading(false);
+  // loading.current = 0;
 };
 
 const Search = (props) => {
@@ -44,6 +46,8 @@ const Search = (props) => {
   const [resultNotes, setResultNotes] = useState([]);
   const db = firebase.firestore();
   var fetchedData = useRef(0);
+  const [loading, setLoading] = useState(false);
+  // var loading = useRef(0);
   var color = "#049be4";
   const debouncedSearch = useCallback(debounce(containsRegex, 500), []);
 
@@ -75,10 +79,13 @@ const Search = (props) => {
       fetchedData.current = 1;
       fetchNotes();
     } else if (notes.length > 0) {
+      // loading.current = 1;
+      setLoading(true);
       debouncedSearch({
         notes: notes,
         regex: inputValue,
         setResultNotes: setResultNotes,
+        setLoading: setLoading,
       });
     }
   }, [inputValue]);
@@ -112,14 +119,27 @@ const Search = (props) => {
               onChange={searchText}
             />
           </div>
-          {resultNotes.length ? (
-            <div className="searchResultsArea">
-              {resultNotes.map((note, i) => (
-                <>
-                  <SearchListItem note={note} />
-                </>
-              ))}
-            </div>
+          {inputValue ? (
+            <>
+              {!loading ? (
+                <div className="searchResultsArea">
+                  {resultNotes.map((note, i) => (
+                    <>
+                      <SearchListItem note={note} />
+                    </>
+                  ))}
+                </div>
+              ) : (
+                <div className="loadingArea">
+                  <PulseLoader
+                    color={color}
+                    loading={loading}
+                    css={override}
+                    size={20}
+                  />
+                </div>
+              )}
+            </>
           ) : (
             <></>
           )}
