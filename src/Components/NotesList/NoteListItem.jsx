@@ -9,6 +9,12 @@ var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 const NoteListItem = (props) => {
   const { note } = props;
+  const pageReload = () => {
+    if ((window.location.href.split("/")[1].split("-")[0] = "note")) {
+      console.log("Refreshed!!!");
+      setTimeout(() => window.location.reload(), 10);
+    }
+  };
   var calendarDateAreaClass;
   if (note) {
     if (note.todayStart == 1) {
@@ -39,6 +45,7 @@ const NoteListItem = (props) => {
           to={`/note-${note.id}`}
           className="Note"
           style={{ textDecoration: "none" }}
+          onClick={pageReload}
         >
           <div className="NoteTitleArea">
             <text className="NoteTitleText">{note.title}</text>

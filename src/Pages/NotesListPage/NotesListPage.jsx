@@ -150,6 +150,7 @@ const NotesListPage = (props) => {
         notes: notes,
         setNotes: setNotes,
         loadingTop: loadingTop,
+        todayLine: true,
       }).then((offset) => setScrolling(offset));
     }
   }, [sorted]);
@@ -160,6 +161,7 @@ const NotesListPage = (props) => {
         notes: notes,
         setNotes: setNotes,
         loadingTop: loadingTop,
+        todayLine: true,
       }).then((offset) => setScrolling(offset));
     }
   }, [notes]);

@@ -200,6 +200,7 @@ const NotePage = (props) => {
           notes: linkNotes,
           setNotes: setLinkNotes,
           loadingTop: false,
+          todayLine: false,
         });
         await setLoadingLinkNotes(false);
       };

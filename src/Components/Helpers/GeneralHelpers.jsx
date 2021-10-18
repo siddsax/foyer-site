@@ -33,7 +33,7 @@ var offsetNoteArea = 80;
 var offsetMonthArea = 30;
 
 const setFirstMonthNote = async (props) => {
-  const { notes, setNotes, loadingTop } = props;
+  const { notes, setNotes, loadingTop, todayLine } = props;
   // 50, 60
   var indx = -1;
   var offset = 0;
@@ -83,18 +83,22 @@ const setFirstMonthNote = async (props) => {
       if (mt === m1 && dt === d1 && indx === -1) {
         indx = j;
         match = 1;
-        await setNotes((prevValue) => {
-          prevValue[j].todayStart = true;
-          return prevValue;
-        });
+        if (todayLine) {
+          await setNotes((prevValue) => {
+            prevValue[j].todayStart = true;
+            return prevValue;
+          });
+        }
       }
 
       if ((mt < m1 || (mt === m1 && dt < d1)) && indx === -1) {
         indx = j; // The chosen point is ahead
-        await setNotes((prevValue) => {
-          prevValue[j].todayStart = 2;
-          return prevValue;
-        });
+        if (todayLine) {
+          await setNotes((prevValue) => {
+            prevValue[j].todayStart = 2;
+            return prevValue;
+          });
+        }
       }
     }
 
