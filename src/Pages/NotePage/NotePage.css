@@ -5,19 +5,15 @@
   justify-content: center;
   align-items: center;
 }
-/* .notePage {
-  background-color: #000000;
-  display: flex;
-  height: 100vh;
-  width: 100%;
-} */
 
 .notePage {
+  margin-top: 20px;
   background-color: var(--main-bg-color);
   display: flex;
-  height: 100vh;
+  overflow-y: auto;
+  width: 100%;
+  height: 90vh;
   flex-direction: column;
-  overflow: scroll;
   align-content: center;
   align-items: center;
 }
@@ -28,11 +24,9 @@
   background-color: var(--first-object-color);
   width: 80%;
   min-width: 380px;
-  /* height: 75%; */
-  height: 25%;
+  height: auto;
   margin-top: 20px;
   margin-bottom: 20px;
-  overflow: scroll;
   border-radius: 10px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
@@ -96,18 +90,9 @@
   margin-right: 10pt;
 }
 
-.Editor {
-  display: flex;
-  color: blue;
-  margin-left: 20px;
-  /* background-color: blue; */
-  height: 90%;
-  overflow: scroll;
-}
-
 .editorBox {
   margin: 10pt;
-  /* color: white; */
+  min-height: 200px;
   color: var(--first-text-color);
 }
 
@@ -134,25 +119,32 @@
 }
 
 .linkedMeetingsArea {
-  height: 100px;
   width: 100%;
-  background-color: plum;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .LinkedNotesListArea {
-  margin-top: 30px;
   display: flex;
-  height: 70vh;
   flex-direction: column;
   margin-bottom: 40px;
   align-content: center;
   align-items: center;
 
-  /* New stuff */
   box-sizing: border-box;
-  overflow: auto;
 }
 
 .LinkedNotesListArea::-webkit-scrollbar {
   display: none;
+}
+
+.linkedMeetingsAreaTitle {
+  font-size: 30px;
+  font-weight: 300;
+  width: 80%;
+  text-shadow: 0.5px;
+  margin-bottom: 20px;
 }

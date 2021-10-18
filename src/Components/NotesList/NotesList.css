@@ -1,14 +1,13 @@
 .allNotesPage {
   display: flex;
   width: 100%;
-  height: 80vh;
+  /* height: 80vh; */
   align-items: center;
   justify-content: center;
   align-content: center;
 }
 .allNotes {
   flex-direction: column;
-  height: 80vh;
   min-width: 400px;
   width: 60vw;
 }

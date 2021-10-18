@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import { formatMeeting } from "../../Components/Helpers/GeneralHelpers";
 import PuffLoader from "react-spinners/PuffLoader";
 import { css } from "@emotion/react";
+import { setFirstMonthNote } from "../../Components/Helpers/GeneralHelpers";
 
 const override = css`
   display: block;
@@ -31,9 +32,6 @@ const NotesListPage = (props) => {
   const container = document.querySelector(".NotesListArea");
   var lastVisible = useRef(0);
   var scrollHeightOld = useRef(0);
-
-  var offsetNoteArea = 80;
-  var offsetMonthArea = 30;
 
   const handleScroll = () => {
     let triggerHeight = container.scrollTop + container.offsetHeight;
@@ -99,90 +97,6 @@ const NotesListPage = (props) => {
     }
   };
 
-  const setFirstMonthNote = async () => {
-    // 50, 60
-    var indx = -1;
-    var offset = 0;
-    var match = 0;
-
-    for (let j = 0; j < notes.length; j++) {
-      var m1, m2, d1, d2;
-      m1 = new Date(notes[j].createdAt).getMonth();
-      d1 = new Date(notes[j].createdAt).getDate();
-      if (j > 0) {
-        m2 = new Date(notes[j - 1].createdAt).getMonth();
-        d2 = new Date(notes[j - 1].createdAt).getDate();
-      } else {
-        m2 = m1 - 1;
-        d2 = d1 - 1;
-      }
-
-      if (m1 !== m2) {
-        await setNotes((prevValue) => {
-          prevValue[j].firstOfMonth = true;
-          prevValue[j].firstOfDay = true;
-          return prevValue;
-        });
-        if (indx === -1) {
-          offset += offsetMonthArea;
-        }
-      } else {
-        if (d1 !== d2) {
-          await setNotes((prevValue) => {
-            prevValue[j].firstOfMonth = false;
-            prevValue[j].firstOfDay = true;
-            return prevValue;
-          });
-        } else {
-          await setNotes((prevValue) => {
-            prevValue[j].firstOfMonth = false;
-            prevValue[j].firstOfDay = false;
-            return prevValue;
-          });
-        }
-      }
-
-      // For the purpose of reaching the correct scroll point
-      var mt = new Date().getMonth();
-      var dt = new Date().getDate();
-      if (!loadingTop) {
-        if (mt === m1 && dt === d1 && indx === -1) {
-          indx = j;
-          match = 1;
-          await setNotes((prevValue) => {
-            prevValue[j].todayStart = true;
-            return prevValue;
-          });
-        }
-
-        if ((mt < m1 || (mt === m1 && dt < d1)) && indx === -1) {
-          indx = j; // The chosen point is ahead
-          await setNotes((prevValue) => {
-            prevValue[j].todayStart = 2;
-            return prevValue;
-          });
-        }
-      }
-
-      if (indx === -1) {
-        offset += offsetNoteArea;
-      }
-    }
-
-    container.addEventListener("scroll", handleScroll);
-    if (!loadingTop) {
-      window.setTimeout(() => {
-        container.scrollTop = offset;
-      }, 0);
-    } else {
-      window.setTimeout(() => {
-        container.scrollTop = container.scrollHeight - scrollHeightOld.current;
-      }, 0);
-    }
-    setLoading(false);
-    setLoadingTop(false);
-  };
-
   useEffect(() => {
     listUpcomingEvents(10, setMeetings);
     fetchNotes();
@@ -215,15 +129,38 @@ const NotesListPage = (props) => {
     addMeetings();
   }, [meetings]);
 
+  const setScrolling = (offset) => {
+    container.addEventListener("scroll", handleScroll);
+    if (!loadingTop) {
+      window.setTimeout(() => {
+        container.scrollTop = offset;
+      }, 0);
+    } else {
+      window.setTimeout(() => {
+        container.scrollTop = container.scrollHeight - scrollHeightOld.current;
+      }, 0);
+    }
+    setLoading(false);
+    setLoadingTop(false);
+  };
+
   useEffect(() => {
     if (sorted) {
-      setFirstMonthNote();
+      setFirstMonthNote({
+        notes: notes,
+        setNotes: setNotes,
+        loadingTop: loadingTop,
+      }).then((offset) => setScrolling(offset));
     }
   }, [sorted]);
 
   useEffect(() => {
     if (loadingTop) {
-      setFirstMonthNote();
+      setFirstMonthNote({
+        notes: notes,
+        setNotes: setNotes,
+        loadingTop: loadingTop,
+      }).then((offset) => setScrolling(offset));
     }
   }, [notes]);
 

@@ -12,51 +12,6 @@
   height: 40px;
 }
 
-.example-warper {
-  padding: 20px 5%;
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  border: 2px var(--ifm-link-color) dashed;
-  margin: 10px;
-  white-space: pre-line;
-}
-
-.example-warper .button,
-.popup-content .button {
-  font-family: "Roboto", Arial, sans-serif;
-  color: #000000;
-  cursor: pointer;
-  padding: 0px 30px;
-  display: inline-block;
-  margin: 10px 15px;
-  text-transform: uppercase;
-  line-height: 2em;
-  letter-spacing: 1.5px;
-  font-size: 1em;
-  outline: none;
-  position: relative;
-  font-size: 14px;
-  border: 3px dashed var(--ifm-link-color);
-  /* border-radius: 15px 15px 15px 15px; */
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-  background-color: blue;
-}
-.example-warper .button:hover,
-.example-warper .button.hover {
-  border-color: #2980b9;
-  color: #000000 !important;
-}
-.example-warper .popup-card {
-  font-size: 12px;
-}
-.example-warper .popup-card > .header {
-  width: 100%;
-  border-bottom: 1px solid gray;
-  font-size: 14px;
-  text-align: center;
-}
 /* animation */
 
 @keyframes anvil {
@@ -82,6 +37,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  -webkit-animation: anvil 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
 }
 
 .headerPopup {

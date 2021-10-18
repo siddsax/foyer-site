@@ -19,6 +19,7 @@ import PopupShare from "../../Components/PopupShare/PopupShare";
 import { override } from "../../Components/Helpers/GeneralHelpers";
 import PopupLinkMeet from "../../Components/PopupLinkMeet/PopupLinkMeet";
 import NotesList from "../../Components/NotesList/NotesList";
+import { setFirstMonthNote } from "../../Components/Helpers/GeneralHelpers";
 
 const NotePage = (props) => {
   const { user, fromMeeting } = props;
@@ -31,6 +32,7 @@ const NotePage = (props) => {
   const db = firebase.firestore();
   const [value, setValue] = useState(initialValue);
   const [linkNotes, setLinkNotes] = useState(null);
+  const [loadingLinkNotes, setLoadingLinkNotes] = useState(true);
 
   const onUpdateNoteDB = (title, content) => {
     setContentState(
@@ -180,7 +182,16 @@ const NotePage = (props) => {
 
   useEffect(() => {
     if (linkNotes) {
-      console.log(linkNotes, "===========================");
+      setLoadingLinkNotes(true);
+      setFirstMonthNote({
+        notes: linkNotes,
+        setNotes: setLinkNotes,
+        loadingTop: false,
+      }).then(() => {
+        // loadingLinkNotes.current = false;
+        setLoadingLinkNotes(false);
+      });
+
       db.collection("Notes").doc(`${activeNoteID.current}`).update({
         linkNotes: linkNotes,
       });
@@ -231,9 +242,9 @@ const NotePage = (props) => {
             <PopupLinkMeet user={user} setLinkNotes={setLinkNotes} />
           </div>
           <div className="linkedMeetingsArea">
-            <div className="linkedMeetingsAreaTitle">Title</div>
+            <div className="linkedMeetingsAreaTitle">Linked Meetings</div>
             <div className="linkedMeetingsListArea">
-              {linkNotes ? (
+              {!loadingLinkNotes ? (
                 <div className="LinkedNotesListArea">
                   <NotesList notes={linkNotes} loading={false} />
                 </div>
