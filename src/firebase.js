@@ -1,6 +1,6 @@
 import firebase from "firebase";
 
-const dev = 1;
+const dev = 0;
 var firebaseConfig;
 
 var firebaseConfigProd = {

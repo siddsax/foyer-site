@@ -23,11 +23,12 @@ const containsRegex = async (props) => {
   var foundNothing = 1;
   const { notes, regex, setResultNotes, setLoading, activeNote } = props;
   await setResultNotes([]);
-  console.log(activeNote.id, "=================================");
   for (var i = 0; i < notes.length; i++) {
     if (notes[i].title.toLowerCase().search(regex) > -1) {
-      if (notes[i].id != activeNote.id)
-        await setResultNotes((preVal) => [...preVal, notes[i]]);
+      if (activeNote) {
+        if (notes[i].id != activeNote.id)
+          await setResultNotes((preVal) => [...preVal, notes[i]]);
+      } else await setResultNotes((preVal) => [...preVal, notes[i]]);
       foundNothing = 0;
     }
   }
