@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import firebase from "../../firebase";
 
 var Config;
-var dev = 0;
+var dev = 1;
 
 if (dev) {
   Config = require("../../apiGoogleconfigDev.json");

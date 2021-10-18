@@ -39,7 +39,14 @@ const NotesList = (props) => {
   return (
     <div className="allNotesPage">
       {loading ? (
-        <HashLoader color={color} loading={loading} css={override} size={50} />
+        <div className="loadingNotes">
+          <HashLoader
+            color={color}
+            loading={loading}
+            css={override}
+            size={50}
+          />
+        </div>
       ) : (
         <div className="allNotes">
           {notes.map((note, i) => (

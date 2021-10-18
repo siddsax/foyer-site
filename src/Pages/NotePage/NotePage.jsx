@@ -14,6 +14,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { addMeetNote } from "../../Components/Helpers/BackendHelpers";
 import { formatMeeting } from "../../Components/Helpers/GeneralHelpers";
 import HashLoader from "react-spinners/HashLoader";
+import PuffLoader from "react-spinners/PuffLoader";
 import EditableText from "../../Components/EditableText/EditableText";
 import PopupShare from "../../Components/PopupShare/PopupShare";
 import { override } from "../../Components/Helpers/GeneralHelpers";
@@ -33,6 +34,7 @@ const NotePage = (props) => {
   const [value, setValue] = useState(initialValue);
   const [linkNotes, setLinkNotes] = useState(null);
   const [loadingLinkNotes, setLoadingLinkNotes] = useState(true);
+  const [updatingToggle, setUpdatingToggle] = useState(true);
 
   const onUpdateNoteDB = (title, content) => {
     setContentState(
@@ -59,7 +61,7 @@ const NotePage = (props) => {
 
     docRef
       .get()
-      .then((doc) => {
+      .then(async (doc) => {
         if (doc.exists) {
           console.log("Document exists", doc.data());
           activeNote = doc.data();
@@ -67,8 +69,9 @@ const NotePage = (props) => {
           console.log("No such document!");
           activeNote = null;
         }
-        setActiveNote(activeNote);
-        setLinkNotes(activeNote.linkNotes);
+        await setActiveNote(activeNote);
+        await setLinkNotes(activeNote.linkNotes ? activeNote.linkNotes : []);
+        await setUpdatingToggle((preVal) => !preVal);
       })
       .catch((error) => {
         console.log("Error getting document:", error);
@@ -181,22 +184,29 @@ const NotePage = (props) => {
   }, [meetings]);
 
   useEffect(() => {
+    console.log(updatingToggle, "++++++-------------==============");
     if (linkNotes) {
-      setLoadingLinkNotes(true);
-      setFirstMonthNote({
-        notes: linkNotes,
-        setNotes: setLinkNotes,
-        loadingTop: false,
-      }).then(() => {
-        // loadingLinkNotes.current = false;
-        setLoadingLinkNotes(false);
-      });
+      const addDatesLinkNotes = async () => {
+        await setLoadingLinkNotes(true);
+        await db.collection("Notes").doc(`${activeNoteID.current}`).update({
+          linkNotes: linkNotes,
+        });
 
-      db.collection("Notes").doc(`${activeNoteID.current}`).update({
-        linkNotes: linkNotes,
-      });
+        await setLinkNotes((prevValue) => {
+          return prevValue.slice().sort((a, b) => a.createdAt - b.createdAt);
+        });
+
+        await setFirstMonthNote({
+          notes: linkNotes,
+          setNotes: setLinkNotes,
+          loadingTop: false,
+        });
+        await setLoadingLinkNotes(false);
+      };
+
+      addDatesLinkNotes();
     }
-  }, [linkNotes]);
+  }, [updatingToggle]);
 
   return (
     <div>
@@ -239,7 +249,12 @@ const NotePage = (props) => {
               attendees={activeNote.access}
               title={activeNote.title}
             />
-            <PopupLinkMeet user={user} setLinkNotes={setLinkNotes} />
+            <PopupLinkMeet
+              user={user}
+              setLinkNotes={setLinkNotes}
+              activeNote={activeNote}
+              setUpdatingToggle={setUpdatingToggle}
+            />
           </div>
           <div className="linkedMeetingsArea">
             <div className="linkedMeetingsAreaTitle">Linked Meetings</div>
@@ -249,7 +264,14 @@ const NotePage = (props) => {
                   <NotesList notes={linkNotes} loading={false} />
                 </div>
               ) : (
-                <></>
+                <>
+                  <PuffLoader
+                    color="#049be4"
+                    loading={loadingLinkNotes}
+                    css={override}
+                    size={50}
+                  />
+                </>
               )}
             </div>
           </div>

@@ -13,7 +13,6 @@ import PopupSearch from "../Search/PopupSearch";
 import SearchListItem from "../Search/SearchListItem";
 
 const Header = (props) => {
-  const { activeNote } = props;
   const [user, loading, error] = useAuthState(firebase.auth());
   const dropdownRef = useRef(null);
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
@@ -45,7 +44,6 @@ const Header = (props) => {
                   user={user}
                   trigger={trigger}
                   ListItem={SearchListItem}
-                  activeNote={activeNote}
                 />
               </div>
             </div>

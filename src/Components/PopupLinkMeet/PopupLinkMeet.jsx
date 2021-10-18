@@ -3,7 +3,7 @@ import PopupSearch from "../Search/PopupSearch";
 import LinkMeetListItem from "./LinkMeetListItem";
 
 const PopupLinkMeet = (props) => {
-  const { user, setLinkNotes } = props;
+  const { user, setLinkNotes, activeNote, setUpdatingToggle } = props;
   const trigger = (
     <Button
       variant="contained"
@@ -23,6 +23,8 @@ const PopupLinkMeet = (props) => {
       user={user}
       ListItem={LinkMeetListItem}
       setLinkNotes={setLinkNotes}
+      activeNote={activeNote}
+      setUpdatingToggle={setUpdatingToggle}
     />
   );
 };

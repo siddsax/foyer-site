@@ -21,11 +21,13 @@ const contentStyle = {
 
 const containsRegex = async (props) => {
   var foundNothing = 1;
-  const { notes, regex, setResultNotes, setLoading } = props;
+  const { notes, regex, setResultNotes, setLoading, activeNote } = props;
   await setResultNotes([]);
+  console.log(activeNote.id, "=================================");
   for (var i = 0; i < notes.length; i++) {
     if (notes[i].title.toLowerCase().search(regex) > -1) {
-      await setResultNotes((preVal) => [...preVal, notes[i]]);
+      if (notes[i].id != activeNote.id)
+        await setResultNotes((preVal) => [...preVal, notes[i]]);
       foundNothing = 0;
     }
   }
@@ -33,7 +35,14 @@ const containsRegex = async (props) => {
 };
 
 const PopupSearch = (props) => {
-  const { user, trigger, ListItem, setLinkNotes } = props;
+  const {
+    user,
+    trigger,
+    ListItem,
+    setLinkNotes,
+    activeNote,
+    setUpdatingToggle,
+  } = props;
   const [notes, setNotes] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [inputValue, setInputValue] = useState(null);
@@ -78,6 +87,7 @@ const PopupSearch = (props) => {
         regex: inputValue,
         setResultNotes: setResultNotes,
         setLoading: setLoading,
+        activeNote: activeNote,
       });
     }
   }, [inputValue]);
@@ -109,6 +119,8 @@ const PopupSearch = (props) => {
                         note={note}
                         setLinkNotes={setLinkNotes}
                         close={close}
+                        activeNote={activeNote}
+                        setUpdatingToggle={setUpdatingToggle}
                       />
                     </>
                   ))}

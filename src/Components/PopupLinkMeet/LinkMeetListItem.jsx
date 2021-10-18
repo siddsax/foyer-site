@@ -6,7 +6,7 @@ import firebase from "../../firebase";
 var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 const LinkMeetListItem = (props) => {
-  const { note, setLinkNotes, close } = props;
+  const { note, setLinkNotes, close, activeNote, setUpdatingToggle } = props;
   const db = firebase.firestore();
 
   const selectNote = (title, content) => {
@@ -28,8 +28,20 @@ const LinkMeetListItem = (props) => {
         creator: note.creator,
       };
 
-      if (!result) return [...preVal, toAdd];
-      else return preVal;
+      if (!result) {
+        var noteCopy = Object.assign({}, activeNote);
+        delete noteCopy.body;
+        delete noteCopy.linkNotes;
+
+        db.collection("Notes")
+          .doc(`${note.id}`)
+          .update({
+            linkNotes: firebase.firestore.FieldValue.arrayUnion(noteCopy),
+          });
+        setUpdatingToggle((preVal) => !preVal);
+
+        return [...preVal, toAdd];
+      } else return preVal;
     });
     close();
   };
