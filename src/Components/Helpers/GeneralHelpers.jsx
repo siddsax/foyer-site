@@ -1,3 +1,5 @@
+import { css } from "@emotion/react";
+
 const formatMeeting = (props) => {
   const { meetingCalendar } = props;
   const meet = {
@@ -21,4 +23,10 @@ const formatMeeting = (props) => {
   return meet;
 };
 
-export { formatMeeting };
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
+
+export { formatMeeting, override };

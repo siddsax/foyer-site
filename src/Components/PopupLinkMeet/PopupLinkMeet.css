@@ -1,0 +1,21 @@
+.searchListItem {
+  display: flex;
+  align-content: flex-start;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.type {
+  display: flex;
+  align-content: flex-start;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+/* 
+.t {
+    display: flex;
+    align-content: flex-start;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+   */

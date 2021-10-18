@@ -7,12 +7,7 @@ import { debounce } from "debounce";
 import PulseLoader from "react-spinners/PulseLoader";
 import { css } from "@emotion/react";
 import SearchListItem from "./SearchListItem";
-
-const override = css`
-  display: block;
-  margin: 0 auto;
-  border-color: red;
-`;
+import { override } from "../Helpers/GeneralHelpers";
 
 const contentStyle = {
   "background-color": "rgb(80,80,80)",
@@ -35,11 +30,10 @@ const containsRegex = async (props) => {
     }
   }
   setLoading(false);
-  // loading.current = 0;
 };
 
-const Search = (props) => {
-  const { user } = props;
+const PopupSearch = (props) => {
+  const { user, trigger, ListItem, setLinkNotes } = props;
   const [notes, setNotes] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [inputValue, setInputValue] = useState(null);
@@ -47,8 +41,6 @@ const Search = (props) => {
   const db = firebase.firestore();
   var fetchedData = useRef(0);
   const [loading, setLoading] = useState(false);
-  // var loading = useRef(0);
-  var color = "#049be4";
   const debouncedSearch = useCallback(debounce(containsRegex, 500), []);
 
   const fillNotes = async (querySnapshot) => {
@@ -95,19 +87,7 @@ const Search = (props) => {
   }, [resultNotes]);
 
   return (
-    <Popup
-      trigger={
-        <input
-          type="text"
-          placeholder="Search"
-          className="searchBox"
-          //   onChange={searchText}
-        />
-      }
-      modal
-      nested
-      contentStyle={contentStyle}
-    >
+    <Popup trigger={trigger} modal nested contentStyle={contentStyle}>
       {(close) => (
         <div className="modalCustom">
           <div className="headerPopup">
@@ -125,14 +105,18 @@ const Search = (props) => {
                 <div className="searchResultsArea">
                   {resultNotes.map((note, i) => (
                     <>
-                      <SearchListItem note={note} />
+                      <ListItem
+                        note={note}
+                        setLinkNotes={setLinkNotes}
+                        close={close}
+                      />
                     </>
                   ))}
                 </div>
               ) : (
                 <div className="loadingArea">
                   <PulseLoader
-                    color={color}
+                    color="#049be4"
                     loading={loading}
                     css={override}
                     size={20}
@@ -149,4 +133,4 @@ const Search = (props) => {
   );
 };
 
-export default Search;
+export default PopupSearch;

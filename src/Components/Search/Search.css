@@ -167,6 +167,10 @@
 }
 
 .title {
+  -webkit-box-align: stretch;
+  /* justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start; */
   width: 70%;
   overflow: hidden;
   text-overflow: ellipsis;

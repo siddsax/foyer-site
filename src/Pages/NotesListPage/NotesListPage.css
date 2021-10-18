@@ -127,7 +127,6 @@ input:checked + .slider:before {
   display: flex;
   height: 70vh;
   flex-direction: column;
-  /* overflow: scroll; */
   margin-bottom: 40px;
   align-content: center;
   align-items: center;

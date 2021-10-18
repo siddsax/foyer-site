@@ -7,7 +7,7 @@ var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const SearchListItem = (props) => {
   const { note } = props;
   const pageReload = () => {
-    if (window.location.href.split("/")[1] != `/note-${note.id}`) {
+    if ((window.location.href.split("/")[1].split("-")[0] = "note")) {
       console.log("Refreshed!!!");
       setTimeout(() => window.location.reload(), 10);
     }

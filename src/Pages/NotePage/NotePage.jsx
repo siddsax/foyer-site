@@ -13,16 +13,12 @@ import {
 import { useHistory, useLocation } from "react-router-dom";
 import { addMeetNote } from "../../Components/Helpers/BackendHelpers";
 import { formatMeeting } from "../../Components/Helpers/GeneralHelpers";
-import { css } from "@emotion/react";
 import HashLoader from "react-spinners/HashLoader";
-import EditableText from "./EditableText";
-import PopupShare from "./shareAlert";
-
-const override = css`
-  display: block;
-  margin: 0 auto;
-  border-color: red;
-`;
+import EditableText from "../../Components/EditableText/EditableText";
+import PopupShare from "../../Components/PopupShare/PopupShare";
+import { override } from "../../Components/Helpers/GeneralHelpers";
+import PopupLinkMeet from "../../Components/PopupLinkMeet/PopupLinkMeet";
+import NotesList from "../../Components/NotesList/NotesList";
 
 const NotePage = (props) => {
   const { user, fromMeeting } = props;
@@ -32,9 +28,9 @@ const NotePage = (props) => {
   const [meetings, setMeetings] = useState(null);
   const [contentState, setContentState] = useState(null);
   const history = useHistory();
-  var color = "#049be4";
   const db = firebase.firestore();
   const [value, setValue] = useState(initialValue);
+  const [linkNotes, setLinkNotes] = useState(null);
 
   const onUpdateNoteDB = (title, content) => {
     setContentState(
@@ -70,6 +66,7 @@ const NotePage = (props) => {
           activeNote = null;
         }
         setActiveNote(activeNote);
+        setLinkNotes(activeNote.linkNotes);
       })
       .catch((error) => {
         console.log("Error getting document:", error);
@@ -99,6 +96,11 @@ const NotePage = (props) => {
         console.log("Error getting document:", error);
         setActiveNote("No Meeting");
       });
+  };
+
+  const updateTitle = (value) => {
+    console.log(value, "++++++++++++++");
+    debouncedOnUpdateNoteDB(value, activeNote.body);
   };
 
   useEffect(() => {
@@ -176,14 +178,18 @@ const NotePage = (props) => {
     }
   }, [meetings]);
 
-  const updateTitle = (value) => {
-    console.log(value, "++++++++++++++");
-    debouncedOnUpdateNoteDB(value, activeNote.body);
-  };
+  useEffect(() => {
+    if (linkNotes) {
+      console.log(linkNotes, "===========================");
+      db.collection("Notes").doc(`${activeNoteID.current}`).update({
+        linkNotes: linkNotes,
+      });
+    }
+  }, [linkNotes]);
 
   return (
     <div>
-      <Header />
+      <Header activeNote={activeNote} />
       {activeNote !== null && activeNote !== "No Meeting" ? (
         <div className="notePage">
           <div className="noteArea">
@@ -222,11 +228,24 @@ const NotePage = (props) => {
               attendees={activeNote.access}
               title={activeNote.title}
             />
+            <PopupLinkMeet user={user} setLinkNotes={setLinkNotes} />
+          </div>
+          <div className="linkedMeetingsArea">
+            <div className="linkedMeetingsAreaTitle">Title</div>
+            <div className="linkedMeetingsListArea">
+              {linkNotes ? (
+                <div className="LinkedNotesListArea">
+                  <NotesList notes={linkNotes} loading={false} />
+                </div>
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
         </div>
       ) : (
         <div className="loader">
-          <HashLoader color={color} loading={true} css={override} size={50} />
+          <HashLoader color="#049be4" loading={true} css={override} size={50} />
         </div>
       )}
     </div>

@@ -2,7 +2,7 @@ import Button from "@mui/material/Button";
 import Popup from "reactjs-popup";
 import { useState, useEffect, useCallback, useRef } from "react";
 import "reactjs-popup/dist/index.css";
-import "./popup.css";
+import "./PopupShare.css";
 import { useHistory, useLocation } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";

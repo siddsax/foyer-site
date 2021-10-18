@@ -1,0 +1,11 @@
+.inputTitle {
+  padding: "0px";
+  width: 90%;
+  background-color: var(--first-object-color);
+  outline: none;
+  overflow: hidden;
+  border: none;
+  margin-left: -20px;
+  margin-top: -4px;
+  margin-bottom: -2px;
+}

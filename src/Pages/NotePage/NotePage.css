@@ -28,7 +28,8 @@
   background-color: var(--first-object-color);
   width: 80%;
   min-width: 380px;
-  height: 75%;
+  /* height: 75%; */
+  height: 25%;
   margin-top: 20px;
   margin-bottom: 20px;
   overflow: scroll;
@@ -51,21 +52,6 @@
   display: flex;
   position: relative;
   width: 90%;
-}
-
-.inputTitle {
-  padding: "0px";
-  width: 90%;
-  background-color: var(--first-object-color);
-  outline: none;
-  overflow: hidden;
-  border: none;
-  margin-left: -20px;
-  margin-top: -4px;
-  margin-bottom: -2px;
-  /* position: absolute; */
-  /* left: 0px;
-  top: 0px; */
 }
 
 .noteTitle {
@@ -132,6 +118,8 @@
   width: 30%;
   min-width: 380px;
   margin-bottom: 5%;
+  display: flex;
+  flex-direction: row;
 }
 
 @media only screen and (max-width: 500px) {
@@ -143,4 +131,28 @@
     min-width: 380px;
     margin-bottom: 5%;
   }
+}
+
+.linkedMeetingsArea {
+  height: 100px;
+  width: 100%;
+  background-color: plum;
+}
+
+.LinkedNotesListArea {
+  margin-top: 30px;
+  display: flex;
+  height: 70vh;
+  flex-direction: column;
+  margin-bottom: 40px;
+  align-content: center;
+  align-items: center;
+
+  /* New stuff */
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.LinkedNotesListArea::-webkit-scrollbar {
+  display: none;
 }

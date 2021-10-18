@@ -1,4 +1,4 @@
-import "./NotePage.css";
+import "./EditableText.css";
 import React from "react";
 
 class EditableText extends React.Component {

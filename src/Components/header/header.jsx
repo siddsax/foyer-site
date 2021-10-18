@@ -9,9 +9,11 @@ import { DropdownMenu, MenuItem } from "react-bootstrap-dropdown-menu";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useDetectOutsideClick } from "./useDetectOutsideClick";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Search from "../../Components/Search/Search";
+import PopupSearch from "../Search/PopupSearch";
+import SearchListItem from "../Search/SearchListItem";
 
 const Header = (props) => {
+  const { activeNote } = props;
   const [user, loading, error] = useAuthState(firebase.auth());
   const dropdownRef = useRef(null);
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
@@ -26,6 +28,9 @@ const Header = (props) => {
       });
   };
 
+  const trigger = (
+    <input type="text" placeholder="Search" className="searchBox" />
+  );
   return (
     <>
       {user.photoURL ? (
@@ -36,7 +41,12 @@ const Header = (props) => {
             </Link>
             <div className="searchBar">
               <div className="searchBarInner">
-                <Search user={user} />
+                <PopupSearch
+                  user={user}
+                  trigger={trigger}
+                  ListItem={SearchListItem}
+                  activeNote={activeNote}
+                />
               </div>
             </div>
             <div className="signOut">

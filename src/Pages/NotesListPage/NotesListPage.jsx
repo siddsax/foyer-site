@@ -17,13 +17,8 @@ const override = css`
   border-color: red;
 `;
 
-function insertAfter(referenceNode, newNode) {
-  referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-}
-
 const NotesListPage = (props) => {
   const { user } = props;
-  const [changeStateRender, setChangeStateRender] = useState(false);
   const db = firebase.firestore();
   var [notes, setNotes] = useState([]);
   const [meetings, setMeetings] = useState(null);
@@ -73,6 +68,7 @@ const NotesListPage = (props) => {
       createdAt: Date.now(),
       creator: user.uid,
       access: [user.email],
+      linkedNotes: [],
     };
     await db.collection("Notes").doc(`${uid}`).set(newNote);
     history.push(`/note-${uid}`);
@@ -233,7 +229,7 @@ const NotesListPage = (props) => {
 
   return (
     <div className="NotesListPage">
-      <Header setChangeStateRender={setChangeStateRender} />
+      <Header />
       <div className="modeSelectorArea">
         <div className="buttonArea">
           <label class="switch">
