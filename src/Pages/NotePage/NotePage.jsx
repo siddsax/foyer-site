@@ -21,7 +21,6 @@ import { override } from "../../Components/Helpers/GeneralHelpers";
 import PopupLinkMeet from "../../Components/PopupLinkMeet/PopupLinkMeet";
 import NotesList from "../../Components/NotesList/NotesList";
 import { setFirstMonthNote } from "../../Components/Helpers/GeneralHelpers";
-import ActiveNote from "../../Components/activeNote/ActiveNote";
 
 const NotePage = (props) => {
   const { user, fromMeeting } = props;
@@ -37,6 +36,7 @@ const NotePage = (props) => {
   const [loadingLinkNotes, setLoadingLinkNotes] = useState(true);
   const [updatingToggle, setUpdatingToggle] = useState(true);
 
+  // Not using due to errors
   const setNote = async (props) => {
     const { note } = props;
     await setActiveNote(note);
@@ -77,7 +77,9 @@ const NotePage = (props) => {
           console.log("No such document!");
           activeNote = null;
         }
-        setNote(activeNote);
+        await setActiveNote(activeNote);
+        await setLinkNotes(activeNote.linkNotes ? activeNote.linkNotes : []);
+        await setUpdatingToggle((preVal) => !preVal);
       })
       .catch((error) => {
         console.log("Error getting document:", error);
@@ -105,7 +107,9 @@ const NotePage = (props) => {
           activeNote = doc.data();
           activeNoteID.current = activeNote.id;
         });
-        setNote(activeNote);
+        await setActiveNote(activeNote);
+        await setLinkNotes(activeNote.linkNotes ? activeNote.linkNotes : []);
+        await setUpdatingToggle((preVal) => !preVal);
       })
       .catch((error) => {
         console.log("Error getting document:", error);
@@ -168,7 +172,9 @@ const NotePage = (props) => {
                 user: user,
               }).then(async (note) => {
                 activeNoteID.current = note.id;
-                setNote(note);
+                await setActiveNote(note);
+                await setLinkNotes(note.linkNotes ? note.linkNotes : []);
+                await setUpdatingToggle((preVal) => !preVal);
               });
               break;
             }
@@ -184,7 +190,9 @@ const NotePage = (props) => {
           user: user,
         }).then(async (note) => {
           activeNoteID.current = note.id;
-          setNote(note);
+          await setActiveNote(note);
+          await setLinkNotes(note.linkNotes ? note.linkNotes : []);
+          await setUpdatingToggle((preVal) => !preVal);
         });
       }
       if (!found) {
