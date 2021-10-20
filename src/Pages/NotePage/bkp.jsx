@@ -21,7 +21,6 @@ import { override } from "../../Components/Helpers/GeneralHelpers";
 import PopupLinkMeet from "../../Components/PopupLinkMeet/PopupLinkMeet";
 import NotesList from "../../Components/NotesList/NotesList";
 import { setFirstMonthNote } from "../../Components/Helpers/GeneralHelpers";
-import ActiveNote from "../../Components/activeNote/ActiveNote";
 
 const NotePage = (props) => {
   const { user, fromMeeting } = props;
@@ -36,13 +35,6 @@ const NotePage = (props) => {
   const [linkNotes, setLinkNotes] = useState(null);
   const [loadingLinkNotes, setLoadingLinkNotes] = useState(true);
   const [updatingToggle, setUpdatingToggle] = useState(true);
-
-  const setNote = async (props) => {
-    const { note } = props;
-    await setActiveNote(note);
-    await setLinkNotes(note.linkNotes ? note.linkNotes : []);
-    await setUpdatingToggle((preVal) => !preVal);
-  };
 
   const onUpdateNoteDB = (title, content) => {
     setContentState(
@@ -77,7 +69,9 @@ const NotePage = (props) => {
           console.log("No such document!");
           activeNote = null;
         }
-        setNote(activeNote);
+        await setActiveNote(activeNote);
+        await setLinkNotes(activeNote.linkNotes ? activeNote.linkNotes : []);
+        await setUpdatingToggle((preVal) => !preVal);
       })
       .catch((error) => {
         console.log("Error getting document:", error);
@@ -88,24 +82,20 @@ const NotePage = (props) => {
   const getMeetingNote = async (props) => {
     const { meetHangoutID } = props;
     var activeNote = "No Meeting";
-    var docRef;
-    if (meetHangoutID.split("-").length > 1) {
-      docRef = db
-        .collection("Notes")
-        .where("hangoutLink", "==", `https://meet.google.com/${meetHangoutID}`);
-    } else {
-      docRef = db.collection("Notes").where("meetId", "==", `${meetHangoutID}`);
-    }
+
+    var docRef = db
+      .collection("Notes")
+      .where("hangoutLink", "==", `https://meet.google.com/${meetHangoutID}`);
 
     docRef
       .get()
-      .then(async (querySnapshot) => {
+      .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           console.log("Document exists", doc.data());
           activeNote = doc.data();
           activeNoteID.current = activeNote.id;
         });
-        setNote(activeNote);
+        setActiveNote(activeNote);
       })
       .catch((error) => {
         console.log("Error getting document:", error);
@@ -159,36 +149,36 @@ const NotePage = (props) => {
               .split("/")
               .slice(-1)[0];
             if (meetHangoutID === uriHangoutID) {
-              found = 1; // meeting found, using this from the next 10 events
+              found = 1;
               var meet = formatMeeting({ meetingCalendar: meetings[i] });
               addMeetNote({
                 meet: meet,
                 db: db,
                 history: history,
                 user: user,
-              }).then(async (note) => {
+              }).then((note) => {
                 activeNoteID.current = note.id;
-                setNote(note);
+                setActiveNote(note);
               });
               break;
             }
           }
         }
       } else {
-        found = 1; // meeting found by pulling directly via calendar api
+        found = 1;
         var meet = formatMeeting({ meetingCalendar: meetings });
         addMeetNote({
           meet: meet,
           db: db,
           history: history,
           user: user,
-        }).then(async (note) => {
+        }).then((note) => {
           activeNoteID.current = note.id;
-          setNote(note);
+          setActiveNote(note);
         });
       }
       if (!found) {
-        history.push(`/`); // return to homepage if meeting not found
+        history.push(`/`);
       }
     }
   }, [meetings]);
