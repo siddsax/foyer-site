@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import "./WelcomePage.css";
 import logo from "../../assets/images/logo.png";
+import googleSignIn from "../../assets/icons/googleSignIn.png";
 const WelcomePage = (props) => {
   const { signIn } = props;
   return (
@@ -21,9 +22,12 @@ const WelcomePage = (props) => {
             </div>
           </div>
           <div className="signInButton">
-            <Button onClick={signIn} variant="contained">
+            <button onClick={signIn}>
+              <img src={googleSignIn} />
+            </button>
+            {/* <Button onClick={signIn} variant="contained">
               Sign in with Google
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>

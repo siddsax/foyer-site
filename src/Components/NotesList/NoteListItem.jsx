@@ -10,7 +10,8 @@ var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const NoteListItem = (props) => {
   const { note } = props;
   const pageReload = () => {
-    if ((window.location.href.split("/")[1].split("-")[0] = "note")) {
+    console.log(window.location.href.split("/"));
+    if (window.location.href.split("/").at(-1).split("-")[0] === "note") {
       console.log("Refreshed!!!");
       setTimeout(() => window.location.reload(), 10);
     }
