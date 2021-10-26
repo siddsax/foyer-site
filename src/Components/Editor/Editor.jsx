@@ -46,8 +46,10 @@ const EditorFoyer = (props) => {
   };
 
   useEffect(() => {
-    setValue(JSON.parse(note.body));
-  }, []);
+    if (note) {
+      setValue(JSON.parse(note.body));
+    }
+  }, [note]);
 
   return (
     <Slate

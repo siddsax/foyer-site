@@ -86,23 +86,18 @@ const NotePage = (props) => {
 
     var docRef = db.collection("Notes").doc(`${activeNoteID.current}`);
 
-    docRef
-      .onSnapshot(async (doc) => {
-        if (doc.exists) {
-          console.log("Document exists", doc.data());
-          activeNote = doc.data();
-        } else {
-          console.log("No such document!");
-          activeNote = null;
-        }
-        await setActiveNote(activeNote);
-        await setLinkNotes(activeNote.linkNotes ? activeNote.linkNotes : []);
-        await setUpdatingToggle((preVal) => !preVal);
-      })
-      .catch((error) => {
-        console.log("Error getting document:", error);
-        setActiveNote(null);
-      });
+    docRef.onSnapshot(async (doc) => {
+      if (doc.exists) {
+        console.log("Document exists", doc.data());
+        activeNote = doc.data();
+      } else {
+        console.log("No such document!");
+        activeNote = null;
+      }
+      await setActiveNote(activeNote);
+      await setLinkNotes(activeNote.linkNotes ? activeNote.linkNotes : []);
+      await setUpdatingToggle((preVal) => !preVal);
+    });
   };
 
   const getMeetingNote = async (props) => {
@@ -117,8 +112,8 @@ const NotePage = (props) => {
       docRef = db.collection("Notes").where("meetId", "==", `${meetHangoutID}`);
     }
 
-    docRef
-      .onSnapshot(async (querySnapshot) => {
+    docRef.onSnapshot(async (querySnapshot) => {
+      if (querySnapshot.length) {
         querySnapshot.forEach((doc) => {
           console.log("Document exists", doc.data());
           activeNote = doc.data();
@@ -127,11 +122,8 @@ const NotePage = (props) => {
         await setActiveNote(activeNote);
         await setLinkNotes(activeNote.linkNotes ? activeNote.linkNotes : []);
         await setUpdatingToggle((preVal) => !preVal);
-      })
-      .catch((error) => {
-        console.log("Error getting document:", error);
-        setActiveNote("No Meeting");
-      });
+      } else setActiveNote("No Meeting");
+    });
   };
 
   const updateTitle = (value) => {
