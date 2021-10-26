@@ -87,8 +87,7 @@ const NotePage = (props) => {
     var docRef = db.collection("Notes").doc(`${activeNoteID.current}`);
 
     docRef
-      .get()
-      .then(async (doc) => {
+      .onSnapshot(async (doc) => {
         if (doc.exists) {
           console.log("Document exists", doc.data());
           activeNote = doc.data();
@@ -119,8 +118,7 @@ const NotePage = (props) => {
     }
 
     docRef
-      .get()
-      .then(async (querySnapshot) => {
+      .onSnapshot(async (querySnapshot) => {
         querySnapshot.forEach((doc) => {
           console.log("Document exists", doc.data());
           activeNote = doc.data();
