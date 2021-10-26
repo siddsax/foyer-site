@@ -113,16 +113,14 @@ const NotePage = (props) => {
     }
 
     docRef.onSnapshot(async (querySnapshot) => {
-      if (querySnapshot.length) {
-        querySnapshot.forEach((doc) => {
-          console.log("Document exists", doc.data());
-          activeNote = doc.data();
-          activeNoteID.current = activeNote.id;
-        });
-        await setActiveNote(activeNote);
-        await setLinkNotes(activeNote.linkNotes ? activeNote.linkNotes : []);
-        await setUpdatingToggle((preVal) => !preVal);
-      } else setActiveNote("No Meeting");
+      querySnapshot.forEach((doc) => {
+        console.log("Document exists", doc.data());
+        activeNote = doc.data();
+        activeNoteID.current = activeNote.id;
+      });
+      await setActiveNote(activeNote);
+      await setLinkNotes(activeNote.linkNotes ? activeNote.linkNotes : []);
+      await setUpdatingToggle((preVal) => !preVal);
     });
   };
 
