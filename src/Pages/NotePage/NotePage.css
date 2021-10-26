@@ -1,5 +1,5 @@
 .loader {
-  margin-top: 20px;
+  /* margin-top: 20px; */
   height: 100vh;
   align-content: center;
   display: flex;
@@ -8,7 +8,7 @@
 }
 
 .notePage {
-  margin-top: 20px;
+  padding-top: 20px;
   background-color: var(--main-bg-color);
   display: flex;
   overflow-y: auto;
@@ -92,7 +92,7 @@
 }
 
 .editorBox {
-  margin: 10pt;
+  margin: 0pt 10pt 10pt 10pt;
   min-height: 200px;
   color: var(--first-text-color);
 }

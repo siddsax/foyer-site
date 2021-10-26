@@ -21,6 +21,14 @@ import { override } from "../../Components/Helpers/GeneralHelpers";
 import PopupLinkMeet from "../../Components/PopupLinkMeet/PopupLinkMeet";
 import NotesList from "../../Components/NotesList/NotesList";
 import { setFirstMonthNote } from "../../Components/Helpers/GeneralHelpers";
+import PopupActionItem from "../../Components/PopupActionItem/PopupActionItem";
+import ActionItemsDisplay from "../../Components/ActionItemsDisplay/ActionItemsDisplay";
+
+let keysDown = {};
+
+window.onkeyup = function (e) {
+  keysDown[e.key] = false;
+};
 
 const NotePage = (props) => {
   const { user, fromMeeting } = props;
@@ -35,6 +43,7 @@ const NotePage = (props) => {
   const [linkNotes, setLinkNotes] = useState(null);
   const [loadingLinkNotes, setLoadingLinkNotes] = useState(true);
   const [updatingToggle, setUpdatingToggle] = useState(true);
+  const [openActionItemPopup, setOpenActionItemPopup] = useState(false);
 
   // Not using due to errors
   const setNote = async (props) => {
@@ -42,6 +51,16 @@ const NotePage = (props) => {
     await setActiveNote(note);
     await setLinkNotes(note.linkNotes ? note.linkNotes : []);
     await setUpdatingToggle((preVal) => !preVal);
+  };
+
+  window.onkeydown = function (e) {
+    keysDown[e.key] = true;
+
+    if (keysDown["Control"] && keysDown["t"]) {
+      //do what you want when control and a is pressed for example
+      console.log("control + t");
+      setOpenActionItemPopup(true);
+    }
   };
 
   const onUpdateNoteDB = (title, content) => {
@@ -261,6 +280,9 @@ const NotePage = (props) => {
                 setValue={setValue}
               />
             </div>
+            <div className="actionItemArea">
+              <ActionItemsDisplay noteId={activeNote.id} user={user} />
+            </div>
           </div>
           <div className="shareNoteButtonArea">
             <PopupShare
@@ -273,6 +295,14 @@ const NotePage = (props) => {
               setLinkNotes={setLinkNotes}
               activeNote={activeNote}
               setUpdatingToggle={setUpdatingToggle}
+            />
+            <PopupActionItem
+              noteContent={contentState}
+              attendees={activeNote.access}
+              noteId={activeNote.id}
+              openActionItemPopup={openActionItemPopup}
+              setOpenActionItemPopup={setOpenActionItemPopup}
+              user={user}
             />
           </div>
           <div className="linkedMeetingsArea">
