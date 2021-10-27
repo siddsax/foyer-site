@@ -39,6 +39,7 @@ const NotePage = (props) => {
   const [contentState, setContentState] = useState(null);
   const history = useHistory();
   const db = firebase.firestore();
+
   const [value, setValue] = useState(initialValue);
   const [linkNotes, setLinkNotes] = useState(null);
   const [loadingLinkNotes, setLoadingLinkNotes] = useState(true);
@@ -95,8 +96,10 @@ const NotePage = (props) => {
         activeNote = null;
       }
       await setActiveNote(activeNote);
-      await setLinkNotes(activeNote.linkNotes ? activeNote.linkNotes : []);
-      await setUpdatingToggle((preVal) => !preVal);
+      if (activeNote) {
+        await setLinkNotes(activeNote.linkNotes ? activeNote.linkNotes : []);
+        await setUpdatingToggle((preVal) => !preVal);
+      }
     });
   };
 
@@ -125,7 +128,6 @@ const NotePage = (props) => {
   };
 
   const updateTitle = (value) => {
-    console.log(value, "++++++++++++++");
     debouncedOnUpdateNoteDB(value, activeNote.body);
   };
 
@@ -209,7 +211,6 @@ const NotePage = (props) => {
   }, [meetings]);
 
   useEffect(() => {
-    console.log(updatingToggle, "++++++-------------==============");
     if (linkNotes) {
       const addDatesLinkNotes = async () => {
         await setLoadingLinkNotes(true);
@@ -327,6 +328,6 @@ export default NotePage;
 const initialValue: Descendant[] = [
   {
     type: "paragraph",
-    children: [{ text: "This is editable " }],
+    children: [{ text: "" }],
   },
 ];

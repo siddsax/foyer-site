@@ -1,5 +1,5 @@
 import { css } from "emotion";
-import { useEffect, useCallback, useMemo, useState } from "react";
+import { useEffect, useCallback, useMemo, useState, useRef } from "react";
 import isHotkey from "is-hotkey";
 import { Editable, withReact, useSlate, Slate } from "slate-react";
 import {
@@ -34,10 +34,10 @@ const LIST_TYPES = ["numbered-list", "bulleted-list"];
 
 const EditorFoyer = (props) => {
   const { user, note, updateDB, value, setValue } = props;
-
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+
   const db = firebase.firestore();
 
   const onEditNote = (value) => {
@@ -46,6 +46,7 @@ const EditorFoyer = (props) => {
   };
 
   useEffect(() => {
+    console.log(note);
     if (note) {
       setValue(JSON.parse(note.body));
     }

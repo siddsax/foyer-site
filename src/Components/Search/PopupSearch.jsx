@@ -93,10 +93,6 @@ const PopupSearch = (props) => {
     }
   }, [inputValue]);
 
-  useEffect(() => {
-    console.log(resultNotes);
-  }, [resultNotes]);
-
   return (
     <Popup trigger={trigger} modal nested contentStyle={contentStyle}>
       {(close) => (
