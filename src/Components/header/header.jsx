@@ -3,8 +3,9 @@ import { Box, Button } from "@mui/material";
 import firebase from "firebase";
 import "./header.css";
 import logo from "../../assets/images/logo.png";
+import back from "../../assets/icons/arrow-left.png";
 import Icon from "@mui/material/Icon";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { DropdownMenu, MenuItem } from "react-bootstrap-dropdown-menu";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useDetectOutsideClick } from "./useDetectOutsideClick";
@@ -13,7 +14,9 @@ import PopupSearch from "../Search/PopupSearch";
 import SearchListItem from "../Search/SearchListItem";
 
 const Header = (props) => {
+  // const {notePage} = props
   const [user, loading, error] = useAuthState(firebase.auth());
+  const history = useHistory();
   const dropdownRef = useRef(null);
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const onClick = () => setIsActive(!isActive);
@@ -27,6 +30,24 @@ const Header = (props) => {
       });
   };
 
+  const goBack = () => {
+    console.log(document.referrer, "========");
+    if (document.referrer) {
+      const site = document.referrer.split("/")[2];
+      console.log(site, document.referrer.split("/"));
+      if (site === "my.foyer.work" || site === "localhost") {
+        history.goBack();
+        setTimeout(() => {
+          if (window.location.href.split("/").at(-1).split("-")[0] === "note") {
+            console.log("Refreshed!!!");
+            setTimeout(() => window.location.reload(), 10);
+          }
+        });
+      }
+    }
+    history.push("/");
+  };
+
   const trigger = (
     <input type="text" placeholder="Search" className="searchBox" />
   );
@@ -38,6 +59,10 @@ const Header = (props) => {
             <Link to="/">
               <img src={logo} className="logo" />
             </Link>
+
+            <button onClick={goBack} className="back">
+              <img src={back} />
+            </button>
             <div className="searchBar">
               <div className="searchBarInner">
                 <PopupSearch

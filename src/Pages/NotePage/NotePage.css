@@ -1,5 +1,4 @@
 .loader {
-  /* margin-top: 20px; */
   height: 100vh;
   align-content: center;
   display: flex;
@@ -19,17 +18,26 @@
   align-items: center;
 }
 
-.noteArea {
-  margin-left: 10px;
-  margin-right: 10px;
-  background-color: var(--first-object-color);
+.notePageContent {
   width: 80%;
+}
+
+@media only screen and (max-width: 500px) {
+  .notePageContent {
+    width: 95%;
+  }
+}
+
+.noteArea {
+  /* background-color: var(--first-object-color); */
+  width: 100%;
   min-width: 380px;
   height: auto;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   margin-bottom: 20px;
   border-radius: 10px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  margin-right: 0px;
+  /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); */
 }
 
 .noteHeaderArea {
@@ -37,7 +45,6 @@
   flex-direction: row;
   font-size: 30px;
   margin-top: 2%;
-  margin-left: 10pt;
   align-items: center;
   justify-content: center;
   align-content: center;
@@ -55,7 +62,6 @@
   position: relative;
   color: var(--first-text-color);
   font-weight: 500;
-  /* margin-left: 10pt; */
 }
 
 .dateArea {
@@ -87,21 +93,17 @@
 }
 
 .headerUnderline {
-  margin-left: 10pt;
-  margin-right: 10pt;
+  margin-left: 0pt;
+  margin-right: 0pt;
 }
 
 .editorBox {
-  margin: 0pt 10pt 10pt 10pt;
   min-height: 200px;
   color: var(--first-text-color);
 }
 
 .shareNoteButtonArea {
-  width: 100%;
-  margin-left: 10px;
-  margin-right: 10px;
-  width: 30%;
+  width: 90%;
   min-width: 380px;
   margin-bottom: 5%;
   display: flex;
@@ -111,9 +113,7 @@
 @media only screen and (max-width: 500px) {
   .shareNoteButtonArea {
     width: 100%;
-    margin-left: 10px;
-    margin-right: 10px;
-    width: 80%;
+    width: 90%;
     min-width: 380px;
     margin-bottom: 5%;
   }
@@ -121,7 +121,6 @@
 
 .linkedMeetingsArea {
   width: 100%;
-
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -134,7 +133,6 @@
   margin-bottom: 40px;
   align-content: center;
   align-items: center;
-
   box-sizing: border-box;
 }
 
@@ -142,10 +140,23 @@
   display: none;
 }
 
+.linkedMeetingsListArea {
+  width: 100%;
+}
+
+.linkedMeetingsHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
 .linkedMeetingsAreaTitle {
   font-size: 30px;
   font-weight: 300;
-  width: 80%;
+  margin-right: 20px;
   text-shadow: 0.5px;
-  margin-bottom: 20px;
 }

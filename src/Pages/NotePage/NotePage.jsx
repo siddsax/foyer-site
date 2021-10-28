@@ -240,77 +240,81 @@ const NotePage = (props) => {
       <Header activeNote={activeNote} />
       {activeNote !== null && activeNote !== "No Meeting" ? (
         <div className="notePage">
-          <div className="noteArea">
-            <div className="noteHeaderArea">
-              <div className="noteTitleArea">
-                <EditableText
-                  value={activeNote.title}
-                  editClassName="inputTitle"
-                  updateTitle={updateTitle}
+          <div className="notePageContent">
+            <div className="noteArea">
+              <div className="noteHeaderArea">
+                <div className="noteTitleArea">
+                  <EditableText
+                    value={activeNote.title}
+                    editClassName="inputTitle"
+                    updateTitle={updateTitle}
+                  />
+                </div>
+
+                <div className="dateArea">
+                  <text className="date">
+                    {dateFormat(
+                      new Date(activeNote.createdAt),
+                      "ddd, mmm d, h:MM TT"
+                    )}
+                  </text>
+                </div>
+              </div>
+              <hr className="headerUnderline"></hr>
+              <div className="editorBox">
+                <EditorFoyer
+                  user={user}
+                  note={activeNote}
+                  updateDB={debouncedOnUpdateNoteDB}
+                  value={value}
+                  setValue={setValue}
                 />
               </div>
-
-              <div className="dateArea">
-                <text className="date">
-                  {dateFormat(
-                    new Date(activeNote.createdAt),
-                    "ddd, mmm d, h:MM TT"
-                  )}
-                </text>
+              <div className="actionItemArea">
+                <ActionItemsDisplay noteId={activeNote.id} user={user} />
               </div>
             </div>
-            <hr className="headerUnderline"></hr>
-            <div className="editorBox">
-              <EditorFoyer
+            <div className="shareNoteButtonArea">
+              <PopupShare
+                noteContent={contentState}
+                attendees={activeNote.access}
+                title={activeNote.title}
+              />
+              <PopupActionItem
+                noteContent={contentState}
+                attendees={activeNote.access}
+                noteId={activeNote.id}
+                openActionItemPopup={openActionItemPopup}
+                setOpenActionItemPopup={setOpenActionItemPopup}
                 user={user}
-                note={activeNote}
-                updateDB={debouncedOnUpdateNoteDB}
-                value={value}
-                setValue={setValue}
               />
             </div>
-            <div className="actionItemArea">
-              <ActionItemsDisplay noteId={activeNote.id} user={user} />
-            </div>
-          </div>
-          <div className="shareNoteButtonArea">
-            <PopupShare
-              noteContent={contentState}
-              attendees={activeNote.access}
-              title={activeNote.title}
-            />
-            <PopupLinkMeet
-              user={user}
-              setLinkNotes={setLinkNotes}
-              activeNote={activeNote}
-              setUpdatingToggle={setUpdatingToggle}
-            />
-            <PopupActionItem
-              noteContent={contentState}
-              attendees={activeNote.access}
-              noteId={activeNote.id}
-              openActionItemPopup={openActionItemPopup}
-              setOpenActionItemPopup={setOpenActionItemPopup}
-              user={user}
-            />
-          </div>
-          <div className="linkedMeetingsArea">
-            <div className="linkedMeetingsAreaTitle">Linked Meetings</div>
-            <div className="linkedMeetingsListArea">
-              {!loadingLinkNotes ? (
-                <div className="LinkedNotesListArea">
-                  <NotesList notes={linkNotes} loading={false} />
-                </div>
-              ) : (
-                <>
-                  <PuffLoader
-                    color="#049be4"
-                    loading={loadingLinkNotes}
-                    css={override}
-                    size={50}
-                  />
-                </>
-              )}
+            <div className="linkedMeetingsArea">
+              <div className="linkedMeetingsHeader">
+                <div className="linkedMeetingsAreaTitle">Linked Meetings</div>
+                <PopupLinkMeet
+                  user={user}
+                  setLinkNotes={setLinkNotes}
+                  activeNote={activeNote}
+                  setUpdatingToggle={setUpdatingToggle}
+                />
+              </div>
+              <div className="linkedMeetingsListArea">
+                {!loadingLinkNotes ? (
+                  <div className="LinkedNotesListArea">
+                    <NotesList notes={linkNotes} loading={false} />
+                  </div>
+                ) : (
+                  <>
+                    <PuffLoader
+                      color="#049be4"
+                      loading={loadingLinkNotes}
+                      css={override}
+                      size={50}
+                    />
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>

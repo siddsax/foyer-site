@@ -237,3 +237,14 @@ html[data-theme="light"] .popup-arrow {
 .shareMethodGoogleBox {
   display: flex;
 }
+
+.buttonShare {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 150px;
+  background-color: #9c978e;
+  color: white;
+  border-radius: 10px;
+}

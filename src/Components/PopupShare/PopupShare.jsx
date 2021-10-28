@@ -11,7 +11,7 @@ import copyIcon from "../../assets/icons/copyIcon.png";
 import emailIcon from "../../assets/icons/email.png";
 import { apiKey } from "../../sendgrid";
 import firebase from "../../firebase";
-
+import rocket from "../../assets/icons/rocket.png";
 const ShareMethod = (props) => {
   const { icon, onClickFunction, text, closeAlert } = props;
   return (
@@ -59,16 +59,22 @@ const PopupShare = (props) => {
   return (
     <Popup
       trigger={
-        <Button
-          variant="contained"
-          style={{
-            backgroundColor: "#EEBC1D",
-            color: "Black",
-            width: "100%",
-          }}
-        >
-          Share Note
-        </Button>
+        // <Button
+        //   variant="contained"
+        //   style={{
+        //     backgroundColor: "#EEBC1D",
+        //     color: "Black",
+        //     width: "100%",
+        //   }}
+        // >
+        //   Share Note
+        // </Button>
+        <button>
+          <div className="buttonShare">
+            <img src={rocket} style={{ "margin-right": "10px" }} />
+            Share Notes
+          </div>
+        </button>
       }
       modal
       nested
