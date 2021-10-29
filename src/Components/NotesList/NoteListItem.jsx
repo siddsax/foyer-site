@@ -1,8 +1,7 @@
 import calender from "../../assets/images/calendar.png";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import "./NotesList.css";
-import { formatAMPM } from "./helper";
-import { weekdays } from "../Helpers/GeneralHelpers";
+import { weekdays, ListItemBarComponent } from "../Helpers/GeneralHelpers";
 
 const NoteListItem = (props) => {
   const { note } = props;
@@ -45,17 +44,7 @@ const NoteListItem = (props) => {
           style={{ textDecoration: "none" }}
           onClick={pageReload}
         >
-          <div className="NoteTitleArea">
-            <text className="NoteTitleText">{note.title}</text>
-          </div>
-          <div className="DateTimeArea">
-            {note.end ? (
-              <text className="DateTime">
-                {formatAMPM(new Date(note.createdAt))} {" - "}
-                {formatAMPM(new Date(note.end))}
-              </text>
-            ) : null}
-          </div>
+          <ListItemBarComponent item={note} />
         </Link>
       </div>
     </div>

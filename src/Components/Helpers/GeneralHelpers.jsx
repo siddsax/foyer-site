@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-
+import "./helpers.css";
 var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const monthArray = [
   "January",
@@ -15,6 +15,17 @@ const monthArray = [
   "November",
   "December",
 ];
+
+function formatAMPM(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? "pm" : "am";
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  var strTime = hours + ":" + minutes + " " + ampm;
+  return strTime;
+}
 
 const formatMeeting = (props) => {
   const { meetingCalendar } = props;
@@ -126,4 +137,48 @@ const setFirstMonthNote = async (props) => {
   return offset;
 };
 
-export { formatMeeting, override, setFirstMonthNote, weekdays, monthArray };
+const ListItemBarComponent = (props) => {
+  const { item } = props;
+  return (
+    <>
+      <div className="NoteTitleArea">
+        <text className="NoteTitleText">{item.title}</text>
+      </div>
+      <div className="DateTimeArea">
+        {item.end ? (
+          <text className="DateTime">
+            {formatAMPM(new Date(item.createdAt))} {" - "}
+            {formatAMPM(new Date(item.end))}
+          </text>
+        ) : null}
+      </div>
+    </>
+  );
+};
+
+const SearchListItemDisplayComponent = (props) => {
+  const { item } = props;
+  return (
+    <div className="searchListItem">
+      <div className="type">{item.meetId ? "Meeting Note" : "Note"}</div>
+      <div className="title">| {item.title}</div>
+      <div className="dateArea">
+        {formatAMPM(new Date(item.createdAt))},{"  "}
+        {weekdays[new Date(item.createdAt).getDay()]},{"  "}
+        {new Date(item.createdAt).getDate()}/
+        {new Date(item.createdAt).getMonth()}
+      </div>
+    </div>
+  );
+};
+
+export {
+  formatMeeting,
+  override,
+  setFirstMonthNote,
+  weekdays,
+  monthArray,
+  formatAMPM,
+  ListItemBarComponent,
+  SearchListItemDisplayComponent,
+};

@@ -1,12 +1,9 @@
-import calender from "../../assets/images/calendar.png";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import "./NotesList.css";
-import { formatAMPM } from "./helper";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory } from "react-router-dom";
 import firebase from "../../firebase";
 import { addMeetNote } from "../Helpers/BackendHelpers";
-import { weekdays } from "../Helpers/GeneralHelpers";
+import { weekdays, ListItemBarComponent } from "../Helpers/GeneralHelpers";
 
 const MeetListItem = (props) => {
   const { meet } = props;
@@ -46,17 +43,7 @@ const MeetListItem = (props) => {
           }}
           className="buttonMeetingNote"
         >
-          <div className="NoteTitleArea">
-            <text className="NoteTitleText">{meet.title}</text>
-          </div>
-          <div className="DateTimeArea">
-            {meet.end ? (
-              <text className="DateTime">
-                {formatAMPM(new Date(meet.createdAt))} {" - "}
-                {formatAMPM(new Date(meet.end))}
-              </text>
-            ) : null}
-          </div>
+          <ListItemBarComponent item={meet} />
         </button>
       </div>
     </div>

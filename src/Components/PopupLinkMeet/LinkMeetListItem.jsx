@@ -1,9 +1,7 @@
-import { formatAMPM } from "..//NotesList/helper";
 import "../Search/Search.css";
 import "./PopupLinkMeet.css";
 import firebase from "../../firebase";
-
-var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+import { SearchListItemDisplayComponent } from "../../Components/Helpers/GeneralHelpers";
 
 const LinkMeetListItem = (props) => {
   const { note, setLinkNotes, close, activeNote, setUpdatingToggle } = props;
@@ -47,18 +45,9 @@ const LinkMeetListItem = (props) => {
   };
 
   return (
-    // <button>
-    <div className="searchListItem" onClick={selectNote}>
-      <div className="type">{note.meetId ? "Meeting Note" : "Note"}</div>
-      <div className="title">| {note.title}</div>
-      <div className="dateArea">
-        {formatAMPM(new Date(note.createdAt))},{"  "}
-        {weekdays[new Date(note.createdAt).getDay()]},{"  "}
-        {new Date(note.createdAt).getDate()}/
-        {new Date(note.createdAt).getMonth()}
-      </div>
+    <div onClick={selectNote}>
+      <SearchListItemDisplayComponent item={note} />
     </div>
-    // </button>
   );
 };
 
