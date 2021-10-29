@@ -59,17 +59,10 @@ select {
   align-items: center;
   justify-content: center;
 }
-/* 
-.MuiOutlinedInput-root input[type="text"] {
-  border: none;
-  outline: none;
-  background-color: grey;
-  padding-bottom: 25px;
-  display: flex;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
-} */
+
+.css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+  margin-top: 20px;
+}
 
 .createActionItemButtonArea {
   display: flex;

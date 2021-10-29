@@ -1,5 +1,21 @@
 import { css } from "@emotion/react";
 
+var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const monthArray = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 const formatMeeting = (props) => {
   const { meetingCalendar } = props;
   const meet = {
@@ -110,4 +126,4 @@ const setFirstMonthNote = async (props) => {
   return offset;
 };
 
-export { formatMeeting, override, setFirstMonthNote };
+export { formatMeeting, override, setFirstMonthNote, weekdays, monthArray };

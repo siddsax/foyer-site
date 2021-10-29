@@ -8,6 +8,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DatePicker from "react-datepicker";
 import Button from "@mui/material/Button";
 import firebase from "../../firebase";
+import TimePicker from "@mui/lab/TimePicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -23,6 +24,8 @@ export default function InputForm(props) {
     assignees,
     user,
     noteId,
+    time,
+    setTime,
   } = props;
 
   const db = firebase.firestore();
@@ -37,6 +40,7 @@ export default function InputForm(props) {
       date: date,
       status: false,
       noteId: noteId,
+      time: time,
     };
 
     console.log(user, newActionItem);
@@ -80,6 +84,19 @@ export default function InputForm(props) {
           onChange={(newValue) => {
             setDate(newValue);
           }}
+        />
+
+        <DatePicker
+          selected={time}
+          onChange={(time) => {
+            console.log(time);
+            setTime(time);
+          }}
+          showTimeSelect
+          showTimeSelectOnly
+          timeIntervals={15}
+          timeCaption="Time"
+          dateFormat="hh:mm aa"
         />
       </Stack>
       <div className="createActionItemButtonArea">

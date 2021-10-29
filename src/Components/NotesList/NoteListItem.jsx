@@ -2,10 +2,7 @@ import calender from "../../assets/images/calendar.png";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import "./NotesList.css";
 import { formatAMPM } from "./helper";
-
-var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-// {formatAMPM(new Date(note.createdAt))}
+import { weekdays } from "../Helpers/GeneralHelpers";
 
 const NoteListItem = (props) => {
   const { note } = props;

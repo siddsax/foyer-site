@@ -11,7 +11,6 @@ import { formatMeeting } from "../../Components/Helpers/GeneralHelpers";
 import PuffLoader from "react-spinners/PuffLoader";
 import { css } from "@emotion/react";
 import { setFirstMonthNote } from "../../Components/Helpers/GeneralHelpers";
-
 const override = css`
   display: block;
   margin: 0 auto;
@@ -189,7 +188,13 @@ const NotesListPage = (props) => {
             <Button
               variant="contained"
               onClick={addNote}
-              style={{ backgroundColor: "#EEBC1D", color: "Black" }}
+              // style={{ backgroundColor: "#EEBC1D", color: "Black" }}
+              style={{
+                backgroundColor: getComputedStyle(
+                  document.documentElement
+                ).getPropertyValue("--button-color"),
+                color: "Black",
+              }}
             >
               New Note
             </Button>

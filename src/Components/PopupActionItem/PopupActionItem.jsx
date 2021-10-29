@@ -25,6 +25,7 @@ const PopupActionItem = (props) => {
   const [date, setDate] = useState(null);
   const [assignees, setAssignees] = useState(null);
   const [title, setTitle] = useState("");
+  const [time, setTime] = useState(new Date("01-01-1970 17:00:00"));
 
   useEffect(() => {
     console.log(openActionItemPopup);
@@ -57,6 +58,8 @@ const PopupActionItem = (props) => {
               assignees={assignees}
               user={user}
               noteId={noteId}
+              time={time}
+              setTime={setTime}
             />
           </div>
           <div className="actions"></div>

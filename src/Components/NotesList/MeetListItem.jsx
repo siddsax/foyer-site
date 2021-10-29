@@ -6,8 +6,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory } from "react-router-dom";
 import firebase from "../../firebase";
 import { addMeetNote } from "../Helpers/BackendHelpers";
-
-var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+import { weekdays } from "../Helpers/GeneralHelpers";
 
 const MeetListItem = (props) => {
   const { meet } = props;

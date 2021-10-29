@@ -5,27 +5,9 @@ import "./NotesList.css";
 import { css } from "@emotion/react";
 import HashLoader from "react-spinners/HashLoader";
 import calendar from "../../assets/images/calendar.png";
+import { override } from "../Helpers/GeneralHelpers";
+import { monthArray } from "../Helpers/GeneralHelpers";
 
-const monthArray = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-const override = css`
-  display: block;
-  margin: 0 auto;
-  border-color: red;
-`;
 const NotesList = (props) => {
   var { notes, loading } = props;
   // let [color, setColor] = useState("#ffffff");
