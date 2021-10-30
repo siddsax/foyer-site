@@ -46,236 +46,48 @@ const NotePage = (props) => {
   const [updatingToggle, setUpdatingToggle] = useState(true);
   const [openActionItemPopup, setOpenActionItemPopup] = useState(false);
 
-  // Not using due to errors
-  const setNote = async (props) => {
-    const { note } = props;
-    await setActiveNote(note);
-    await setLinkNotes(note.linkNotes ? note.linkNotes : []);
-    await setUpdatingToggle((preVal) => !preVal);
-  };
-
-  window.onkeydown = function (e) {
-    keysDown[e.key] = true;
-
-    if (keysDown["Control"] && keysDown["t"]) {
-      //do what you want when control and a is pressed for example
-      console.log("control + t");
-      setOpenActionItemPopup(true);
-    }
-  };
-
-  const onUpdateNoteDB = (title, content) => {
-    setContentState(
-      document.getElementsByClassName("editorBox")[0].childNodes[2].innerHTML
-    );
-
-    console.log("Updating");
-    db.collection("Notes").doc(`${activeNoteID.current}`).update({
-      title: title,
-      body: content,
-      lastModified: Date.now(),
-    });
-  };
-
-  const debouncedOnUpdateNoteDB = useCallback(
-    debounce(onUpdateNoteDB, 500),
-    []
-  );
-
-  const getActiveNote = async () => {
-    var activeNote = null;
-
-    var docRef = db.collection("Notes").doc(`${activeNoteID.current}`);
-
-    docRef.onSnapshot(async (doc) => {
-      if (doc.exists) {
-        console.log("Document exists", doc.data());
-        activeNote = doc.data();
-      } else {
-        console.log("No such document!");
-        activeNote = null;
-      }
-      await setActiveNote(activeNote);
-      if (activeNote) {
-        await setLinkNotes(activeNote.linkNotes ? activeNote.linkNotes : []);
-        await setUpdatingToggle((preVal) => !preVal);
-      }
-    });
-  };
-
-  const getMeetingNote = async (props) => {
-    const { meetHangoutID } = props;
-    var activeNote = "No Meeting";
-    var docRef;
-    if (meetHangoutID.split("-").length > 1) {
-      docRef = db
-        .collection("Notes")
-        .where("hangoutLink", "==", `https://meet.google.com/${meetHangoutID}`);
-    } else {
-      docRef = db.collection("Notes").where("meetId", "==", `${meetHangoutID}`);
-    }
-
-    docRef.onSnapshot(async (querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        console.log("Document exists", doc.data());
-        activeNote = doc.data();
-        activeNoteID.current = activeNote.id;
-      });
-      await setActiveNote(activeNote);
-      await setLinkNotes(activeNote.linkNotes ? activeNote.linkNotes : []);
-      await setUpdatingToggle((preVal) => !preVal);
-    });
-  };
-
-  const updateTitle = (value) => {
-    debouncedOnUpdateNoteDB(value, activeNote.body);
-  };
-
-  useEffect(() => {
-    if (!fromMeeting) {
-      activeNoteID.current = location.pathname.split("note-")[1];
-      getActiveNote();
-    } else {
-      getMeetingNote({
-        meetHangoutID: location.pathname.split("meetid-")[1],
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    var uriHangoutID = location.pathname.split("meetid-")[1];
-    if (activeNote === "No Meeting" && fromMeeting) {
-      if (uriHangoutID.split("-").length > 1) {
-        listUpcomingEvents(10, setMeetings);
-      } else {
-        getMeetDetails({ eventId: uriHangoutID, setEvent: setMeetings });
-      }
-    }
-  }, [activeNote]);
-
-  useEffect(() => {
-    if (activeNote !== null && activeNote !== "No Meeting") {
-      setContentState(
-        document.getElementsByClassName("editorBox")[0].childNodes[2].innerHTML
-      );
-    }
-  }, [value]);
-
-  useEffect(() => {
-    var found = 0;
-    var uriHangoutID = location.pathname.split("meetid-")[1];
-    if (meetings) {
-      if (uriHangoutID.split("-").length > 1) {
-        for (let i = 0; i < meetings.length; i++) {
-          if (meetings[i].hangoutLink) {
-            const meetHangoutID = meetings[i].hangoutLink
-              .split("/")
-              .slice(-1)[0];
-            if (meetHangoutID === uriHangoutID) {
-              found = 1; // meeting found, using this from the next 10 events
-              var meet = formatMeeting({ meetingCalendar: meetings[i] });
-              addMeetNote({
-                meet: meet,
-                db: db,
-                history: history,
-                user: user,
-              }).then(async (note) => {
-                activeNoteID.current = note.id;
-                await setActiveNote(note);
-                await setLinkNotes(note.linkNotes ? note.linkNotes : []);
-                await setUpdatingToggle((preVal) => !preVal);
-              });
-              break;
-            }
-          }
-        }
-      } else {
-        found = 1; // meeting found by pulling directly via calendar api
-        var meet = formatMeeting({ meetingCalendar: meetings });
-        addMeetNote({
-          meet: meet,
-          db: db,
-          history: history,
-          user: user,
-        }).then(async (note) => {
-          activeNoteID.current = note.id;
-          await setActiveNote(note);
-          await setLinkNotes(note.linkNotes ? note.linkNotes : []);
-          await setUpdatingToggle((preVal) => !preVal);
-        });
-      }
-      if (!found) {
-        history.push(`/`); // return to homepage if meeting not found
-      }
-    }
-  }, [meetings]);
-
-  useEffect(() => {
-    if (linkNotes) {
-      const addDatesLinkNotes = async () => {
-        await setLoadingLinkNotes(true);
-        await db.collection("Notes").doc(`${activeNoteID.current}`).update({
-          linkNotes: linkNotes,
-        });
-
-        await setLinkNotes((prevValue) => {
-          return prevValue.slice().sort((a, b) => a.createdAt - b.createdAt);
-        });
-
-        await setFirstMonthNote({
-          notes: linkNotes,
-          setNotes: setLinkNotes,
-          loadingTop: false,
-          todayLine: false,
-        });
-        await setLoadingLinkNotes(false);
-      };
-
-      addDatesLinkNotes();
-    }
-  }, [updatingToggle]);
-
   return (
     <div>
-      <Header activeNote={activeNote} />
-      {activeNote !== null && activeNote !== "No Meeting" ? (
-        <div className="notePage">
-          <div className="notePageContent">
-            <div className="noteArea">
-              <div className="noteHeaderArea">
-                <div className="noteTitleArea">
-                  <EditableText
-                    value={activeNote.title}
-                    editClassName="inputTitle"
-                    updateTitle={updateTitle}
-                  />
-                </div>
-
-                <div className="dateArea">
-                  <text className="date">
-                    {dateFormat(
-                      new Date(activeNote.createdAt),
-                      "ddd, mmm d, h:MM TT"
-                    )}
-                  </text>
-                </div>
-              </div>
-              <hr className="headerUnderline"></hr>
-              <div className="editorBox">
-                <EditorFoyer
-                  user={user}
-                  note={activeNote}
-                  updateDB={debouncedOnUpdateNoteDB}
-                  value={value}
-                  setValue={setValue}
+      {/* <Header activeNote={activeNote} /> */}
+      <Header activeNote={null} />
+      {/* {activeNote !== null && activeNote !== "No Meeting" ? ( */}
+      <div className="notePage">
+        <div className="notePageContent">
+          <div className="noteArea">
+            <div className="noteHeaderArea">
+              <div className="noteTitleArea">
+                <EditableText
+                  value={"Dummy"}
+                  editClassName="inputTitle"
+                  // updateTitle={updateTitle}
                 />
               </div>
-              <div className="actionItemArea">
-                <ActionItemsDisplay noteId={activeNote.id} user={user} />
+
+              <div className="dateArea">
+                <text className="date">
+                  {/* {dateFormat(
+                      new Date(activeNote.createdAt),
+                      "ddd, mmm d, h:MM TT"
+                    )} */}
+                </text>
               </div>
             </div>
-            <div className="shareNoteButtonArea">
-              <PopupShare
+            <hr className="headerUnderline"></hr>
+            <div className="editorBox">
+              <EditorFoyer
+                user={user}
+                // note={activeNote}
+                // updateDB={debouncedOnUpdateNoteDB}
+                value={value}
+                setValue={setValue}
+              />
+            </div>
+            {/* <div className="actionItemArea">
+                <ActionItemsDisplay noteId={activeNote.id} user={user} />
+              </div> */}
+          </div>
+          <div className="shareNoteButtonArea">
+            {/* <PopupShare
                 noteContent={contentState}
                 attendees={activeNote.access}
                 title={activeNote.title}
@@ -287,42 +99,42 @@ const NotePage = (props) => {
                 openActionItemPopup={openActionItemPopup}
                 setOpenActionItemPopup={setOpenActionItemPopup}
                 user={user}
+              /> */}
+          </div>
+          <div className="linkedMeetingsArea">
+            <div className="linkedMeetingsHeader">
+              <div className="linkedMeetingsAreaTitle">Linked Meetings</div>
+              <PopupLinkMeet
+                user={user}
+                setLinkNotes={setLinkNotes}
+                // activeNote={activeNote}
+                setUpdatingToggle={setUpdatingToggle}
               />
             </div>
-            <div className="linkedMeetingsArea">
-              <div className="linkedMeetingsHeader">
-                <div className="linkedMeetingsAreaTitle">Linked Meetings</div>
-                <PopupLinkMeet
-                  user={user}
-                  setLinkNotes={setLinkNotes}
-                  activeNote={activeNote}
-                  setUpdatingToggle={setUpdatingToggle}
-                />
-              </div>
-              <div className="linkedMeetingsListArea">
-                {!loadingLinkNotes ? (
-                  <div className="LinkedNotesListArea">
-                    <NotesList notes={linkNotes} loading={false} />
-                  </div>
-                ) : (
-                  <>
-                    <PuffLoader
-                      color="#049be4"
-                      loading={loadingLinkNotes}
-                      css={override}
-                      size={50}
-                    />
-                  </>
-                )}
-              </div>
+            <div className="linkedMeetingsListArea">
+              {!loadingLinkNotes ? (
+                <div className="LinkedNotesListArea">
+                  <NotesList notes={linkNotes} loading={false} />
+                </div>
+              ) : (
+                <>
+                  <PuffLoader
+                    color="#049be4"
+                    loading={loadingLinkNotes}
+                    css={override}
+                    size={50}
+                  />
+                </>
+              )}
             </div>
           </div>
         </div>
-      ) : (
+      </div>
+      {/* ) : (
         <div className="loader">
           <HashLoader color="#049be4" loading={true} css={override} size={50} />
         </div>
-      )}
+      )} */}
     </div>
   );
 };

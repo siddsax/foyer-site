@@ -1,0 +1,16 @@
+.editor {
+  /* background-color: burlywood; */
+  height: 200px;
+}
+
+.ql-toolbar.ql-snow {
+  border-width: 1px 1px 0px 1px;
+}
+
+.ql-container.ql-snow {
+  min-height: 200px;
+}
+
+.ql-toolbar.ql-snow .ql-formats {
+  margin-right: 0px;
+}
