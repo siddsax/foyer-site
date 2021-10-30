@@ -31,4 +31,30 @@ const addMeetNote = async (props) => {
   return newNote;
 };
 
-export { addMeetNote };
+const getActionItems = async (props) => {
+  const { db, setLoading, setActionItems, noteId, userId, assigneeID } = props;
+  await setLoading(true);
+
+  var docRef = db.collection("ActionItems").orderBy("date", "asc");
+  if (noteId) {
+    docRef = docRef.where("assignees", "array-contains", noteId);
+  } else if (assigneeID) {
+    docRef = docRef.where("noteId", "==", assigneeID);
+  } else if (userId) {
+    docRef = docRef.where("creator", "==", userId);
+  }
+
+  await docRef.onSnapshot((querySnapshot) => {
+    querySnapshot.docChanges().forEach((change) => {
+      console.log(change.doc.id, " => ", change.doc.data());
+      setActionItems((preVal) => [
+        ...preVal,
+        { id: change.doc.id, data: change.doc.data() },
+      ]);
+    });
+  });
+
+  await setLoading(false);
+};
+
+export { addMeetNote, getActionItems };

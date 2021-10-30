@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NotePage from "./Pages/NotePage/NotePage";
 import GCalendarAPI from "./Components/GCalendarAPI/GCalendarAPI";
 import WelcomePage from "./Pages/WelcomePage/WelcomePage";
+import HomePage from "./Pages/HomePage/HomePage";
 
 function App() {
   const [user, loading, error] = useAuthState(firebase.auth());
@@ -56,7 +57,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <NotesListPage user={user} />
+            <HomePage user={user} />
           </Route>
           <Route path="/note-*">
             <NotePage user={user} fromMeeting={false} />

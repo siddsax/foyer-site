@@ -1,0 +1,14 @@
+.checkBoxArea {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  color: var(--fourth-object-color);
+}
+
+@media only screen and (max-width: 500px) {
+  .newActionItemButton {
+    display: none;
+  }
+}

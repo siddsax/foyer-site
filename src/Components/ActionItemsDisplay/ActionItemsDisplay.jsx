@@ -4,11 +4,10 @@ import firebase from "../../firebase";
 import BarLoader from "react-spinners/BarLoader";
 import { override } from "../Helpers/GeneralHelpers";
 import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Tooltip from "@mui/material/Tooltip";
 import Fade from "@mui/material/Fade";
-import { monthArray } from "../Helpers/GeneralHelpers";
 import moment from "moment";
+import { getActionItems } from "../../Components/Helpers/BackendHelpers";
 
 const FormattedDate = (props) => {
   const { dateNanSec, timeNanSec } = props;
@@ -40,26 +39,6 @@ export default function ActionItemsDisplay(props) {
   const [loading, setLoading] = useState(true);
   const db = firebase.firestore();
 
-  const getActionItems = async () => {
-    await setLoading(true);
-    const docRef = db
-      .collection("ActionItems")
-      .where("noteId", "==", noteId)
-      .orderBy("date", "asc");
-
-    await docRef.onSnapshot((querySnapshot) => {
-      querySnapshot.docChanges().forEach((change) => {
-        console.log(change.doc.id, " => ", change.doc.data());
-        setActionItems((preVal) => [
-          ...preVal,
-          { id: change.doc.id, data: change.doc.data() },
-        ]);
-      });
-    });
-
-    await setLoading(false);
-  };
-
   const handleChange = (props) => {
     const { actionItem } = props;
     console.log(actionItem.id);
@@ -70,7 +49,12 @@ export default function ActionItemsDisplay(props) {
   };
 
   useEffect(() => {
-    getActionItems();
+    getActionItems({
+      db: db,
+      setLoading: setLoading,
+      setActionItems: setActionItems,
+      noteId: noteId,
+    });
   }, []);
 
   return (

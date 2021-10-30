@@ -172,6 +172,18 @@ const SearchListItemDisplayComponent = (props) => {
   );
 };
 
+const handleScroll = (props) => {
+  const { actionTop, actionBottom, container, scrollHeightOld } = props;
+  let triggerHeight = container.scrollTop + container.offsetHeight;
+  if (triggerHeight >= container.scrollHeight) {
+    actionBottom();
+  }
+  if (container.scrollTop == 0) {
+    if (scrollHeightOld) scrollHeightOld.current = container.scrollHeight;
+    actionTop();
+  }
+};
+
 export {
   formatMeeting,
   override,
@@ -181,4 +193,5 @@ export {
   formatAMPM,
   ListItemBarComponent,
   SearchListItemDisplayComponent,
+  handleScroll,
 };

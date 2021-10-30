@@ -19,13 +19,7 @@
   min-width: 400px;
   width: 60vw;
 }
-@media only screen and (max-width: 500px) {
-  /* .allNotes {
-    flex-direction: column;
-    min-width: 400px;
-    width: 95vw;
-  } */
-}
+
 .linkedMeetingsArea .allNotes {
   flex-direction: column;
   min-width: 400px;
