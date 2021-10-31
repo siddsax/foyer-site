@@ -59,14 +59,21 @@ const EditorFoyer = (props) => {
           }
         });
 
-        // Hacky way to get data only when first person is connecting
-        setTimeout(() => {
-          if (awareness.meta.size === 1) {
-            document.getElementsByClassName(
-              "ql-container ql-snow"
-            )[0].childNodes[0].innerHTML = note.body;
+        provider.on("sync", (status) => {
+          if (status) {
+            console.log(status);
+            console.log(
+              awareness.meta.size,
+              awareness.meta,
+              "+++++++++++++++++++++++++++++++++"
+            );
+            if (awareness.meta.size === 1) {
+              document.getElementsByClassName(
+                "ql-container ql-snow"
+              )[0].childNodes[0].innerHTML = note.body;
+            }
           }
-        }, 50);
+        });
       }
     }
   }, [note]);
@@ -82,6 +89,7 @@ const EditorFoyer = (props) => {
         formats={formats}
         onChange={(value) => onEditNote(value)}
         // value={"Testing"}
+        placeholder="Type in your notes here."
       ></ReactQuill>
     </div>
   );

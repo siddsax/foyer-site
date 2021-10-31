@@ -40,7 +40,7 @@ const NotePage = (props) => {
   const history = useHistory();
   const db = firebase.firestore();
 
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = useState("");
   const [linkNotes, setLinkNotes] = useState(null);
   const [loadingLinkNotes, setLoadingLinkNotes] = useState(true);
   const [updatingToggle, setUpdatingToggle] = useState(true);
@@ -330,10 +330,3 @@ const NotePage = (props) => {
 };
 
 export default NotePage;
-
-const initialValue: Descendant[] = [
-  {
-    type: "paragraph",
-    children: [{ text: "" }],
-  },
-];
