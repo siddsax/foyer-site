@@ -65,7 +65,8 @@ const EditorFoyer = (props) => {
             console.log(
               awareness.meta.size,
               awareness.meta,
-              "+++++++++++++++++++++++++++++++++"
+              "+++++++++++++++++++++++++++++++++",
+              note.body
             );
             if (awareness.meta.size === 1) {
               document.getElementsByClassName(

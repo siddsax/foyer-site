@@ -13,7 +13,7 @@ const addMeetNote = async (props) => {
   const newNote = {
     id: uid,
     title: meet.title,
-    body: '[{"type":"paragraph","children":[{"text":""}]}]',
+    body: "",
     lastModified: Date.now(),
     createdAt:
       typeof meet.createdAt === "undefined" ? Date.now() : meet.createdAt,

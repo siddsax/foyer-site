@@ -48,7 +48,7 @@ const NotesListPage = (props) => {
     const newNote = {
       id: uid,
       title: "Untitled Note",
-      body: '[{"type":"paragraph","children":[{"text":""}]}]',
+      body: "",
       lastModified: Date.now(),
       createdAt: Date.now(),
       creator: user.uid,
