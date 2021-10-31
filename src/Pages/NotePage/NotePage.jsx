@@ -267,7 +267,7 @@ const NotePage = (props) => {
                 <EditorFoyer
                   user={user}
                   note={activeNote}
-                  // updateDB={debouncedOnUpdateNoteDB}
+                  updateDB={debouncedOnUpdateNoteDB}
                   value={value}
                   setValue={setValue}
                 />

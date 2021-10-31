@@ -11,6 +11,7 @@ import QuillCursors from "quill-cursors";
 import { WebsocketProvider } from "y-websocket";
 import { IndexeddbPersistence } from "y-indexeddb";
 import { usercolors, modules, formats, setUsername } from "./Editorhelpers";
+import { LeveldbPersistence } from "y-leveldb";
 
 Quill.register("modules/cursors", QuillCursors);
 
@@ -19,23 +20,26 @@ const EditorFoyer = (props) => {
   var quillRef, reactQuillRef, binding;
   const myColor = usercolors[Math.floor(Math.random() * usercolors.length)];
   const ydoc = new Y.Doc();
+  // const ytext = ydoc.getText("quill");
+
   const ytext = ydoc.getText("quill");
   const firstTime = useRef(true);
 
   var provider, awareness, persistence;
   const onEditNote = (value) => {
     setValue(value);
-    updateDB(note.title, JSON.stringify(value));
+    updateDB(
+      note.title,
+      document.getElementsByClassName("ql-container ql-snow")[0].childNodes[0]
+        .innerHTML
+    );
   };
 
   useEffect(() => {
-    console.log(note);
     if (note) {
       if (firstTime.current) {
-        console.log("first time");
         firstTime.current = false;
         provider = new WebsocketProvider(
-          // "wss://demos.yjs.dev",
           "wss://limitless-thicket-34436.herokuapp.com/",
           note.id,
           ydoc
@@ -48,15 +52,22 @@ const EditorFoyer = (props) => {
 
         const strings = [];
         awareness.getStates().forEach((state) => {
-          console.log(state);
           if (state.user) {
             strings.push(
               `<div style="color:${state.user.color};">• ${state.user.name}</div>`
             );
           }
         });
+
+        // Hacky way to get data only when first person is connecting
+        setTimeout(() => {
+          if (awareness.meta.size === 1) {
+            document.getElementsByClassName(
+              "ql-container ql-snow"
+            )[0].childNodes[0].innerHTML = note.body;
+          }
+        }, 50);
       }
-      setValue(JSON.parse(note.body));
     }
   }, [note]);
 
@@ -67,11 +78,10 @@ const EditorFoyer = (props) => {
           reactQuillRef = el;
         }}
         theme="snow"
-        // onChange={updateText}
         modules={modules}
         formats={formats}
-        defaultValue={"OK"}
-        // value={value}
+        onChange={(value) => onEditNote(value)}
+        // value={"Testing"}
       ></ReactQuill>
     </div>
   );
