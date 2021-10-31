@@ -32,11 +32,14 @@
   /* background-color: var(--first-object-color); */
   width: 100%;
   min-width: 380px;
-  height: auto;
+  /* height: auto; */
   /* margin-top: 20px; */
   margin-bottom: 20px;
   border-radius: 10px;
   margin-right: 0px;
+  /* overflow: auto; */
+  /* overflow: visible; */
+  /* display: inline; */
   /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); */
 }
 

@@ -1,6 +1,6 @@
 .editor {
   /* background-color: burlywood; */
-  height: 200px;
+  min-height: 200px;
 }
 
 .ql-toolbar.ql-snow {
@@ -8,9 +8,18 @@
 }
 
 .ql-container.ql-snow {
+  height: inherit;
   min-height: 200px;
+}
+
+.ql-editor {
+  height: auto;
 }
 
 .ql-toolbar.ql-snow .ql-formats {
   margin-right: 0px;
+}
+
+.quill {
+  height: auto;
 }
