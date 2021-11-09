@@ -19,7 +19,6 @@ const ActionItemListItem = (props) => {
   } = props;
 
   const [status, setStatus] = useState(actionItem.data.status);
-  const [animation, setAnimation] = useState("fadeIn");
   const db = firebase.firestore();
 
   var actionItemArea;
@@ -29,8 +28,6 @@ const ActionItemListItem = (props) => {
       status: !status,
     });
     setStatus((preVal) => !preVal);
-    // animation = "fadeOut";
-    setAnimation("fadeOut");
     setActionItems((preVal) => {
       setLoading(true);
       // animation = "fadeOut";
@@ -54,7 +51,7 @@ const ActionItemListItem = (props) => {
   }
 
   return (
-    <div className={animation}>
+    <div className="fadeIn">
       <div className="NoteItemArea">
         <div class={calendarDateAreaClass}>
           {actionItem.firstOfDay ? (
