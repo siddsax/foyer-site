@@ -19,6 +19,7 @@ const ActionItemListItem = (props) => {
   } = props;
 
   const [status, setStatus] = useState(actionItem.data.status);
+  const [animation, setAnimation] = useState("fadeIn");
   const db = firebase.firestore();
 
   var actionItemArea;
@@ -28,8 +29,11 @@ const ActionItemListItem = (props) => {
       status: !status,
     });
     setStatus((preVal) => !preVal);
+    // animation = "fadeOut";
+    setAnimation("fadeOut");
     setActionItems((preVal) => {
       setLoading(true);
+      // animation = "fadeOut";
       preVal.splice(indx, 1);
       return preVal;
     });
@@ -50,57 +54,61 @@ const ActionItemListItem = (props) => {
   }
 
   return (
-    <div className="NoteItemArea">
-      <div class={calendarDateAreaClass}>
-        {actionItem.firstOfDay ? (
-          <>
-            <text className="calendarDay">
-              {
-                weekdays[
-                  new Date(actionItem["data"].date.seconds * 1000).getDay()
-                ]
-              }
-            </text>
-            <text className="calendarDate">
-              {new Date(actionItem["data"].date.seconds * 1000).getDate()}
-            </text>
-          </>
-        ) : (
-          <></>
-        )}
-      </div>
+    <div className={animation}>
+      <div className="NoteItemArea">
+        <div class={calendarDateAreaClass}>
+          {actionItem.firstOfDay ? (
+            <>
+              <text className="calendarDay">
+                {
+                  weekdays[
+                    new Date(actionItem["data"].date.seconds * 1000).getDay()
+                  ]
+                }
+              </text>
+              <text className="calendarDate">
+                {new Date(actionItem["data"].date.seconds * 1000).getDate()}
+              </text>
+            </>
+          ) : (
+            <></>
+          )}
+        </div>
 
-      <div className="NoteArea">
-        <div className={actionItemArea}>
-          <Checkbox
-            checked={status}
-            onChange={changeStatus}
-            inputProps={{ "aria-label": "controlled" }}
-            sx={{
-              color: getComputedStyle(
-                document.documentElement
-              ).getPropertyValue("--second-text-color"),
-              "&.Mui-checked": {
+        <div className="NoteArea">
+          <div className={actionItemArea}>
+            <Checkbox
+              checked={status}
+              onChange={changeStatus}
+              inputProps={{ "aria-label": "controlled" }}
+              sx={{
                 color: getComputedStyle(
                   document.documentElement
                 ).getPropertyValue("--second-text-color"),
-              },
-            }}
-          />
-          <ListItemBarComponent item={actionItem["data"]} />
-          <div className="actionListAssignees">
-            {actionItem["data"].assignees.map((assignee, i) => (
-              <>
-                <Tooltip
-                  placement="top"
-                  title={assignee}
-                  TransitionComponent={Fade}
-                  TransitionProps={{ timeout: 600 }}
-                >
-                  <div className="memberCircle">{assignee.substring(0, 2)}</div>
-                </Tooltip>
-              </>
-            ))}
+                "&.Mui-checked": {
+                  color: getComputedStyle(
+                    document.documentElement
+                  ).getPropertyValue("--second-text-color"),
+                },
+              }}
+            />
+            <ListItemBarComponent item={actionItem["data"]} />
+            <div className="actionListAssignees">
+              {actionItem["data"].assignees.map((assignee, i) => (
+                <>
+                  <Tooltip
+                    placement="top"
+                    title={assignee}
+                    TransitionComponent={Fade}
+                    TransitionProps={{ timeout: 600 }}
+                  >
+                    <div className="memberCircle">
+                      {assignee.substring(0, 2)}
+                    </div>
+                  </Tooltip>
+                </>
+              ))}
+            </div>
           </div>
         </div>
       </div>

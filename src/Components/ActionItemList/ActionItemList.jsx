@@ -17,10 +17,6 @@ const ActionItemList = (props) => {
     setLoading,
   } = props;
 
-  useEffect(() => {
-    console.log("*************");
-  }, [actionItems]);
-
   return (
     <div className="allNotesPage">
       {loading ? (
