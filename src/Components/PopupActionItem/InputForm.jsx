@@ -27,6 +27,7 @@ export default function InputForm(props) {
     noteId,
     time,
     setTime,
+    setRerenderActionItems,
   } = props;
 
   const db = firebase.firestore();
@@ -49,6 +50,7 @@ export default function InputForm(props) {
     setAssignees(null);
     setTitle("");
     setDate(null);
+    setRerenderActionItems((preVal) => !preVal);
 
     onClose();
   };

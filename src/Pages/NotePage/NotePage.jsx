@@ -23,6 +23,7 @@ import NotesList from "../../Components/NotesList/NotesList";
 import { setFirstMonthNote } from "../../Components/Helpers/GeneralHelpers";
 import PopupActionItem from "../../Components/PopupActionItem/PopupActionItem";
 import ActionItemsDisplay from "../../Components/ActionItemsDisplay/ActionItemsDisplay";
+import alarmClock from "../../assets/icons/alarmClock.png";
 
 let keysDown = {};
 
@@ -37,6 +38,7 @@ const NotePage = (props) => {
   const [activeNote, setActiveNote] = useState(null);
   const [meetings, setMeetings] = useState(null);
   const [contentState, setContentState] = useState(null);
+  const [rerenderActionItems, setRerenderActionItems] = useState(false);
   const history = useHistory();
   const db = firebase.firestore();
 
@@ -54,15 +56,15 @@ const NotePage = (props) => {
     await setUpdatingToggle((preVal) => !preVal);
   };
 
-  window.onkeydown = function (e) {
-    keysDown[e.key] = true;
+  // window.onkeydown = function (e) {
+  //   keysDown[e.key] = true;
 
-    if (keysDown["Control"] && keysDown["t"]) {
-      //do what you want when control and a is pressed for example
-      console.log("control + t");
-      setOpenActionItemPopup(true);
-    }
-  };
+  //   if (keysDown["Control"] && keysDown["t"]) {
+  //     //do what you want when control and a is pressed for example
+  //     console.log("control + t");
+  //     setOpenActionItemPopup(true);
+  //   }
+  // };
 
   const onUpdateNoteDB = (title, content) => {
     setContentState(
@@ -273,22 +275,36 @@ const NotePage = (props) => {
                 />
               </div>
               <div className="actionItemArea">
-                <ActionItemsDisplay noteId={activeNote.id} user={user} />
+                <ActionItemsDisplay
+                  noteId={activeNote.id}
+                  user={user}
+                  rerenderActionItems={rerenderActionItems}
+                />
               </div>
             </div>
+            <PopupActionItem
+              noteContent={contentState}
+              attendees={activeNote.access}
+              noteId={activeNote.id}
+              openActionItemPopup={openActionItemPopup}
+              setOpenActionItemPopup={setOpenActionItemPopup}
+              user={user}
+              setRerenderActionItems={setRerenderActionItems}
+              trigger={
+                <button className="actionItemButtonNotePage">
+                  <img src={alarmClock} />
+
+                  <div style={{ "margin-left": "10px" }}>
+                    Add a Reminder or Task
+                  </div>
+                </button>
+              }
+            />
             <div className="shareNoteButtonArea">
               <PopupShare
                 noteContent={contentState}
                 attendees={activeNote.access}
                 title={activeNote.title}
-              />
-              <PopupActionItem
-                noteContent={contentState}
-                attendees={activeNote.access}
-                noteId={activeNote.id}
-                openActionItemPopup={openActionItemPopup}
-                setOpenActionItemPopup={setOpenActionItemPopup}
-                user={user}
               />
             </div>
             <div className="linkedMeetingsArea">

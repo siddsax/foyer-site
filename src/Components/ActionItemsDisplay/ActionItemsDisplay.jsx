@@ -31,18 +31,25 @@ const FormattedDate = (props) => {
 };
 
 export default function ActionItemsDisplay(props) {
-  const { user, noteId } = props;
+  const { user, noteId, rerenderActionItems } = props;
   const [actionItems, setActionItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const db = firebase.firestore();
 
-  const handleChange = (props) => {
-    const { actionItem } = props;
-    console.log(actionItem.id);
+  const handleChange = async (props) => {
+    await setLoading(true);
+    const { actionItem, indx } = props;
+
     const docRef = db.collection("ActionItems").doc(actionItem.id);
-    docRef.update({
+    await docRef.update({
       status: !actionItem.data.status,
     });
+    actionItem.data.status = !actionItem.data.status;
+    // await setActionItems((preVal) => {
+    //   preVal[indx].data.status = !preVal[indx].data.status;
+    //   return preVal;
+    // });
+    await setLoading(false);
   };
 
   useEffect(() => {
@@ -52,7 +59,7 @@ export default function ActionItemsDisplay(props) {
       setActionItems: setActionItems,
       noteId: noteId,
     });
-  }, []);
+  }, [rerenderActionItems]);
 
   return (
     <div>
@@ -64,14 +71,10 @@ export default function ActionItemsDisplay(props) {
               {/* <Checkbox {...actionItem.status} defaultChecked /> */}
               <Checkbox
                 checked={actionItem.data.status}
-                onChange={() => handleChange({ actionItem: actionItem })}
+                onChange={() =>
+                  handleChange({ actionItem: actionItem, indx: i })
+                }
                 inputProps={{ "aria-label": "controlled" }}
-              />
-              <div className="actionListItemTitle">{actionItem.data.title}</div>
-
-              <FormattedDate
-                dateNanSec={actionItem.data.date.seconds * 1000}
-                timeNanSec={actionItem.data.time.seconds * 1000}
               />
               <div className="actionListAssignees">
                 {actionItem.data.assignees.map((assignee, i) => (
@@ -89,6 +92,12 @@ export default function ActionItemsDisplay(props) {
                   </>
                 ))}
               </div>
+              <div className="actionListItemTitle">{actionItem.data.title}</div>
+
+              <FormattedDate
+                dateNanSec={actionItem.data.date.seconds * 1000}
+                timeNanSec={actionItem.data.time.seconds * 1000}
+              />
             </div>
           ))}
         </>

@@ -7,31 +7,44 @@ hr {
   /* background-color: pink; */
   width: 100%;
   /* height: 20px; */
+  /* display: flex; */
 }
 
 .actionListItemArea {
+  font-weight: 300;
+  background-color: #fff7e8;
   align-content: center;
   align-items: center;
+  justify-content: center;
   display: flex;
   flex-direction: row;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: black;
+  border-style: solid;
 }
 
 .actionListItemTitle {
-  min-width: 200px;
-  width: 60%;
+  /* background-color: red; */
+  margin-right: 20px;
+  /* min-width: 200px; */
+  /* width: 60%; */
 }
 
 .actionListItemDate {
-  min-width: 170px;
+  /* background-color: royalblue; */
+  /* min-width: 170px; */
   font-size: 14px;
 }
 
 .actionListAssignees {
+  /* background-color: saddlebrown; */
   display: flex;
   flex-direction: row;
   margin-right: 10px;
   /* width: 50px; */
-  width: 20%;
+  /* width: 20%; */
 }
 
 .memberCircle {

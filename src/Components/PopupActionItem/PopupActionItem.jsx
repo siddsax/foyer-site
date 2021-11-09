@@ -1,15 +1,6 @@
-import Button from "@mui/material/Button";
 import Popup from "reactjs-popup";
 import { useState, useEffect, useCallback, useRef } from "react";
 import "reactjs-popup/dist/index.css";
-import { useHistory, useLocation } from "react-router-dom";
-import IconButton from "@material-ui/core/IconButton";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import copyIcon from "../../assets/icons/copyIcon.png";
-import emailIcon from "../../assets/icons/email.png";
-import { apiKey } from "../../sendgrid";
-import firebase from "../../firebase";
 import "./PopupActionItem.css";
 import InputForm from "./InputForm";
 
@@ -20,6 +11,7 @@ const PopupActionItem = (props) => {
     // openActionItemPopup,
     // setOpenActionItemPopup,
     user,
+    setRerenderActionItems,
     trigger,
   } = props;
 
@@ -58,6 +50,7 @@ const PopupActionItem = (props) => {
               noteId={noteId}
               time={time}
               setTime={setTime}
+              setRerenderActionItems={setRerenderActionItems}
             />
           </div>
           <div className="actions"></div>
