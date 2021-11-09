@@ -1,10 +1,17 @@
-/* input[type="checkbox"]:checked ~ .actionListAssignees {
-  background-color: red;
-  display: none;
+.fade-enter {
+  opacity: 0.01;
 }
 
-input[type="checkbox"] {
-  margin: 20px;
-  background-color: red;
-  color: red;
-} */
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.fade-leave {
+  opacity: 1;
+}
+
+.fade-leave.fade-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

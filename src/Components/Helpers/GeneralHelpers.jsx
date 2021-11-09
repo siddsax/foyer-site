@@ -28,6 +28,16 @@ function formatAMPM(date) {
   return strTime;
 }
 
+const getDateFormatted = (props) => {
+  const { dateObj } = props;
+  var month = dateObj.getUTCMonth() + 1; //months from 1-12
+  var day = dateObj.getUTCDate();
+  var year = dateObj.getUTCFullYear();
+
+  var newdate = `${year}${month}${day}`;
+  return newdate;
+};
+
 const formatMeeting = (props) => {
   const { meetingCalendar } = props;
   const meet = {
@@ -68,14 +78,18 @@ const setFirstMonthNote = async (props) => {
   var match = 0;
 
   for (let j = 0; j < notes.length; j++) {
-    var m1, m2, d1, d2;
+    var m1, m2, d1, d2, mdy1;
     if (actionItem) {
       m1 = new Date(notes[j]["data"].date.seconds * 1000).getMonth();
       d1 = new Date(notes[j]["data"].date.seconds * 1000).getDate();
+      mdy1 = new Date(notes[j]["data"].date.seconds * 1000);
     } else {
       m1 = new Date(notes[j].createdAt).getMonth();
       d1 = new Date(notes[j].createdAt).getDate();
+      mdy1 = new Date(notes[j].createdAt);
     }
+
+    mdy1 = getDateFormatted({ dateObj: mdy1 });
 
     if (j > 0) {
       if (actionItem) {
@@ -116,10 +130,12 @@ const setFirstMonthNote = async (props) => {
     }
 
     // For the purpose of reaching the correct scroll point
-    var mt = new Date().getMonth();
-    var dt = new Date().getDate();
+    // var mt = new Date().getMonth();
+    // var dt = new Date().getDate();
+    var now = new Date();
+    now = getDateFormatted({ dateObj: now });
     if (!loadingTop) {
-      if (mt === m1 && dt === d1 && indx === -1) {
+      if (mdy1 === now && indx === -1) {
         indx = j;
         match = 1;
         if (todayLine) {
@@ -128,9 +144,7 @@ const setFirstMonthNote = async (props) => {
             return prevValue;
           });
         }
-      }
-
-      if ((mt < m1 || (mt === m1 && dt < d1)) && indx === -1) {
+      } else if (mdy1 > now && indx === -1) {
         indx = j; // The chosen point is ahead
         if (todayLine) {
           await setNotes((prevValue) => {
@@ -138,6 +152,11 @@ const setFirstMonthNote = async (props) => {
             return prevValue;
           });
         }
+      } else if (mdy1 < now && indx === -1) {
+        await setNotes((prevValue) => {
+          prevValue[j].todayStart = -1;
+          return prevValue;
+        });
       }
     }
 

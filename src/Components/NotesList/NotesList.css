@@ -120,7 +120,7 @@
   align-items: center;
 }
 
-.Note {
+/* .Note {
   display: flex;
   align-items: center;
   align-content: center;
@@ -131,13 +131,15 @@
   border-radius: 5px;
   margin-left: 10px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-}
+} */
 
-.buttonMeetingNote {
+.Note,
+.buttonMeetingNote,
+.ActionItemPassed {
   display: flex;
   height: 80%;
   width: 100%;
-  background-color: var(--third-object-color-2);
+  background-color: var(--third-object-color);
   border-radius: 5px;
   margin-left: 10px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -146,4 +148,12 @@
   border: 1px solid transparent;
   align-items: center;
   overflow: hidden;
+}
+
+.buttonMeetingNote {
+  background-color: var(--third-object-color-2);
+}
+
+.ActionItemPassed {
+  background-color: #e60000;
 }

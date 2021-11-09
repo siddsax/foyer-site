@@ -50,17 +50,25 @@ const getActionItems = async (props) => {
     docRef = docRef.where("assignees", "array-contains", assigneeID);
   else if (userId) docRef = docRef.where("creator", "==", userId);
 
-  console.log(completed, assigneeID, userId);
   docRef = docRef.where("status", "==", completed);
 
   const actionItems = [];
-  await docRef.onSnapshot(async (querySnapshot) => {
-    await querySnapshot.docChanges().forEach(async (change) => {
-      await actionItems.push({ id: change.doc.id, data: change.doc.data() });
-    });
-  });
+  // await docRef.onSnapshot(async (querySnapshot) => {
+  //   await querySnapshot.docChanges().forEach(async (change) => {
+  //     await actionItems.push({ id: change.doc.id, data: change.doc.data() });
+  //   });
+  //   await setActionItems(actionItems);
+  // });
 
-  await setActionItems(actionItems);
+  await docRef.get().then(async (querySnapshot) => {
+    await querySnapshot.forEach(async (doc) => {
+      console.log(doc.data(), doc.id);
+      actionItems.push({ id: doc.id, data: doc.data() });
+    });
+    await setActionItems(actionItems);
+  });
+  setTimeout(() => setLoading(false), 300);
+  // await setLoading(false);
 };
 
 export { addMeetNote, getActionItems };

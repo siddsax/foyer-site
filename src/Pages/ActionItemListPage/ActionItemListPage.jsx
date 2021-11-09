@@ -13,8 +13,6 @@ import PuffLoader from "react-spinners/PuffLoader";
 import ActionItemList from "../../Components/ActionItemList/ActionItemList";
 import { getActionItems } from "../../Components/Helpers/BackendHelpers";
 import Switch from "@mui/material/Switch";
-import HashLoader from "react-spinners/HashLoader";
-
 const ActionItemListPage = (props) => {
   const { user } = props;
   const [mine, setMine] = useState(false);
@@ -23,7 +21,8 @@ const ActionItemListPage = (props) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(true);
   const [loadingBottom, setLoadingBottom] = useState(false);
-  const [actionItems, setActionItems] = useState(null);
+  const [actionItems, setActionItems] = useState([]);
+  let [rerender, setRerender] = useState(0);
   const db = firebase.firestore();
   const paginateNumber = 10;
 
@@ -33,7 +32,7 @@ const ActionItemListPage = (props) => {
     setIsButtonDisabled(true);
     setTimeout(() => setIsButtonDisabled(false), 300);
 
-    await getActionItems({
+    getActionItems({
       db: db,
       setLoading: setLoading,
       setActionItems: setActionItems,
@@ -67,21 +66,29 @@ const ActionItemListPage = (props) => {
   }, [completed, mine]);
 
   useEffect(() => {
-    const dummyFunc = async () => {
-      console.log("*************=========++++++++++++", loading, actionItems);
-      await setFirstMonthNote({
+    console.log(actionItems, "================++++++______________********");
+    setFirstMonthNote({
+      notes: actionItems,
+      setNotes: setActionItems,
+      loadingTop: false,
+      todayLine: true,
+      actionItem: true,
+    });
+  }, [actionItems]);
+
+  useEffect(() => {
+    if (rerender) {
+      console.log(rerender, "__________&&&&&&&&&&&&&&&");
+      setFirstMonthNote({
         notes: actionItems,
         setNotes: setActionItems,
         loadingTop: false,
         todayLine: true,
         actionItem: true,
       });
-      await setLoading(false);
-    };
-    if (actionItems != null) {
-      dummyFunc();
+      setLoading(false);
     }
-  }, [actionItems]);
+  }, [rerender]);
 
   return (
     <div className="NotesListPage">
@@ -125,18 +132,14 @@ const ActionItemListPage = (props) => {
       </div>
 
       <div className="NotesListArea">
-        {loading ? (
-          <div className="loadingNotes">
-            <HashLoader
-              color={"#049be4"}
-              loading={loading}
-              css={override}
-              size={50}
-            />
-          </div>
-        ) : (
-          <ActionItemList actionItems={actionItems} loading={loading} />
-        )}
+        <ActionItemList
+          actionItems={actionItems}
+          loading={loading}
+          completed={completed}
+          setRerender={setRerender}
+          setActionItems={setActionItems}
+          setLoading={setLoading}
+        />
         {loadingBottom ? (
           <>
             <PuffLoader

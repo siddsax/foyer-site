@@ -9,27 +9,46 @@ import firebase from "../../firebase";
 import "./ActionItemList.css";
 
 const ActionItemListItem = (props) => {
-  const { actionItem } = props;
-  const [status, setStatus] = useState(actionItem.status);
+  const {
+    actionItem,
+    setRerender,
+    completed,
+    setActionItems,
+    indx,
+    setLoading,
+  } = props;
+
+  const [status, setStatus] = useState(actionItem.data.status);
   const db = firebase.firestore();
 
+  var actionItemArea;
   const changeStatus = async () => {
     var docRef = db.collection("ActionItems").doc(actionItem.id);
     docRef.update({
       status: !status,
     });
     setStatus((preVal) => !preVal);
+    setActionItems((preVal) => {
+      setLoading(true);
+      preVal.splice(indx, 1);
+      return preVal;
+    });
+    setRerender((preVal) => preVal + 1);
   };
 
   var calendarDateAreaClass;
   if (actionItem) {
-    if (actionItem.todayStart == 1) {
+    if (actionItem.todayStart === -1 && !completed)
+      actionItemArea = "ActionItemPassed";
+    else actionItemArea = "Note";
+
+    if (actionItem.todayStart === 1) {
       calendarDateAreaClass = "calendarDateAreaB";
     } else {
       calendarDateAreaClass = "calendarDateArea";
     }
   }
-  console.log("actionItem", actionItem);
+
   return (
     <div className="NoteItemArea">
       <div class={calendarDateAreaClass}>
@@ -52,11 +71,21 @@ const ActionItemListItem = (props) => {
       </div>
 
       <div className="NoteArea">
-        <div className="Note">
+        <div className={actionItemArea}>
           <Checkbox
             checked={status}
             onChange={changeStatus}
             inputProps={{ "aria-label": "controlled" }}
+            sx={{
+              color: getComputedStyle(
+                document.documentElement
+              ).getPropertyValue("--second-text-color"),
+              "&.Mui-checked": {
+                color: getComputedStyle(
+                  document.documentElement
+                ).getPropertyValue("--second-text-color"),
+              },
+            }}
           />
           <ListItemBarComponent item={actionItem["data"]} />
           <div className="actionListAssignees">

@@ -15,9 +15,6 @@ const FormattedDate = (props) => {
   var time = new Date(timeNanSec);
 
   console.log(dateNanSec, timeNanSec, date, time);
-  // var output = `By ${date.getDate()} ${monthArray[date.getMonth()]} at ${moment(
-  //   time
-  // ).format("h:mm a")}`;
 
   var dateCombined = new Date(
     date.getFullYear(),
