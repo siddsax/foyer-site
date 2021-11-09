@@ -11,7 +11,7 @@ import ActionItemListPage from "../ActionItemListPage/ActionItemListPage";
 
 const HomePage = (props) => {
   const { user } = props;
-  const [showNotes, setShowNotes] = useState(true);
+  const [showNotes, setShowNotes] = useState(false);
   const [loadingTop, setLoadingTop] = useState(false);
   const container = document.querySelector(".NotesListArea");
   var scrollHeightOld = useRef(0);

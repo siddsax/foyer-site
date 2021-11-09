@@ -1,0 +1,10 @@
+/* input[type="checkbox"]:checked ~ .actionListAssignees {
+  background-color: red;
+  display: none;
+}
+
+input[type="checkbox"] {
+  margin: 20px;
+  background-color: red;
+  color: red;
+} */

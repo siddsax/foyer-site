@@ -122,6 +122,9 @@
 
 .Note {
   display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
   height: 80%;
   width: 100%;
   background-color: var(--third-object-color);

@@ -1,3 +1,4 @@
+import moment from "moment";
 import { css } from "@emotion/react";
 import "./helpers.css";
 var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -60,7 +61,7 @@ var offsetNoteArea = 80;
 var offsetMonthArea = 30;
 
 const setFirstMonthNote = async (props) => {
-  const { notes, setNotes, loadingTop, todayLine } = props;
+  const { notes, setNotes, loadingTop, todayLine, actionItem } = props;
   // 50, 60
   var indx = -1;
   var offset = 0;
@@ -68,11 +69,22 @@ const setFirstMonthNote = async (props) => {
 
   for (let j = 0; j < notes.length; j++) {
     var m1, m2, d1, d2;
-    m1 = new Date(notes[j].createdAt).getMonth();
-    d1 = new Date(notes[j].createdAt).getDate();
+    if (actionItem) {
+      m1 = new Date(notes[j]["data"].date.seconds * 1000).getMonth();
+      d1 = new Date(notes[j]["data"].date.seconds * 1000).getDate();
+    } else {
+      m1 = new Date(notes[j].createdAt).getMonth();
+      d1 = new Date(notes[j].createdAt).getDate();
+    }
+
     if (j > 0) {
-      m2 = new Date(notes[j - 1].createdAt).getMonth();
-      d2 = new Date(notes[j - 1].createdAt).getDate();
+      if (actionItem) {
+        m2 = new Date(notes[j - 1]["data"].date.seconds * 1000).getMonth();
+        d2 = new Date(notes[j - 1]["data"].date.seconds * 1000).getDate();
+      } else {
+        m2 = new Date(notes[j - 1].createdAt).getMonth();
+        d2 = new Date(notes[j - 1].createdAt).getDate();
+      }
     } else {
       m2 = m1 - 1;
       d2 = d1 - 1;
@@ -145,12 +157,21 @@ const ListItemBarComponent = (props) => {
         <text className="NoteTitleText">{item.title}</text>
       </div>
       <div className="DateTimeArea">
-        {item.end ? (
-          <text className="DateTime">
-            {formatAMPM(new Date(item.createdAt))} {" - "}
-            {formatAMPM(new Date(item.end))}
-          </text>
-        ) : null}
+        <>
+          {item.end ? (
+            <text className="DateTime">
+              {formatAMPM(new Date(item.createdAt))} {" - "}
+              {formatAMPM(new Date(item.end))}
+            </text>
+          ) : null}
+        </>
+        <>
+          {item.date ? (
+            <text className="DateTime">
+              {moment(new Date(item.date.seconds * 1000)).calendar()}
+            </text>
+          ) : null}
+        </>
       </div>
     </>
   );

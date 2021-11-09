@@ -62,3 +62,7 @@ hr {
 .memberCircle:hover + .memberCircleFullNameArea {
   visibility: visible;
 }
+
+input[type="checkbox"]:checked {
+  background-color: red;
+}

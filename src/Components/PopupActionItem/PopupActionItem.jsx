@@ -17,9 +17,10 @@ const PopupActionItem = (props) => {
   const {
     noteId,
     attendees,
-    openActionItemPopup,
-    setOpenActionItemPopup,
+    // openActionItemPopup,
+    // setOpenActionItemPopup,
     user,
+    trigger,
   } = props;
 
   const [date, setDate] = useState(null);
@@ -27,16 +28,13 @@ const PopupActionItem = (props) => {
   const [title, setTitle] = useState("");
   const [time, setTime] = useState(new Date("01-01-1970 17:00:00"));
 
-  useEffect(() => {
-    console.log(openActionItemPopup);
-  }, [openActionItemPopup]);
-
   return (
     <Popup
-      open={openActionItemPopup}
+      // open={openActionItemPopup}
       modal
       nested
-      onClose={() => setOpenActionItemPopup(false)}
+      trigger={trigger}
+      // onClose={() => setOpenActionItemPopup(false)}
     >
       {(close) => (
         <div className="modalCustom">

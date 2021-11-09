@@ -9,6 +9,7 @@ import DatePicker from "react-datepicker";
 import Button from "@mui/material/Button";
 import firebase from "../../firebase";
 import TimePicker from "@mui/lab/TimePicker";
+import InputTags from "../InputTags/InputTags";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -55,21 +56,32 @@ export default function InputForm(props) {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Stack sx={{ width: "100%" }}>
-        <Autocomplete
-          onChange={(event, value) => setAssignees(value)} // prints the selected value
-          multiple
-          id="tags-outlined"
-          options={attendees}
-          filterSelectedOptions
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Assignees"
-              id="margin-normal"
-              margin="normal"
-            />
-          )}
-        />
+        {attendees.length ? (
+          <Autocomplete
+            onChange={(event, value) => setAssignees(value)} // prints the selected value
+            multiple
+            id="tags-outlined"
+            options={attendees}
+            filterSelectedOptions
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Assignees"
+                id="margin-normal"
+                margin="normal"
+              />
+            )}
+          />
+        ) : (
+          <TextField
+            label={"Assignees Email"}
+            id="margin-normal"
+            margin="normal"
+            value={assignees}
+            onChange={(event) => setAssignees([event.target.value])}
+          />
+        )}
+
         <TextField
           label={"Title"}
           id="margin-normal"

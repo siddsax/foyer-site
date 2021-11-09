@@ -272,9 +272,9 @@ const NotePage = (props) => {
                   setValue={setValue}
                 />
               </div>
-              {/* <div className="actionItemArea">
+              <div className="actionItemArea">
                 <ActionItemsDisplay noteId={activeNote.id} user={user} />
-              </div> */}
+              </div>
             </div>
             <div className="shareNoteButtonArea">
               <PopupShare

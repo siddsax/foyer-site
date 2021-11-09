@@ -32,29 +32,35 @@ const addMeetNote = async (props) => {
 };
 
 const getActionItems = async (props) => {
-  const { db, setLoading, setActionItems, noteId, userId, assigneeID } = props;
+  const {
+    db,
+    setLoading,
+    setActionItems,
+    noteId,
+    userId,
+    assigneeID,
+    completed,
+  } = props;
   await setLoading(true);
 
   var docRef = db.collection("ActionItems").orderBy("date", "asc");
-  if (noteId) {
-    docRef = docRef.where("assignees", "array-contains", noteId);
-  } else if (assigneeID) {
-    docRef = docRef.where("noteId", "==", assigneeID);
-  } else if (userId) {
-    docRef = docRef.where("creator", "==", userId);
-  }
 
-  await docRef.onSnapshot((querySnapshot) => {
-    querySnapshot.docChanges().forEach((change) => {
-      console.log(change.doc.id, " => ", change.doc.data());
-      setActionItems((preVal) => [
-        ...preVal,
-        { id: change.doc.id, data: change.doc.data() },
-      ]);
+  if (noteId) docRef = docRef.where("noteId", "==", noteId);
+  else if (assigneeID)
+    docRef = docRef.where("assignees", "array-contains", assigneeID);
+  else if (userId) docRef = docRef.where("creator", "==", userId);
+
+  console.log(completed, assigneeID, userId);
+  docRef = docRef.where("status", "==", completed);
+
+  const actionItems = [];
+  await docRef.onSnapshot(async (querySnapshot) => {
+    await querySnapshot.docChanges().forEach(async (change) => {
+      await actionItems.push({ id: change.doc.id, data: change.doc.data() });
     });
   });
 
-  await setLoading(false);
+  await setActionItems(actionItems);
 };
 
 export { addMeetNote, getActionItems };
