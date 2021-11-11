@@ -13,6 +13,8 @@ const PopupActionItem = (props) => {
     user,
     setRerenderActionItems,
     trigger,
+    setLoading,
+    setActionItems,
   } = props;
 
   const [date, setDate] = useState(null);
@@ -51,6 +53,8 @@ const PopupActionItem = (props) => {
               time={time}
               setTime={setTime}
               setRerenderActionItems={setRerenderActionItems}
+              setLoading={setLoading}
+              setActionItems={setActionItems}
             />
           </div>
           <div className="actions"></div>

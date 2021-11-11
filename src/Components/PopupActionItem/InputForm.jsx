@@ -28,13 +28,19 @@ export default function InputForm(props) {
     time,
     setTime,
     setRerenderActionItems,
+    setLoading,
+    setActionItems,
   } = props;
 
   const db = firebase.firestore();
 
   const submitActionItem = async () => {
     const uid = uuid();
-    console.log("Test");
+
+    for (let i = 0; i < assignees.length; i++) {
+      assignees[i] = assignees[i].replace(/\s/g, "");
+    }
+
     const newActionItem = {
       creator: user.uid,
       assignees: assignees,
@@ -50,7 +56,22 @@ export default function InputForm(props) {
     setAssignees(null);
     setTitle("");
     setDate(null);
-    setRerenderActionItems((preVal) => !preVal);
+    if (setLoading) {
+      await setLoading(true);
+      console.log("***");
+    }
+
+    if (setActionItems) {
+      setActionItems((preVal) => [
+        ...preVal,
+        { id: null, data: newActionItem },
+      ]);
+    }
+
+    if (setRerenderActionItems) {
+      await setRerenderActionItems((preVal) => !preVal);
+      console.log("***---");
+    }
 
     onClose();
   };
@@ -80,7 +101,7 @@ export default function InputForm(props) {
             id="margin-normal"
             margin="normal"
             value={assignees}
-            onChange={(event) => setAssignees([event.target.value])}
+            onChange={(event) => setAssignees(event.target.value.split(","))}
           />
         )}
 

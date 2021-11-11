@@ -87,6 +87,7 @@ const ActionItemListPage = (props) => {
         actionItem: true,
       });
       setLoading(false);
+      setRerender((preVal) => !preVal);
     }
   }, [rerender]);
 
@@ -108,7 +109,7 @@ const ActionItemListPage = (props) => {
           Completed
         </div>
         <div className="newActionItemButton">
-          <PopupActionItem
+          {/* <PopupActionItem
             trigger={
               <Button
                 variant="contained"
@@ -127,7 +128,10 @@ const ActionItemListPage = (props) => {
             user={user}
             noteId={null}
             attendees={[]}
-          />
+            setRerenderActionItems={setRerender}
+            setLoading={setLoading}
+            setActionItems={setActionItems}
+          /> */}
         </div>
       </div>
 

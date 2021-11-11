@@ -59,12 +59,18 @@ const ActionItemListItem = (props) => {
               <text className="calendarDay">
                 {
                   weekdays[
-                    new Date(actionItem["data"].date.seconds * 1000).getDay()
+                    actionItem["data"].date.seconds
+                      ? new Date(
+                          actionItem["data"].date.seconds * 1000
+                        ).getDay()
+                      : new Date(actionItem["data"].date).getDay()
                   ]
                 }
               </text>
               <text className="calendarDate">
-                {new Date(actionItem["data"].date.seconds * 1000).getDate()}
+                {actionItem["data"].date.seconds
+                  ? new Date(actionItem["data"].date.seconds * 1000).getDate()
+                  : new Date(actionItem["data"].date).getDate()}
               </text>
             </>
           ) : (

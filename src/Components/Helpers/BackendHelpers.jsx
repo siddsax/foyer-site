@@ -50,7 +50,9 @@ const getActionItems = async (props) => {
     docRef = docRef.where("assignees", "array-contains", assigneeID);
   else if (userId) docRef = docRef.where("creator", "==", userId);
 
-  if (completed) docRef = docRef.where("status", "==", completed);
+  if (typeof completed != "undefined") {
+    docRef = docRef.where("status", "==", completed);
+  }
 
   const actionItems = [];
 

@@ -187,7 +187,9 @@ const ListItemBarComponent = (props) => {
         <>
           {item.date ? (
             <text className="DateTime">
-              {moment(new Date(item.date.seconds * 1000)).calendar()}
+              {item.date.seconds
+                ? moment(new Date(item.date.seconds * 1000)).calendar()
+                : moment(new Date(item.date)).calendar()}
             </text>
           ) : null}
         </>

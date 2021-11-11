@@ -13,6 +13,7 @@ tinymce
 
 # misc
 *.swp
+*.swo
 .DS_Store
 .env.local
 .env.development.local
