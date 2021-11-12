@@ -50,69 +50,77 @@ exports.sendMailActionItem = functions.firestore
     return { success: true };
   });
 
-exports.sendMailActionItemReminder = functions.pubsub
-  .schedule("every 5 minutes")
-  // .schedule("every 15 minutes")
-  .timeZone("America/New_York")
-  .onRun(async (context) => {
-    const now = admin.firestore.Timestamp.now().seconds;
-    const nowUnix = new Date(now * 1000).getTime();
-    const nowMin15 = new Date(nowUnix - 15 * 60 * 1000);
+const getActionItemSendMail = async (props) => {
+  const { dateField, content, mailStatusField } = props;
+  const now = admin.firestore.Timestamp.now().seconds;
+  const nowUnix = new Date(now * 1000).getTime();
+  const nowMin15 = new Date(nowUnix - 15 * 60 * 1000);
 
-    console.log(
-      nowMin15,
-      now,
-      nowUnix,
-      new Date(now * 1000),
-      "+++++++++++++++++++"
-    );
-    console.log(
-      admin.firestore.Timestamp.fromMillis(nowMin15),
-      admin.firestore.Timestamp.now(),
-      "-------------------"
-    );
-    const query = db
-      .collection("ActionItems")
-      .where("date", ">=", admin.firestore.Timestamp.fromMillis(nowMin15))
-      .where("date", "<=", admin.firestore.Timestamp.now())
-      .where("status", "==", false)
-      .where("reminder", "==", false);
+  const query = db
+    .collection("ActionItems")
+    .where(dateField, ">=", admin.firestore.Timestamp.fromMillis(nowMin15))
+    .where(dateField, "<=", admin.firestore.Timestamp.now())
+    .where("status", "==", false)
+    .where(mailStatusField, "==", false);
 
-    const reminders = await query.get();
+  const reminders = await query.get();
 
+  reminders.forEach((snapshot) => {
+    const reminderData = snapshot.data();
     let emailRecievers = [
       ...new Set(reminderData.assignees.concat(reminderData.creatorEmail)),
     ];
 
-    reminders.forEach((snapshot) => {
-      const reminderData = snapshot.data();
-      const message = {
-        to: emailRecievers,
-        from: "foyer.work@gmail.com",
-        subject: `Foyer Action Items : ${reminderData.title}`,
-        text: "This is a reminder for the task: " + reminderData.title,
-        // html: noteContent,
-      };
+    const message = {
+      to: emailRecievers,
+      from: "foyer.work@gmail.com",
+      subject: `Foyer Action Items : ${reminderData.title}`,
+      text: content + reminderData.title,
+      // html: noteContent,
+    };
 
-      console.log(
-        message,
-        reminderData.assignees.concat(reminderData.creatorEmail),
-        reminderData,
-        "++~~~~~~~~~~~~~~~~~~~~~@@@@@@@@@@@@++"
-      );
-      sgMail
-        .send(message)
-        .then((response) => {
-          console.log(response[0].statusCode, response[0].headers, "________");
-        })
-        .catch((error) => {
-          console.error(error, "$$$$$$$$$$$$");
-        });
-
-      db.collection("ActionItems").doc(snapshot.id).update({
-        reminder: true,
+    sgMail
+      .send(message)
+      .then((response) => {
+        console.log(response[0].statusCode, response[0].headers, "________");
+      })
+      .catch((error) => {
+        console.error(error, "$$$$$$$$$$$$");
       });
+
+    if (mailStatusField == "reminderMail") {
+      db.collection("ActionItems").doc(snapshot.id).update({
+        reminderMail: true,
+      });
+    } else if (mailStatusField == "finalMail") {
+      db.collection("ActionItems").doc(snapshot.id).update({
+        finalMail: true,
+      });
+    }
+  });
+  console.log("Done doing everything here");
+};
+
+exports.sendMailActionItemReminder = functions.pubsub
+  .schedule("every 14 minutes")
+  .timeZone("America/New_York")
+  .onRun(async (context) => {
+    getActionItemSendMail({
+      dateField: "dateReminder",
+      mailStatusField: "reminderMail",
+      content: "This is a reminder for the task: ",
     });
-    console.log("Done doing everything here");
+    return null;
+  });
+
+exports.sendMailActionItemFinish = functions.pubsub
+  .schedule("every 14 minutes")
+  .timeZone("America/New_York")
+  .onRun(async (context) => {
+    getActionItemSendMail({
+      dateField: "date",
+      mailStatusField: "finalMail",
+      content: "What is the status of the task: ",
+    });
     return null;
   });

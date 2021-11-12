@@ -51,8 +51,8 @@ export default function InputForm(props) {
     );
 
     // 6 hrs before sending reminder
-    var reminderDate = new Date(dateCombined.getTime() - 6 * 60 * 60 * 1000);
-    console.log(dateCombined, reminderDate, "**");
+    var dateReminder = new Date(dateCombined.getTime() - 6 * 60 * 60 * 1000);
+    console.log(dateCombined, dateReminder, "**");
 
     const newActionItem = {
       creatorEmail: user.email,
@@ -61,9 +61,10 @@ export default function InputForm(props) {
       title: title,
       noteId: noteId,
       date: dateCombined,
-      reminderDate: reminderDate,
+      dateReminder: dateReminder,
       status: false,
-      reminder: false,
+      reminderMail: false,
+      finalMail: false,
     };
 
     await db.collection("ActionItems").doc(`${uid}`).set(newActionItem);
