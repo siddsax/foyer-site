@@ -98,9 +98,8 @@ export default function ActionItemsDisplay(props) {
                 timeNanSec={actionItem.data.time.seconds * 1000}
               /> */}
               <div className="actionListItemDate">
-                {`By ${moment(actionItem.data.date.seconds * 1000).calendar()}`}
+                {`by ${moment(actionItem.data.date.seconds * 1000).calendar()}`}
               </div>
-              ;
             </div>
           ))}
         </>

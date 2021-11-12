@@ -35,18 +35,32 @@ exports.sendMailActionItem = functions.firestore
   .onCreate((snapshot, context) => {
     // Grab the current value of what was written to the Realtime Database.
     const original = snapshot.data();
+    let emailRecievers = [
+      ...new Set(original.assignees.concat(original.creatorEmail)),
+    ];
     const message = {
-      to: original.creatorEmail.concat(original.assignees),
+      to: emailRecievers,
       from: "foyer.work@gmail.com",
       subject: `Foyer Action Items : ${original.title}`,
-      text: "Testing Action Items " + original.title,
+      text:
+        "You have been assigned the action Item : " +
+        original.title +
+        " by " +
+        original.creatorEmail,
       // html: noteContent,
     };
 
     functions.logger.log("Hello from info. Here's an object:", original);
     console.log(original);
 
-    sgMail.send(message);
+    sgMail
+      .send(message)
+      .then((response) => {
+        console.log(response[0].statusCode, response[0].headers, "________");
+      })
+      .catch((error) => {
+        console.error(error, "$$$$$$$$$$$$");
+      });
     return { success: true };
   });
 

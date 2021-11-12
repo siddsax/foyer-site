@@ -15,7 +15,7 @@ hr {
   background-color: #fff7e8;
   align-content: center;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   display: flex;
   flex-direction: row;
   margin-bottom: 5px;
@@ -27,15 +27,14 @@ hr {
 
 .actionListItemTitle {
   /* background-color: red; */
-  margin-right: 20px;
-  /* min-width: 200px; */
-  /* width: 60%; */
+  font-weight: 350;
+  margin-right: 4px;
+  font-size: 15px;
 }
 
 .actionListItemDate {
-  /* background-color: royalblue; */
-  /* min-width: 170px; */
-  font-size: 14px;
+  font-weight: 350;
+  font-size: 15px;
 }
 
 .actionListAssignees {
