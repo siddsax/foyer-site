@@ -32,6 +32,7 @@ const getDateFormatted = (props) => {
   const { dateObj } = props;
   var month = dateObj.getUTCMonth() + 1; //months from 1-12
   var day = dateObj.getUTCDate();
+  if (day < 10) day = `0${day}`;
   var year = dateObj.getUTCFullYear();
 
   var newdate = `${year}${month}${day}`;
@@ -134,6 +135,7 @@ const setFirstMonthNote = async (props) => {
     // var dt = new Date().getDate();
     var now = new Date();
     now = getDateFormatted({ dateObj: now });
+    console.log(mdy1, now, "+++");
     if (!loadingTop) {
       if (mdy1 === now && indx === -1) {
         indx = j;

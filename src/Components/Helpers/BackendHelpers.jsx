@@ -58,6 +58,7 @@ const getActionItems = async (props) => {
 
   await docRef.get().then(async (querySnapshot) => {
     await querySnapshot.forEach(async (doc) => {
+      console.log(doc.data(), "^^^^^^^^^^^^^^^^^^");
       actionItems.push({ id: doc.id, data: doc.data() });
     });
     await setActionItems(actionItems);

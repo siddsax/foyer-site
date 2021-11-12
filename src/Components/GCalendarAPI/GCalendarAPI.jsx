@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { dev } from "../../firebaseConfig";
 import firebase from "../../firebase";
 
 var Config;
-var dev = 1;
 
 if (dev) {
   Config = require("../../apiGoogleconfigDev.json");

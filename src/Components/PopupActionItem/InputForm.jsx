@@ -41,25 +41,36 @@ export default function InputForm(props) {
       assignees[i] = assignees[i].replace(/\s/g, "");
     }
 
+    var dateCombined = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      time.getHours(),
+      time.getMinutes(),
+      time.getSeconds()
+    );
+
+    // 6 hrs before sending reminder
+    var reminderDate = new Date(dateCombined.getTime() - 6 * 60 * 60 * 1000);
+    console.log(dateCombined, reminderDate, "**");
+
     const newActionItem = {
+      creatorEmail: user.email,
       creator: user.uid,
       assignees: assignees,
       title: title,
-      date: date,
-      status: false,
       noteId: noteId,
-      time: time,
+      date: dateCombined,
+      reminderDate: reminderDate,
+      status: false,
+      reminder: false,
     };
 
-    console.log(user, newActionItem);
     await db.collection("ActionItems").doc(`${uid}`).set(newActionItem);
     setAssignees(null);
     setTitle("");
     setDate(null);
-    if (setLoading) {
-      await setLoading(true);
-      console.log("***");
-    }
+    if (setLoading) await setLoading(true);
 
     if (setActionItems) {
       setActionItems((preVal) => [
@@ -68,10 +79,8 @@ export default function InputForm(props) {
       ]);
     }
 
-    if (setRerenderActionItems) {
+    if (setRerenderActionItems)
       await setRerenderActionItems((preVal) => !preVal);
-      console.log("***---");
-    }
 
     onClose();
   };
@@ -123,10 +132,7 @@ export default function InputForm(props) {
 
         <DatePicker
           selected={time}
-          onChange={(time) => {
-            console.log(time);
-            setTime(time);
-          }}
+          onChange={(time) => setTime(time)}
           showTimeSelect
           showTimeSelectOnly
           timeIntervals={15}
