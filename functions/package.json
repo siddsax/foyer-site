@@ -11,14 +11,18 @@
   "engines": {
     "node": "14"
   },
-  "main": "index.js",
+  "main": "index.ts",
   "dependencies": {
     "@sendgrid/mail": "^7.4.7",
     "firebase-admin": "^9.8.0",
     "firebase-functions": "^3.14.1"
   },
   "devDependencies": {
+    "@types/node": "^16.11.7",
     "firebase-functions-test": "^0.2.0"
   },
-  "private": true
+  "private": true,
+  "functions": {
+    "predeploy": "npm --prefix functions run build"
+  }
 }

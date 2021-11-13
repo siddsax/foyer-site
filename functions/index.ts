@@ -1,3 +1,7 @@
+// import { EmailTemplate } from "./components/EmailTemplate/EmailTemplate";
+
+// const EmailTemplate = require("./components/EmailTemplate/EmailTemplate.jsx");
+
 require("firebase-functions/lib/logger/compat");
 
 // const admin = require("firebase-admin");
