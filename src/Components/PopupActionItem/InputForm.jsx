@@ -1,3 +1,4 @@
+import moment from "moment";
 import uuid from "react-uuid";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
@@ -8,10 +9,9 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DatePicker from "react-datepicker";
 import Button from "@mui/material/Button";
 import firebase from "../../firebase";
-import TimePicker from "@mui/lab/TimePicker";
-import InputTags from "../InputTags/InputTags";
-
+import EmailTemplate from "../EmailTemplate/EmailTemplate";
 import "react-datepicker/dist/react-datepicker.css";
+import ReactDOMServer from "react-dom/server";
 
 export default function InputForm(props) {
   const {
@@ -66,6 +66,39 @@ export default function InputForm(props) {
       reminderMail: false,
       finalMail: false,
     };
+
+    var name = null;
+    if (assignees.length == 1) {
+      name = assignees[0];
+    }
+
+    const dummyActionItem = { data: newActionItem };
+    console.log(moment(dummyActionItem.data.date).calendar());
+    newActionItem.reminderMailCode = ReactDOMServer.renderToString(
+      <EmailTemplate
+        actionItem={dummyActionItem}
+        // name={name}
+        firstMessageText="You have a reminder due soon"
+      />
+    );
+    newActionItem.assignMailCode = ReactDOMServer.renderToString(
+      <EmailTemplate
+        actionItem={dummyActionItem}
+        // name={name}
+        firstMessageText={
+          "You have been assigned this Action Item by" + `${user.email}`
+        }
+      />
+    );
+    newActionItem.finalMailCode = ReactDOMServer.renderToString(
+      <EmailTemplate
+        actionItem={dummyActionItem}
+        // name={name}
+        firstMessageText={"Kindly update the status of this action item"}
+      />
+    );
+
+    console.log(newActionItem);
 
     await db.collection("ActionItems").doc(`${uid}`).set(newActionItem);
     setAssignees(null);

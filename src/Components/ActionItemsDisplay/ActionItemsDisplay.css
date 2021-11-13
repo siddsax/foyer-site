@@ -10,33 +10,6 @@ hr {
   /* display: flex; */
 }
 
-.actionListItemArea {
-  font-weight: 300;
-  background-color: #fff7e8;
-  align-content: center;
-  align-items: center;
-  justify-content: flex-start;
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 5px;
-  border-radius: 10px;
-  border-width: 1px;
-  border-color: black;
-  border-style: solid;
-}
-
-.actionListItemTitle {
-  /* background-color: red; */
-  font-weight: 350;
-  margin-right: 4px;
-  font-size: 15px;
-}
-
-.actionListItemDate {
-  font-weight: 350;
-  font-size: 15px;
-}
-
 .actionListAssignees {
   /* background-color: saddlebrown; */
   display: flex;

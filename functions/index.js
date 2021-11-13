@@ -1,7 +1,3 @@
-// import { EmailTemplate } from "./components/EmailTemplate/EmailTemplate";
-
-// const EmailTemplate = require("./components/EmailTemplate/EmailTemplate.jsx");
-
 require("firebase-functions/lib/logger/compat");
 
 // const admin = require("firebase-admin");
@@ -51,7 +47,7 @@ exports.sendMailActionItem = functions.firestore
         original.title +
         " by " +
         original.creatorEmail,
-      // html: noteContent,
+      html: reminderData.assignMailCode,
     };
 
     functions.logger.log("Hello from info. Here's an object:", original);
@@ -94,7 +90,11 @@ const getActionItemSendMail = async (props) => {
       from: "foyer.work@gmail.com",
       subject: `Foyer Action Items : ${reminderData.title}`,
       text: content + reminderData.title,
-      // html: noteContent,
+      html: `${
+        finalMail === "finalMail"
+          ? reminderData.finalMailCode
+          : reminderData.reminderMailCode
+      }`,
     };
 
     sgMail
