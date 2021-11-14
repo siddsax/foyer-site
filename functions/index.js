@@ -47,7 +47,7 @@ exports.sendMailActionItem = functions.firestore
         original.title +
         " by " +
         original.creatorEmail,
-      html: reminderData.assignMailCode,
+      html: original.assignMailCode,
     };
 
     functions.logger.log("Hello from info. Here's an object:", original);
@@ -91,7 +91,7 @@ const getActionItemSendMail = async (props) => {
       subject: `Foyer Action Items : ${reminderData.title}`,
       text: content + reminderData.title,
       html: `${
-        finalMail === "finalMail"
+        mailStatusField === "finalMail"
           ? reminderData.finalMailCode
           : reminderData.reminderMailCode
       }`,

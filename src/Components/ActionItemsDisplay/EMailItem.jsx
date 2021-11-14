@@ -6,7 +6,7 @@ import moment from "moment";
 import firebase from "../../firebase";
 import { width } from "@material-ui/system";
 
-export const ListItem = (props) => {
+export const EmailItem = (props) => {
   const { actionItem, setLoading, tooltip } = props;
   var widthReminder, justifyContent;
   if (tooltip) {
@@ -55,59 +55,30 @@ export const ListItem = (props) => {
           display: "flex",
         }}
       >
-        {tooltip ? (
-          <>
-            <input
-              type="checkbox"
-              onChange={() => handleChange({ actionItem: actionItem })}
-              value={actionItem.data.status}
-              style={{
-                margin: "10px",
-                height: "16px",
-                width: "16px",
-              }}
-            />
+        {/* <div style={{ "margin-right": "20px" }}></div> */}
 
-            <div className="actionListAssignees">
-              {actionItem.data.assignees.map((assignee, i) => (
-                <>
-                  <Tooltip
-                    placement="top"
-                    title={assignee}
-                    TransitionComponent={Fade}
-                    TransitionProps={{ timeout: 600 }}
-                  >
-                    <div className="memberCircle">
-                      {assignee.substring(0, 2)}
-                    </div>
-                  </Tooltip>
-                </>
-              ))}
-            </div>
-          </>
-        ) : (
-          <></>
-          // <div style={{ "margin-right": "20px" }}></div>
-        )}
-
-        <div
+        <p
           style={{
             "font-weight": "350",
-            "margin-right": "4px",
-            "font-size": "15px",
+            "text-align": "center",
+            width: "100%",
+            color: "black",
           }}
         >
-          {actionItem.data.title}
-        </div>
-        <div
-          style={{
-            "font-weight": "350",
-            "font-size": "15px",
-          }}
-        >
+          {`${actionItem.data.title} `}
           {actionItem.data.date.seconds
             ? `by ${moment(actionItem.data.date.seconds * 1000).calendar()}`
             : `by ${moment(actionItem.data.date).calendar()}`}
+        </p>
+        <div
+          style={{
+            "font-weight": "350",
+            "font-size": "15px",
+          }}
+        >
+          {/* {actionItem.data.date.seconds
+            ? `by ${moment(actionItem.data.date.seconds * 1000).calendar()}`
+            : `by ${moment(actionItem.data.date).calendar()}`} */}
         </div>
       </div>
     </div>

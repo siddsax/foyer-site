@@ -100,21 +100,21 @@ export default function InputForm(props) {
 
     console.log(newActionItem);
 
-    await db.collection("ActionItems").doc(`${uid}`).set(newActionItem);
-    setAssignees(null);
-    setTitle("");
-    setDate(null);
-    if (setLoading) await setLoading(true);
+    // await db.collection("ActionItems").doc(`${uid}`).set(newActionItem);
+    // setAssignees(null);
+    // setTitle("");
+    // setDate(null);
+    // if (setLoading) await setLoading(true);
 
-    if (setActionItems) {
-      setActionItems((preVal) => [
-        ...preVal,
-        { id: null, data: newActionItem },
-      ]);
-    }
+    // if (setActionItems) {
+    //   setActionItems((preVal) => [
+    //     ...preVal,
+    //     { id: null, data: newActionItem },
+    //   ]);
+    // }
 
-    if (setRerenderActionItems)
-      await setRerenderActionItems((preVal) => !preVal);
+    // if (setRerenderActionItems)
+    //   await setRerenderActionItems((preVal) => !preVal);
 
     onClose();
   };
