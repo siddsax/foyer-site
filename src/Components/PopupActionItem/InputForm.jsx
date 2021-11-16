@@ -86,7 +86,7 @@ export default function InputForm(props) {
         actionItem={dummyActionItem}
         // name={name}
         firstMessageText={
-          "You have been assigned this Action Item by" + `${user.email}`
+          "You have been assigned this Action Item" // by " + `${user.email}`
         }
       />
     );

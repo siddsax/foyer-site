@@ -57,17 +57,11 @@ export const ListItem = (props) => {
       >
         {tooltip ? (
           <>
-            <input
-              type="checkbox"
+            <Checkbox
+              checked={actionItem.data.status}
               onChange={() => handleChange({ actionItem: actionItem })}
-              value={actionItem.data.status}
-              style={{
-                margin: "10px",
-                height: "16px",
-                width: "16px",
-              }}
+              inputProps={{ "aria-label": "controlled" }}
             />
-
             <div className="actionListAssignees">
               {actionItem.data.assignees.map((assignee, i) => (
                 <>

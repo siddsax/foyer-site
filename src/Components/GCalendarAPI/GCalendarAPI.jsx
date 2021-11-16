@@ -19,9 +19,28 @@ export default function GCalendarAPI(props) {
     console.log(script);
     script.src = "https://apis.google.com/js/api.js";
     document.body.appendChild(script);
-    script.onload = () => {
-      window["gapi"].load("client:auth2", initClient);
-    };
+    script.onload = () => setupGapi();
+    // script.onload = () => {
+    //   window["gapi"].load("client:auth2", initClient);
+    // };
+  };
+
+  const setupGapi = () => {
+    window["gapi"].load("client:auth2", {
+      callback: () => {
+        console.log("Gapi Loaded");
+        initClient();
+      },
+      onerror: () => {
+        console.error("gapi error");
+        setTimeout(setupGapi, 1000);
+      },
+      timeout: 1000,
+      ontimeout: () => {
+        console.error("gapi timeout");
+        setupGapi();
+      },
+    });
   };
 
   const initUser = async () => {

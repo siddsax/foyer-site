@@ -8,27 +8,6 @@ import moment from "moment";
 import { getActionItems } from "../../Components/Helpers/BackendHelpers";
 import { ListItem } from "./ListItem";
 
-const FormattedDate = (props) => {
-  const { dateNanSec, timeNanSec } = props;
-  var date = new Date(dateNanSec);
-  var time = new Date(timeNanSec);
-
-  console.log(dateNanSec, timeNanSec, date, time);
-
-  var dateCombined = new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate(),
-    time.getHours(),
-    time.getMinutes(),
-    time.getSeconds()
-  );
-  console.log(dateCombined);
-  var output = `By ${moment(dateCombined).calendar()}`;
-
-  return <div className="actionListItemDate">{output}</div>;
-};
-
 export default function ActionItemsDisplay(props) {
   const { user, noteId, rerenderActionItems } = props;
   const [actionItems, setActionItems] = useState([]);
@@ -41,6 +20,7 @@ export default function ActionItemsDisplay(props) {
       setLoading: setLoading,
       setActionItems: setActionItems,
       noteId: noteId,
+      realtime: true,
     });
   }, [rerenderActionItems]);
 

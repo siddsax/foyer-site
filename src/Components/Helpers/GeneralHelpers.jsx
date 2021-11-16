@@ -135,7 +135,6 @@ const setFirstMonthNote = async (props) => {
     // var dt = new Date().getDate();
     var now = new Date();
     now = getDateFormatted({ dateObj: now });
-    console.log(mdy1, now, "+++");
     if (!loadingTop) {
       if (mdy1 === now && indx === -1) {
         indx = j;

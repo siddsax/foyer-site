@@ -75,6 +75,8 @@ const EmailTemplate = (props) => {
             "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
             transition: "transform 250ms",
             "background-color": "white",
+            "margin-right": "30%",
+            "margin-left": "30%",
           }}
         >
           <p
@@ -135,6 +137,8 @@ const EmailTemplate = (props) => {
             "justify-content": "center",
             width: "100px",
             display: "flex",
+            "margin-left": "30%",
+            "margin-right": "30%",
           }}
         >
           <a

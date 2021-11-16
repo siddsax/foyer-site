@@ -40,6 +40,7 @@ const getActionItems = async (props) => {
     userId,
     assigneeID,
     completed,
+    realtime,
   } = props;
   await setLoading(true);
 
@@ -54,17 +55,27 @@ const getActionItems = async (props) => {
     docRef = docRef.where("status", "==", completed);
   }
 
-  const actionItems = [];
-
-  await docRef.get().then(async (querySnapshot) => {
+  const fillItems = async (props) => {
+    const actionItems = [];
+    const { querySnapshot } = props;
     await querySnapshot.forEach(async (doc) => {
-      console.log(doc.data(), "^^^^^^^^^^^^^^^^^^");
       actionItems.push({ id: doc.id, data: doc.data() });
     });
     await setActionItems(actionItems);
-  });
-  setTimeout(() => setLoading(false), 300);
-  // await setLoading(false);
+  };
+
+  if (realtime) {
+    await docRef.onSnapshot(async (querySnapshot) => {
+      await setLoading(true);
+      await fillItems({ querySnapshot: querySnapshot });
+      setTimeout(() => setLoading(false), 300);
+    });
+  } else {
+    await docRef.get().then(async (querySnapshot) => {
+      await fillItems({ querySnapshot: querySnapshot });
+      setTimeout(() => setLoading(false), 300);
+    });
+  }
 };
 
 export { addMeetNote, getActionItems };
