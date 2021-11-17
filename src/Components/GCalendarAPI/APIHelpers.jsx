@@ -1,20 +1,38 @@
 const listUpcomingEvents = (maxResults, setEvents) => {
+  var newDateObj = new Date(new Date().getTime() - 120 * 60000);
+  var timeoutTime = 250;
+  const callAPI = () => {
+    console.log("calling google api !!!", {
+      calendarId: "primary",
+      timeMin: newDateObj.toISOString(),
+      showDeleted: false,
+      singleEvents: true,
+      maxResults: maxResults,
+      orderBy: "startTime",
+    });
+    window.$gapi.client.calendar.events
+      .list({
+        calendarId: "primary",
+        timeMin: newDateObj.toISOString(),
+        showDeleted: false,
+        singleEvents: true,
+        maxResults: maxResults,
+        orderBy: "startTime",
+      })
+      .then((response) => {
+        const events = response.result.items;
+        setEvents(events);
+      })
+      .catch((error) => {
+        console.log(error, "gapi error, retrying after timeout");
+        timeoutTime = timeoutTime * 2;
+        setTimeout(callAPI, timeoutTime);
+      });
+  };
+
   if (window.$gapi) {
     window.$gapi.client.load("calendar", "v3", () => {
-      var newDateObj = new Date(new Date().getTime() - 120 * 60000);
-      return window.$gapi.client.calendar.events
-        .list({
-          calendarId: "primary",
-          timeMin: newDateObj.toISOString(),
-          showDeleted: false,
-          singleEvents: true,
-          maxResults: maxResults,
-          orderBy: "startTime",
-        })
-        .then((response) => {
-          const events = response.result.items;
-          setEvents(events);
-        });
+      callAPI();
     });
   } else {
     console.log("Error: gapi not loaded");
