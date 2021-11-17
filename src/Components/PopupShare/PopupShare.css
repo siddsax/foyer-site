@@ -76,7 +76,7 @@ html[data-theme="dark"] .menu-item:not(:first-child) {
 }
 
 .popup-content {
-  width: 400px;
+  width: 340px;
   border-radius: 20px;
   padding: 0.5rem;
   background-color: #e5e5e5;

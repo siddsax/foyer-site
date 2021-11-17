@@ -16,7 +16,7 @@ const contentStyle = {
   height: "60%",
   width: "65%",
   "border-radius": "10px",
-  "min-width": "400px",
+  "min-width": "350px",
 };
 
 const containsRegex = async (props) => {

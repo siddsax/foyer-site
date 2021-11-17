@@ -1,6 +1,6 @@
 const listUpcomingEvents = (maxResults, setEvents) => {
   var newDateObj = new Date(new Date().getTime() - 120 * 60000);
-  var timeoutTime = 250;
+  var timeoutTime = 100;
   const callAPI = () => {
     console.log("calling google api !!!", {
       calendarId: "primary",
@@ -55,6 +55,10 @@ const getMeetDetails = (props) => {
         })
         .catch((er) => {
           console.log(er);
+          setTimeout(
+            () => getMeetDetails({ eventId: eventId, setEvent: setEvent }),
+            200
+          );
         });
     });
   } else {

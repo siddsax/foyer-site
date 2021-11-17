@@ -31,7 +31,7 @@
   position: absolute;
   height: 70vh;
   width: 30vw;
-  min-width: 380px;
+  min-width: 350px;
   margin-left: 10px;
   margin-right: 10px;
   /* background-color: rgb(255, 249, 172, 0.5); */
@@ -52,7 +52,7 @@
   align-content: center;
   justify-content: center;
   font-family: Inter, sans-serif;
-  font-size: 45px;
+  font-size: 44px;
   font-weight: bolder;
 }
 
@@ -81,7 +81,7 @@
   background-color: rgba(165, 178, 187, 0.5);
   width: 60%;
   border-radius: 5px;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .signInButton {
@@ -93,7 +93,7 @@
 }
 
 .footer {
-  left: 0;
+  /* left: 5; */
   bottom: 0;
   position: absolute;
   font-size: 10px;
