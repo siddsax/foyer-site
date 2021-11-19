@@ -171,39 +171,30 @@ const setFirstMonthNote = async (props) => {
 
 const ListItemBarComponent = (props) => {
   const { item } = props;
+  console.log("item+++++++", item);
   return (
     <>
       <div className="NoteTitleArea">
         <text className="NoteTitleText">{item.title}</text>
-        {/* </div>
-      <div className="DateTimeArea"> */}
-        {/* <> */}
-        {item.end ? (
-          <text className="DateTime">
-            {formatAMPM(new Date(item.createdAt))} {" - "}
-            {formatAMPM(new Date(item.end))}
-          </text>
-        ) : null}
-        {/* </> */}
-        {/* <> */}
-        {item.date ? (
-          <text className="DateTime">
-            {item.date.seconds
-              ? moment(new Date(item.date.seconds * 1000)).calendar(
-                  (null,
-                  {
-                    sameDay: "[Today] LT",
-                    nextDay: "[Tomorrow] LT",
-                    nextWeek: "dd",
-                    lastDay: "[Yesterday]",
-                    lastWeek: "[Last] ddd",
-                    sameElse: "DD/MM/YYYY",
-                  })
-                )
-              : moment(new Date(item.date)).calendar()}
-          </text>
-        ) : null}
-        {/* </> */}
+      </div>
+      <div className="DateTimeArea">
+        <>
+          {item.end ? (
+            <text className="DateTime">
+              {formatAMPM(new Date(item.createdAt))} {" - "}
+              {formatAMPM(new Date(item.end))}
+            </text>
+          ) : null}
+        </>
+        <>
+          {item.date ? (
+            <text className="DateTime">
+              {item.date.seconds
+                ? moment(new Date(item.date.seconds * 1000)).calendar()
+                : moment(new Date(item.date)).calendar()}
+            </text>
+          ) : null}
+        </>
       </div>
       <div className="FullDateArea">
         {/* {item.date
