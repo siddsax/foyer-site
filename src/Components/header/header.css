@@ -2,7 +2,7 @@
 
 .header {
   display: flex;
-  width: 100%;
+  width: 100vw;
   height: 60px;
   background-color: var(--main-bg-color);
   align-items: center;
@@ -10,9 +10,10 @@
 }
 
 .headerInner {
-  margin-left: 10px;
-  margin-right: 10px;
+  /* margin-left: 25px; */
+  /* margin-right: 10px; */
   width: 80%;
+  min-width: 360px;
   display: flex;
   flex-flow: row;
   align-items: center;
@@ -40,29 +41,29 @@
   align-content: center;
 }
 
+.home,
 .back {
   display: none;
 }
+
 @media only screen and (max-width: 500px) {
   .logo {
     display: none;
   }
   .back {
     display: flex;
+    margin-right: 10px;
+    margin-left: 20px;
   }
-  .searchBarInner {
-    margin-left: 10px;
-    width: 100%;
+  .home {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
   }
 
-  .headerInner {
+  .searchBarInner {
+    margin-left: 10px;
+    margin-right: 10px;
     width: 100%;
     display: flex;
-    flex-flow: row;
     align-items: center;
     justify-content: center;
     align-content: center;
@@ -71,12 +72,15 @@
 
 .searchBox {
   flex-grow: initial;
-  background-color: var(--first-object-color);
-  border: 1px solid transparent;
-  border-radius: 8px;
+  background-color: "white";
+  border: none;
+  /* var(--first-object-color); */
+  /* border: 1px solid transparent; */
+  border-radius: 2px;
   /* transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); */
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); */
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 5px 0px;
 }
 
 /* .searchBox:hover {
@@ -90,7 +94,18 @@
   align-content: center;
   justify-content: center;
 }
-
+@media only screen and (max-width: 500px) {
+  .signOut {
+    display: flex;
+    margin: 1%;
+    margin-right: 20px;
+    /* height: 10px; */
+    /* width: 100px; */
+    align-items: flex-end;
+    align-content: flex-end;
+    justify-content: flex-end;
+  }
+}
 .menu-container {
   position: relative;
   display: flex;
@@ -102,6 +117,11 @@
   width: 40px;
 }
 
+@media only screen and (max-width: 500px) {
+  .profilePic {
+    width: 30px;
+  }
+}
 .menu-trigger {
   /* width: 100px; */
   background: #ffffff;

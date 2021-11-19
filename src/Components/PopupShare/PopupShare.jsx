@@ -26,7 +26,7 @@ const ShareMethod = (props) => {
 };
 
 const PopupShare = (props) => {
-  const { noteContent, attendees, title } = props;
+  const { noteContent, attendees, title, trigger } = props;
   const location = useLocation();
   const [copied, setCopied] = useState(false);
 
@@ -59,22 +59,13 @@ const PopupShare = (props) => {
   return (
     <Popup
       trigger={
-        // <Button
-        //   variant="contained"
-        //   style={{
-        //     backgroundColor: "#EEBC1D",
-        //     color: "Black",
-        //     width: "100%",
-        //   }}
-        // >
-        //   Share Note
-        // </Button>
-        <button>
-          <div className="buttonShare">
-            <img src={rocket} style={{ "margin-right": "10px" }} />
-            Share Notes
-          </div>
-        </button>
+        trigger
+        // <button>
+        //   <div className="buttonShare">
+        //     <img src={rocket} style={{ "margin-right": "10px" }} />
+        //     Share Notes
+        //   </div>
+        // </button>
       }
       modal
       nested

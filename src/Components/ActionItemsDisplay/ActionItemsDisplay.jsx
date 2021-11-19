@@ -26,7 +26,6 @@ export default function ActionItemsDisplay(props) {
 
   return (
     <div>
-      <hr class="separateActionItems"></hr>
       {!loading ? (
         <>
           {actionItems.map((actionItem, i) => (

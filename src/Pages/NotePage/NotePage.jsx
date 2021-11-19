@@ -24,6 +24,8 @@ import { setFirstMonthNote } from "../../Components/Helpers/GeneralHelpers";
 import PopupActionItem from "../../Components/PopupActionItem/PopupActionItem";
 import ActionItemsDisplay from "../../Components/ActionItemsDisplay/ActionItemsDisplay";
 import alarmClock from "../../assets/icons/alarmClock.png";
+import send from "../../assets/icons/send.png";
+import plus from "../../assets/icons/plus.png";
 
 let keysDown = {};
 
@@ -264,7 +266,7 @@ const NotePage = (props) => {
                   </text>
                 </div>
               </div>
-              <hr className="headerUnderline"></hr>
+              {/* <hr className="headerUnderline"></hr> */}
               <div className="editorBox">
                 <EditorFoyer
                   user={user}
@@ -274,64 +276,83 @@ const NotePage = (props) => {
                   setValue={setValue}
                 />
               </div>
-              <div className="actionItemArea">
-                <ActionItemsDisplay
-                  noteId={activeNote.id}
-                  user={user}
-                  rerenderActionItems={rerenderActionItems}
-                />
-              </div>
             </div>
-            <PopupActionItem
-              noteContent={contentState}
-              attendees={activeNote.access}
-              noteId={activeNote.id}
-              openActionItemPopup={openActionItemPopup}
-              setOpenActionItemPopup={setOpenActionItemPopup}
-              user={user}
-              setRerenderActionItems={setRerenderActionItems}
-              trigger={
-                <button className="actionItemButtonNotePage">
-                  <img src={alarmClock} />
+            <hr class="separateActionItems" />
+            <div className="bottomArea">
+              <div className="bottomAreaInner">
+                <div className="buttonsArea">
+                  <PopupShare
+                    noteContent={contentState}
+                    attendees={activeNote.access}
+                    title={activeNote.title}
+                    trigger={
+                      <button className="shareNoteButtonNotePage">
+                        <img src={send} />
+                        <div style={{ "margin-left": "10px" }}>Send Notes</div>
+                      </button>
+                    }
+                  />
+                  <PopupActionItem
+                    noteContent={contentState}
+                    attendees={activeNote.access}
+                    noteId={activeNote.id}
+                    openActionItemPopup={openActionItemPopup}
+                    setOpenActionItemPopup={setOpenActionItemPopup}
+                    user={user}
+                    setRerenderActionItems={setRerenderActionItems}
+                    trigger={
+                      <button className="actionItemButtonNotePage">
+                        <img src={alarmClock} />
 
-                  <div style={{ "margin-left": "10px" }}>
-                    Add a Reminder or Task
-                  </div>
-                </button>
-              }
-            />
-            <div className="shareNoteButtonArea">
-              <PopupShare
-                noteContent={contentState}
-                attendees={activeNote.access}
-                title={activeNote.title}
-              />
-            </div>
-            <div className="linkedMeetingsArea">
-              <div className="linkedMeetingsHeader">
-                <div className="linkedMeetingsAreaTitle">Linked Meetings</div>
-                <PopupLinkMeet
-                  user={user}
-                  setLinkNotes={setLinkNotes}
-                  activeNote={activeNote}
-                  setUpdatingToggle={setUpdatingToggle}
-                />
-              </div>
-              <div className="linkedMeetingsListArea">
-                {!loadingLinkNotes ? (
-                  <div className="LinkedNotesListArea">
-                    <NotesList notes={linkNotes} loading={false} />
-                  </div>
-                ) : (
-                  <>
-                    <PuffLoader
-                      color="#049be4"
-                      loading={loadingLinkNotes}
-                      css={override}
-                      size={50}
+                        <div style={{ "margin-left": "10px" }}>
+                          Assign Reminder
+                        </div>
+                      </button>
+                    }
+                  />
+                </div>
+                <div className="actionItemArea">
+                  <ActionItemsDisplay
+                    noteId={activeNote.id}
+                    user={user}
+                    rerenderActionItems={rerenderActionItems}
+                  />
+                </div>
+                <div className="linkedMeetingsArea">
+                  <div className="linkedMeetingsHeader">
+                    <div className="linkedMeetingsAreaTitle">
+                      Linked Meetings
+                    </div>
+                    <PopupLinkMeet
+                      user={user}
+                      setLinkNotes={setLinkNotes}
+                      activeNote={activeNote}
+                      setUpdatingToggle={setUpdatingToggle}
+                      const
+                      trigger={
+                        <button className="linkedMeetingButton">
+                          <img src={plus} />
+                        </button>
+                      }
                     />
-                  </>
-                )}
+                  </div>
+                  <div className="linkedMeetingsListArea">
+                    {!loadingLinkNotes ? (
+                      <div className="LinkedNotesListArea">
+                        <NotesList notes={linkNotes} loading={false} />
+                      </div>
+                    ) : (
+                      <>
+                        <PuffLoader
+                          color="#049be4"
+                          loading={loadingLinkNotes}
+                          css={override}
+                          size={50}
+                        />
+                      </>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

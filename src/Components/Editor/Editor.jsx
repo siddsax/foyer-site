@@ -90,7 +90,8 @@ const EditorFoyer = (props) => {
         formats={formats}
         onChange={(value) => onEditNote(value)}
         // value={"Testing"}
-        placeholder="Type in your notes here."
+        placeholder=""
+        // placeholder="Type in your notes here."
       ></ReactQuill>
     </div>
   );

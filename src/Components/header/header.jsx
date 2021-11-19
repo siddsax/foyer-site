@@ -3,7 +3,8 @@ import { Box, Button } from "@mui/material";
 import firebase from "firebase";
 import "./header.css";
 import logo from "../../assets/images/logo.png";
-import back from "../../assets/icons/arrow-left.png";
+import home from "../../assets/icons/home.png";
+import back from "../../assets/icons/back.png";
 import Icon from "@mui/material/Icon";
 import { Link, useHistory } from "react-router-dom";
 import { DropdownMenu, MenuItem } from "react-bootstrap-dropdown-menu";
@@ -63,6 +64,13 @@ const Header = (props) => {
             <button onClick={goBack} className="back">
               <img src={back} />
             </button>
+            <button
+              onClick={() => window.open("https://my.foyer.work", "_blank")}
+              className="home"
+            >
+              <img src={home} />
+            </button>
+
             <div className="searchBar">
               <div className="searchBarInner">
                 <PopupSearch

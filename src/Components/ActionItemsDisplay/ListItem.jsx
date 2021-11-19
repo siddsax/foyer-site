@@ -37,12 +37,10 @@ export const ListItem = (props) => {
       <div
         style={{
           "font-weight": "300",
-          "background-color": "#fff7e8",
+          "background-color": "white",
 
           "margin-bottom": "5px",
           "border-radius": "10px",
-          "border-color": "black",
-          "border-style": "solid",
           height: "45px",
           width: "100%",
           "align-items": "center",
@@ -51,42 +49,19 @@ export const ListItem = (props) => {
           "align-content": "center",
           "align-items": "center",
           "justify-content": `${justifyContent}`,
-          "border-width": "1px",
           display: "flex",
+          "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+          "font-weight": "300",
         }}
       >
-        {tooltip ? (
-          <>
-            <Checkbox
-              checked={actionItem.data.status}
-              onChange={() => handleChange({ actionItem: actionItem })}
-              inputProps={{ "aria-label": "controlled" }}
-            />
-            <div className="actionListAssignees">
-              {actionItem.data.assignees.map((assignee, i) => (
-                <>
-                  <Tooltip
-                    placement="top"
-                    title={assignee}
-                    TransitionComponent={Fade}
-                    TransitionProps={{ timeout: 600 }}
-                  >
-                    <div className="memberCircle">
-                      {assignee.substring(0, 2)}
-                    </div>
-                  </Tooltip>
-                </>
-              ))}
-            </div>
-          </>
-        ) : (
-          <></>
-          // <div style={{ "margin-right": "20px" }}></div>
-        )}
+        <Checkbox
+          checked={actionItem.data.status}
+          onChange={() => handleChange({ actionItem: actionItem })}
+          inputProps={{ "aria-label": "controlled" }}
+        />
 
         <div
           style={{
-            "font-weight": "350",
             "margin-right": "4px",
             "font-size": "15px",
           }}
@@ -95,13 +70,27 @@ export const ListItem = (props) => {
         </div>
         <div
           style={{
-            "font-weight": "350",
             "font-size": "15px",
+            "min-width": "110px",
           }}
         >
           {actionItem.data.date.seconds
             ? `by ${moment(actionItem.data.date.seconds * 1000).calendar()}`
             : `by ${moment(actionItem.data.date).calendar()}`}
+        </div>
+        <div className="actionListAssignees">
+          {actionItem.data.assignees.map((assignee, i) => (
+            <>
+              <Tooltip
+                placement="top"
+                title={assignee}
+                TransitionComponent={Fade}
+                TransitionProps={{ timeout: 600 }}
+              >
+                <div className="memberCircle">{assignee.substring(0, 2)}</div>
+              </Tooltip>
+            </>
+          ))}
         </div>
       </div>
     </div>
