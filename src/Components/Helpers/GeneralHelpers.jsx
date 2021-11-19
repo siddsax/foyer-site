@@ -68,8 +68,8 @@ const override = css`
   border-color: red;
 `;
 
-var offsetNoteArea = 80;
-var offsetMonthArea = 30;
+var offsetNoteArea = 60;
+var offsetMonthArea = 50;
 
 const setFirstMonthNote = async (props) => {
   const { notes, setNotes, loadingTop, todayLine, actionItem } = props;
@@ -171,6 +171,7 @@ const setFirstMonthNote = async (props) => {
 
 const ListItemBarComponent = (props) => {
   const { item } = props;
+  console.log("item+++++++", item);
   return (
     <>
       <div className="NoteTitleArea">
@@ -194,6 +195,12 @@ const ListItemBarComponent = (props) => {
             </text>
           ) : null}
         </>
+      </div>
+      <div className="FullDateArea">
+        {/* {item.date
+          ? moment(new Date(item.date.seconds * 1000)).calendar()
+          : item.date} */}
+        {moment(new Date(item.createdAt)).calendar()}
       </div>
     </>
   );

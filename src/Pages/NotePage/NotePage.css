@@ -131,19 +131,29 @@
 .LinkedNotesListArea {
   display: flex;
   flex-direction: column;
-  margin-bottom: 40px;
   align-content: center;
   align-items: center;
   box-sizing: border-box;
-}
-
-.LinkedNotesListArea::-webkit-scrollbar {
-  display: none;
+  width: 100%;
+  margin-bottom: 5px;
 }
 
 .linkedMeetingsListArea {
+  display: flex;
   width: 100%;
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
 }
+
+/* .linkedMeetingsArea .calendarDay {
+  font-size: 9px;
+} */
+
+/* .linkedMeetingsArea .calendarDate {
+  font-size: 17px;
+} */
 
 .linkedMeetingsHeader {
   width: 100%;
@@ -152,11 +162,11 @@
   align-items: center;
   align-content: center;
   justify-content: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 
 .linkedMeetingsAreaTitle {
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 300;
   margin-right: 20px;
   text-shadow: 0.5px;
@@ -221,4 +231,23 @@
 
 .linkedMeetingsArea {
   margin-top: 20px;
+}
+
+.linkMeetsPromptArea {
+  display: flex;
+  width: 80%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+}
+.linkMeetsPromptHead {
+  font-size: 22px;
+  font-weight: 250;
+  margin-bottom: 30px;
+}
+
+.addLinkMeets {
+  margin-right: 4px;
 }

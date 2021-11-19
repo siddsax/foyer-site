@@ -16,15 +16,36 @@
 }
 .allNotes {
   flex-direction: column;
-  min-width: 350px;
   width: 60vw;
 }
 
-.linkedMeetingsArea .allNotes {
-  flex-direction: column;
+@media only screen and (max-width: 500px) {
+  .allNotes {
+    flex-direction: column;
+    width: 95vw;
+  }
+}
+
+/* .linkedMeetingsArea .allNotes {
   min-width: 400px;
   width: 100%;
+} */
+
+/* .linkedMeetingsArea .DateTimeArea {
+  display: none;
 }
+
+.linkedMeetingsArea .monthAreaBar {
+  height: 20px;
+}
+.linkedMeetingsArea img {
+  width: 20px;
+  height: 20px;
+}
+
+.linkedMeetingsArea .monthName {
+  font-size: 20px;
+} */
 
 .monthAreaBar {
   display: flex;
@@ -33,6 +54,28 @@
   align-content: center;
   align-items: center;
   margin-bottom: 10px;
+}
+
+.linkedMeetingsArea .calendarDateArea,
+.linkedMeetingsArea .monthAreaBar,
+.linkedMeetingsArea .monthArea,
+.linkedMeetingsArea .DateTimeArea {
+  display: none;
+}
+.linkedMeetingsArea .NoteItem {
+  height: 50px;
+}
+
+.linkedMeetingsArea .FullDateArea {
+  display: flex;
+  margin-top: 4px;
+  margin-left: 10px;
+  font-size: 10px;
+  color: var(--button-color);
+}
+
+.linkedMeetingsArea .NoteTitleArea {
+  margin-top: 3px;
 }
 
 .monthArea {
@@ -63,13 +106,13 @@
   height: 50px;
   margin-top: 0;
   border-bottom: 1px solid #1f1209;
-  box-shadow: 0 20px 20px -20px #333;
+  box-shadow: 0 15px 15px -15px #333;
   margin: -50px auto 10px;
 }
 
 .NoteItem {
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 4px;
   height: 60px;
   align-content: center;
   /* align-items: center; */
@@ -82,7 +125,8 @@
   width: 100%;
 }
 
-.calendarDateArea {
+.calendarDateArea,
+.calendarDateAreaB {
   position: relative;
   width: 40px;
   border-radius: 0.7em;
@@ -94,16 +138,9 @@
 }
 
 .calendarDateAreaB {
-  position: relative;
-  width: 40px;
-  border-radius: 0.7em;
-  display: flex;
-  align-content: center;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   font-weight: bold;
-  background-color: var(--second-object-color);
+  border: 1px solid black;
+  /* background-color: var(--second-object-color); */
 }
 
 .calendarDay {
@@ -138,12 +175,12 @@
 .ActionItemPassed {
   display: flex;
   height: 80%;
-  width: 100%;
-  background-color: var(--third-object-color);
+  width: 95%;
+  background-color: var(--main-bg-color);
   border-radius: 5px;
   margin-left: 10px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-
+  color: var(--first-text-color);
   box-sizing: border-box;
   border: 1px solid transparent;
   align-items: center;
@@ -151,9 +188,20 @@
 }
 
 .buttonMeetingNote {
-  background-color: var(--third-object-color-2);
+  color: var(--button-color);
 }
 
 .ActionItemPassed {
   background-color: #e60000;
+}
+
+.linkedMeetingsArea .Note {
+  flex-direction: column;
+  align-items: flex-start;
+  height: 45px;
+  margin-left: 0;
+  border-radius: 10px;
+  font-weight: 300;
+  font-size: 15px;
+  width: 100%;
 }

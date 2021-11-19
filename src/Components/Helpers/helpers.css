@@ -3,7 +3,7 @@
   align-items: center;
   width: 50%;
   margin-left: 10px;
-  color: var(--second-text-color);
+  /* align-content: center; */
 }
 
 .NoteTitleText {
@@ -34,11 +34,14 @@
 .DateTimeArea {
   display: flex;
   width: 100%;
-  color: var(--first-object-color);
   align-content: center;
   justify-content: center;
   align-items: center;
   /* font-weight: bold; */
+}
+
+.FullDateArea {
+  display: none;
 }
 
 .searchListItem {

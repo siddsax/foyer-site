@@ -46,8 +46,6 @@ export const EmailItem = (props) => {
           height: "45px",
           width: "100%",
           "align-items": "center",
-          "font-family":
-            "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
           "align-content": "center",
           "align-items": "center",
           "justify-content": `${justifyContent}`,

@@ -319,39 +319,74 @@ const NotePage = (props) => {
                   />
                 </div>
                 <div className="linkedMeetingsArea">
-                  <div className="linkedMeetingsHeader">
-                    <div className="linkedMeetingsAreaTitle">
-                      Linked Meetings
-                    </div>
-                    <PopupLinkMeet
-                      user={user}
-                      setLinkNotes={setLinkNotes}
-                      activeNote={activeNote}
-                      setUpdatingToggle={setUpdatingToggle}
-                      const
-                      trigger={
-                        <button className="linkedMeetingButton">
-                          <img src={plus} />
-                        </button>
-                      }
+                  {loadingLinkNotes ? (
+                    <PuffLoader
+                      color="#049be4"
+                      loading={loadingLinkNotes}
+                      css={override}
+                      size={50}
                     />
-                  </div>
-                  <div className="linkedMeetingsListArea">
-                    {!loadingLinkNotes ? (
-                      <div className="LinkedNotesListArea">
-                        <NotesList notes={linkNotes} loading={false} />
-                      </div>
-                    ) : (
-                      <>
-                        <PuffLoader
-                          color="#049be4"
-                          loading={loadingLinkNotes}
-                          css={override}
-                          size={50}
-                        />
-                      </>
-                    )}
-                  </div>
+                  ) : (
+                    <>
+                      {linkNotes.length > 0 ? (
+                        <>
+                          <div className="linkedMeetingsHeader">
+                            <div className="linkedMeetingsAreaTitle">
+                              Related Meetings
+                            </div>
+                          </div>
+                          <div className="linkedMeetingsListArea">
+                            <div className="LinkedNotesListArea">
+                              <NotesList notes={linkNotes} loading={false} />
+                            </div>
+                            <PopupLinkMeet
+                              user={user}
+                              setLinkNotes={setLinkNotes}
+                              activeNote={activeNote}
+                              setUpdatingToggle={setUpdatingToggle}
+                              const
+                              trigger={
+                                <button className="linkedMeetingButton">
+                                  <img src={plus} />
+                                </button>
+                              }
+                            />
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="linkMeetsPromptArea">
+                            <div className="linkMeetsPromptHead">
+                              {" "}
+                              Searching for older notes?
+                            </div>
+                            <PopupLinkMeet
+                              user={user}
+                              setLinkNotes={setLinkNotes}
+                              activeNote={activeNote}
+                              setUpdatingToggle={setUpdatingToggle}
+                              const
+                              trigger={
+                                <div style={{ display: "flex" }}>
+                                  <button className="addLinkMeets">
+                                    <div>Find related Notes </div>
+                                  </button>
+                                  {"and link them to"}
+                                </div>
+                              }
+                            />
+                            <div
+                              style={{
+                                "text-align": "center",
+                              }}
+                            >
+                              this meeting note so that they are always handing
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </>
+                  )}
                 </div>
               </div>
             </div>
