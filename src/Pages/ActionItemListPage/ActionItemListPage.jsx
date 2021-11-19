@@ -92,7 +92,7 @@ const ActionItemListPage = (props) => {
   }, [rerender]);
 
   return (
-    <div className="NotesListPage">
+    <div className="ActionItemListPage">
       <div className="newNote">
         <div className="checkBoxArea">
           Assigned
@@ -105,6 +105,16 @@ const ActionItemListPage = (props) => {
             checked={completed}
             onChange={() => setCompleted((prevVal) => !prevVal)}
             inputProps={{ "aria-label": "controlled" }}
+            sx={{
+              color: getComputedStyle(
+                document.documentElement
+              ).getPropertyValue("--fourth-object-color"),
+              "&.Mui-checked": {
+                color: getComputedStyle(
+                  document.documentElement
+                ).getPropertyValue("--fourth-object-color"),
+              },
+            }}
           />
           Completed
         </div>

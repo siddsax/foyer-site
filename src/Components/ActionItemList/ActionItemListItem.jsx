@@ -87,11 +87,11 @@ const ActionItemListItem = (props) => {
               sx={{
                 color: getComputedStyle(
                   document.documentElement
-                ).getPropertyValue("--second-text-color"),
+                ).getPropertyValue("--fourth-object-color"),
                 "&.Mui-checked": {
                   color: getComputedStyle(
                     document.documentElement
-                  ).getPropertyValue("--second-text-color"),
+                  ).getPropertyValue("--fourth-object-color"),
                 },
               }}
             />

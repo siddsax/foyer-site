@@ -56,6 +56,16 @@ export const ListItem = (props) => {
           checked={actionItem.data.status}
           onChange={() => handleChange({ actionItem: actionItem })}
           inputProps={{ "aria-label": "controlled" }}
+          sx={{
+            color: getComputedStyle(document.documentElement).getPropertyValue(
+              "--fourth-object-color"
+            ),
+            "&.Mui-checked": {
+              color: getComputedStyle(
+                document.documentElement
+              ).getPropertyValue("--fourth-object-color"),
+            },
+          }}
         />
 
         <div
