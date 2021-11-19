@@ -75,16 +75,10 @@ export const ListItem = (props) => {
           }}
         >
           {actionItem.data.title}
-        </div>
-        <div
-          style={{
-            "font-size": "15px",
-            "min-width": "110px",
-          }}
-        >
+
           {actionItem.data.date.seconds
-            ? `by ${moment(actionItem.data.date.seconds * 1000).calendar()}`
-            : `by ${moment(actionItem.data.date).calendar()}`}
+            ? ` by ${moment(actionItem.data.date.seconds * 1000).calendar()}`
+            : ` by ${moment(actionItem.data.date).calendar()}`}
         </div>
         <div className="actionListAssignees">
           {actionItem.data.assignees.map((assignee, i) => (
