@@ -6,7 +6,7 @@
 
 .quill {
   height: auto;
-  margin-top: 25px;
+  margin-top: 35px;
 }
 
 .ql-toolbar.ql-snow {
@@ -30,10 +30,11 @@
   /* height: 90%; */
   /* height: inherit; */
   /* min-height: 200px; */
+  margin-top: 25px;
   bottom: 25px;
   border: none;
   /* border-width: 0px 0px 3px 0px; */
-  margin-left: 0px;
+  margin-left: -4px;
 }
 
 .ql-editor {

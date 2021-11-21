@@ -35,6 +35,24 @@ const EditorFoyer = (props) => {
     );
   };
 
+  const addShortcuts = (props) => {
+    const { quill } = props;
+    const bindings = ["H", "U"];
+    const formats = ["header", "underline"];
+    for (let i = 0; i < bindings.length; i++) {
+      console.log(formats[i], bindings[i]);
+      quill.keyboard.addBinding(
+        {
+          key: bindings[i],
+          shortKey: true,
+        },
+        function (range, context) {
+          this.quill.formatText(range, formats[i], true);
+        }
+      );
+    }
+  };
+
   useEffect(() => {
     if (note) {
       if (firstTime.current) {
@@ -47,6 +65,7 @@ const EditorFoyer = (props) => {
         awareness = provider.awareness;
         persistence = new IndexeddbPersistence(note.id, ydoc);
         quillRef = reactQuillRef.getEditor();
+        addShortcuts({ quill: quillRef });
         binding = new QuillBinding(ytext, quillRef, provider.awareness);
         setUsername({ user: user, awareness: awareness, myColor: myColor });
 

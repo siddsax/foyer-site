@@ -25,17 +25,17 @@ const modules = {
 };
 
 const formats = [
-  // "header",
-  // "bold",
-  // "italic",
-  // "underline",
-  // "strike",
-  // "blockquote",
+  "header",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
   "list",
   "bullet",
-  // "indent",
-  // "link",
-  // "image",
+  "indent",
+  "link",
+  "image",
 ];
 const setUsername = (props) => {
   const { awareness, user, myColor } = props;
