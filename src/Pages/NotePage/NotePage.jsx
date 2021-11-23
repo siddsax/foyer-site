@@ -158,7 +158,9 @@ const NotePage = (props) => {
 
   useEffect(() => {
     var found = 0;
+    var meet;
     var uriHangoutID = location.pathname.split("meetid-")[1];
+
     if (meetings) {
       if (uriHangoutID.split("-").length > 1) {
         for (let i = 0; i < meetings.length; i++) {
@@ -168,40 +170,38 @@ const NotePage = (props) => {
               .slice(-1)[0];
             if (meetHangoutID === uriHangoutID) {
               found = 1; // meeting found, using this from the next 10 events
-              var meet = formatMeeting({ meetingCalendar: meetings[i] });
-              addMeetNote({
-                meet: meet,
-                db: db,
-                history: history,
-                user: user,
-              }).then(async (note) => {
-                activeNoteID.current = note.id;
-                await setActiveNote(note);
-                await setLinkNotes(note.linkNotes ? note.linkNotes : []);
-                await setUpdatingToggle((preVal) => !preVal);
-              });
+              meet = formatMeeting({ meetingCalendar: meetings[i] });
               break;
             }
           }
         }
       } else {
         found = 1; // meeting found by pulling directly via calendar api
-        var meet = formatMeeting({ meetingCalendar: meetings });
-        addMeetNote({
-          meet: meet,
-          db: db,
-          history: history,
-          user: user,
-        }).then(async (note) => {
-          activeNoteID.current = note.id;
-          await setActiveNote(note);
-          await setLinkNotes(note.linkNotes ? note.linkNotes : []);
-          await setUpdatingToggle((preVal) => !preVal);
-        });
+        meet = formatMeeting({ meetingCalendar: meetings });
       }
-      if (!found) {
-        history.push(`/`); // return to homepage if meeting not found
+
+      if (found === 0) {
+        meet = {
+          hangoutLink: `https://meet.google.com${location.pathname}`,
+          attendees: [{ email: user.email }],
+        };
       }
+
+      addMeetNote({
+        meet: meet,
+        db: db,
+        history: history,
+        user: user,
+      }).then(async (note) => {
+        activeNoteID.current = note.id;
+        await setActiveNote(note);
+        await setLinkNotes(note.linkNotes ? note.linkNotes : []);
+        await setUpdatingToggle((preVal) => !preVal);
+      });
+
+      // if (!found) {
+      //   history.push(`/`);
+      // }
     }
   }, [meetings]);
 

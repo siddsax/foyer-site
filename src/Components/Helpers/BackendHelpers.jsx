@@ -11,26 +11,29 @@ const addMeetNote = async (props) => {
     attendeesEmails.push(meet.attendees[i].email);
   }
 
+  var dtNow = new Date();
+  var dtEnd = new Date();
+  dtEnd.setMinutes(dtNow.getMinutes() + 30);
+
   const newNote = {
     id: uid,
-    title:
-      meet.title === "undefined"
-        ? `Adhock meeting on ${moment().format("MMM Do YY, h:mm a")}`
-        : meet.title,
+    title: meet.title
+      ? meet.title
+      : `Adhock meeting on ${moment().format("MMM Do YY, h:mm a")}`,
     body: "",
     lastModified: Date.now(),
     createdAt:
-      typeof meet.createdAt === "undefined" ? Date.now() : meet.createdAt,
+      typeof meet.createdAt === "undefined" ? dtNow.getTime() : meet.createdAt,
     hangoutLink:
       typeof meet.hangoutLink === "undefined" ? null : meet.hangoutLink,
     meetId: meet.id ? meet.id : null,
     attendees: meet.attendees,
-    end: meet.end ? meet.end : null,
+    end:
+      typeof meet.createdAt === "undefined" ? dtEnd.getTime() : meet.createdAt, // used createdAt here intentionally
     creator: user.uid,
     access: attendeesEmails,
   };
 
-  console.log(newNote, "~~~~~~~~~~~~~~~~~");
   await db.collection("Notes").doc(`${uid}`).set(newNote);
   history.push(`/note-${uid}`);
 
