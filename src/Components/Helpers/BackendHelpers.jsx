@@ -1,4 +1,5 @@
 import uuid from "react-uuid";
+import moment from "moment";
 
 const addMeetNote = async (props) => {
   const { meet, db, history, user } = props;
@@ -12,19 +13,24 @@ const addMeetNote = async (props) => {
 
   const newNote = {
     id: uid,
-    title: meet.title,
+    title:
+      meet.title === "undefined"
+        ? meet.title
+        : `Adhock meeting on ${moment().format("MMM Do YY, h:mm a")}`,
     body: "",
     lastModified: Date.now(),
     createdAt:
       typeof meet.createdAt === "undefined" ? Date.now() : meet.createdAt,
     hangoutLink:
       typeof meet.hangoutLink === "undefined" ? null : meet.hangoutLink,
-    meetId: meet.id,
+    meetId: meet.id ? meet.id : null,
     attendees: meet.attendees,
-    end: meet.end,
+    end: meet.end ? meet.end : null,
     creator: user.uid,
     access: attendeesEmails,
   };
+
+  console.log(newNote, "~~~~~~~~~~~~~~~~~");
   await db.collection("Notes").doc(`${uid}`).set(newNote);
   history.push(`/note-${uid}`);
 
