@@ -1,5 +1,7 @@
+import { signOut } from "./GCalendarAPI";
+
 const listUpcomingEvents = (maxResults, setEvents) => {
-  var newDateObj = new Date(new Date().getTime() - 120 * 60000);
+  var newDateObj = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
   var timeoutTime = 100;
   const callAPI = () => {
     console.log("calling google api !!!", {
@@ -20,11 +22,21 @@ const listUpcomingEvents = (maxResults, setEvents) => {
         orderBy: "startTime",
       })
       .then((response) => {
+        console.log(response.status === 200, "^^^^^^^^^^^^^^^^^^");
         const events = response.result.items;
         setEvents(events);
       })
       .catch((error) => {
-        console.log(error, "gapi error, retrying after timeout");
+        if (error.status === 401) {
+          console.log("Unauthorized Error, Signing Out");
+          signOut();
+        }
+        console.log(
+          error,
+          "gapi error, retrying after timeout",
+          error.status,
+          "^^^^^^^^----^^^^^^^^^^"
+        );
         timeoutTime = timeoutTime * 2;
         setTimeout(callAPI, timeoutTime);
       });

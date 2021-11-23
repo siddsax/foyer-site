@@ -110,7 +110,8 @@ const NotesListPage = (props) => {
   };
 
   useEffect(() => {
-    listUpcomingEvents(10, setMeetings);
+    var newDateObj = new Date(new Date().getTime() - 1 * 60 * 60 * 1000);
+    listUpcomingEvents(30, setMeetings, newDateObj);
     fetchNotes();
   }, []);
 

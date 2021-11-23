@@ -10,7 +10,7 @@ if (dev) {
   Config = require("../../apiGoogleconfig.json");
 }
 
-export default function GCalendarAPI(props) {
+const GCalendarAPI = (props) => {
   // var { setLoading, setUser } = props;
   var gapi = window.gapi;
 
@@ -88,4 +88,18 @@ export default function GCalendarAPI(props) {
   }, []);
 
   return { gapi, signOut, signIn };
-}
+};
+
+const signOut = async () => {
+  // await setLoading(true);
+  // await setUser(null);
+  window.$gapi.auth2
+    .getAuthInstance()
+    .signOut()
+    .then(() => {
+      // setLoading(false);
+      firebase.auth().signOut();
+    });
+};
+
+export { signOut, GCalendarAPI };

@@ -43,6 +43,7 @@ const NotePage = (props) => {
   const [rerenderActionItems, setRerenderActionItems] = useState(false);
   const history = useHistory();
   const db = firebase.firestore();
+  var inside = useRef(0);
 
   const [value, setValue] = useState("");
   const [linkNotes, setLinkNotes] = useState(null);
@@ -138,9 +139,10 @@ const NotePage = (props) => {
 
   useEffect(() => {
     var uriHangoutID = location.pathname.split("meetid-")[1];
+    var newDateObj = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
     if (activeNote === "No Meeting" && fromMeeting) {
       if (uriHangoutID.split("-").length > 1) {
-        listUpcomingEvents(10, setMeetings);
+        listUpcomingEvents(100, setMeetings, newDateObj);
       } else {
         getMeetDetails({ eventId: uriHangoutID, setEvent: setMeetings });
       }
@@ -161,7 +163,9 @@ const NotePage = (props) => {
     var meet;
     var uriHangoutID = location.pathname.split("meetid-")[1];
 
-    if (meetings) {
+    if (meetings && inside.current === 0) {
+      // if (meetings) {
+      inside.current = 1;
       if (uriHangoutID.split("-").length > 1) {
         for (let i = 0; i < meetings.length; i++) {
           if (meetings[i].hangoutLink) {
@@ -198,10 +202,6 @@ const NotePage = (props) => {
         await setLinkNotes(note.linkNotes ? note.linkNotes : []);
         await setUpdatingToggle((preVal) => !preVal);
       });
-
-      // if (!found) {
-      //   history.push(`/`);
-      // }
     }
   }, [meetings]);
 

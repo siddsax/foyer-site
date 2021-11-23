@@ -5,7 +5,7 @@ import firebase from "./firebase";
 import NotesListPage from "./Pages/NotesListPage/NotesListPage";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NotePage from "./Pages/NotePage/NotePage";
-import GCalendarAPI from "./Components/GCalendarAPI/GCalendarAPI";
+import { GCalendarAPI } from "./Components/GCalendarAPI/GCalendarAPI";
 import WelcomePage from "./Pages/WelcomePage/WelcomePage";
 import HomePage from "./Pages/HomePage/HomePage";
 
