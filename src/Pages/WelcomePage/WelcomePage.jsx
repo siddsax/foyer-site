@@ -13,12 +13,12 @@ const WelcomePage = (props) => {
         <div className="signInBox">
           <div className="signInTitleArea">
             <div className="signInTitleBox">
-              <text className="signInTitle">Sign in to Foyer </text>
+              <div className="signInTitle">Sign in to Foyer </div>
             </div>
           </div>
           <div className="subHeadingArea">
             <div className="subHeadingTitleBox">
-              <text className="subHeading">Get more out of your meetings.</text>
+              <div className="subHeading">Get more out of your meetings.</div>
             </div>
           </div>
           <div className="signInButton">

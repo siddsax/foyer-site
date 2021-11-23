@@ -37,9 +37,9 @@ const NotesList = (props) => {
                 <div className="monthAreaBar">
                   <div className="monthArea">
                     <img src={calendar}></img>
-                    <text className="monthName">
+                    <div className="monthName">
                       {monthArray[new Date(note.createdAt).getMonth()]}
-                    </text>
+                    </div>
                   </div>
                 </div>
               ) : (

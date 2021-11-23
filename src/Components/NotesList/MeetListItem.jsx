@@ -24,12 +24,12 @@ const MeetListItem = (props) => {
       <div class={calendarDateAreaClass}>
         {meet.firstOfDay ? (
           <>
-            <text className="calendarDay">
+            <div className="calendarDay">
               {weekdays[new Date(meet.createdAt).getDay()]}
-            </text>
-            <text className="calendarDate">
+            </div>
+            <div className="calendarDate">
               {new Date(meet.createdAt).getDate()}
-            </text>
+            </div>
           </>
         ) : (
           <></>

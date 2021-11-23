@@ -56,7 +56,7 @@ const ActionItemListItem = (props) => {
         <div class={calendarDateAreaClass}>
           {actionItem.firstOfDay ? (
             <>
-              <text className="calendarDay">
+              <div className="calendarDay">
                 {
                   weekdays[
                     actionItem["data"].date.seconds
@@ -66,12 +66,12 @@ const ActionItemListItem = (props) => {
                       : new Date(actionItem["data"].date).getDay()
                   ]
                 }
-              </text>
-              <text className="calendarDate">
+              </div>
+              <div className="calendarDate">
                 {actionItem["data"].date.seconds
                   ? new Date(actionItem["data"].date.seconds * 1000).getDate()
                   : new Date(actionItem["data"].date).getDate()}
-              </text>
+              </div>
             </>
           ) : (
             <></>

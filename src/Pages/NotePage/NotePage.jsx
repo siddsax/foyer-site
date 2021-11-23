@@ -258,12 +258,12 @@ const NotePage = (props) => {
                 </div>
 
                 <div className="dateArea">
-                  <text className="date">
+                  <div className="date">
                     {dateFormat(
                       new Date(activeNote.createdAt),
                       "ddd, mmm d, h:MM TT"
                     )}
-                  </text>
+                  </div>
                 </div>
               </div>
               {/* <hr className="headerUnderline"></hr> */}

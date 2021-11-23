@@ -171,24 +171,23 @@ const setFirstMonthNote = async (props) => {
 
 const ListItemBarComponent = (props) => {
   const { item } = props;
-  console.log("item+++++++", item);
   return (
     <>
       <div className="NoteTitleArea">
-        <text className="NoteTitleText">{item.title}</text>
+        <div className="NoteTitleText">{item.title}</div>
       </div>
       <div className="DateTimeArea">
         <>
           {item.end ? (
-            <text className="DateTime">
+            <div className="DateTime">
               {formatAMPM(new Date(item.createdAt))} {" - "}
               {formatAMPM(new Date(item.end))}
-            </text>
+            </div>
           ) : null}
         </>
         <>
           {item.date ? (
-            <text className="DateTime">
+            <div className="DateTime">
               {item.date.seconds
                 ? moment(new Date(item.date.seconds * 1000)).calendar(null, {
                     lastDay: "[Yest. at] LT",
@@ -199,7 +198,7 @@ const ListItemBarComponent = (props) => {
                     sameElse: "L",
                   })
                 : moment(new Date(item.date)).calendar()}
-            </text>
+            </div>
           ) : null}
         </>
       </div>

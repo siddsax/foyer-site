@@ -36,7 +36,7 @@ const ActionItemList = (props) => {
                 <div className="monthAreaBar">
                   <div className="monthArea">
                     <img src={calendar}></img>
-                    <text className="monthName">
+                    <div className="monthName">
                       {
                         monthArray[
                           new Date(
@@ -44,7 +44,7 @@ const ActionItemList = (props) => {
                           ).getMonth()
                         ]
                       }
-                    </text>
+                    </div>
                   </div>
                 </div>
               ) : (

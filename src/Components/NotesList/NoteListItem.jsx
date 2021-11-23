@@ -25,12 +25,12 @@ const NoteListItem = (props) => {
       <div class={calendarDateAreaClass}>
         {note.firstOfDay ? (
           <>
-            <text className="calendarDay">
+            <div className="calendarDay">
               {weekdays[new Date(note.createdAt).getDay()]}
-            </text>
-            <text className="calendarDate">
+            </div>
+            <div className="calendarDate">
               {new Date(note.createdAt).getDate()}
-            </text>
+            </div>
           </>
         ) : (
           <></>
