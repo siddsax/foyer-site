@@ -1,7 +1,6 @@
 import { signOut } from "./GCalendarAPI";
 
-const listUpcomingEvents = (maxResults, setEvents) => {
-  var newDateObj = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
+const listUpcomingEvents = (maxResults, setEvents, newDateObj) => {
   var timeoutTime = 100;
   const callAPI = () => {
     console.log("calling google api !!!", {
