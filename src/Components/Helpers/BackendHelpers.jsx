@@ -15,8 +15,8 @@ const addMeetNote = async (props) => {
     id: uid,
     title:
       meet.title === "undefined"
-        ? meet.title
-        : `Adhock meeting on ${moment().format("MMM Do YY, h:mm a")}`,
+        ? `Adhock meeting on ${moment().format("MMM Do YY, h:mm a")}`
+        : meet.title,
     body: "",
     lastModified: Date.now(),
     createdAt:
