@@ -190,6 +190,8 @@
 .ListItemBarComponent {
   display: flex;
   align-items: inherit;
+  flex-direction: inherit;
+  /* flex-direction: row; */
   color: inherit;
   width: calc(100% - 30px);
   height: 100%;
@@ -204,12 +206,15 @@
 }
 
 .linkedMeetingsArea .Note {
-  flex-direction: column;
-  align-items: flex-start;
   height: 45px;
   margin-left: 0;
   border-radius: 10px;
   font-weight: 300;
   font-size: 15px;
   width: 100%;
+}
+
+.linkedMeetingsArea .ListItemBarComponent {
+  flex-direction: column;
+  align-items: flex-start;
 }

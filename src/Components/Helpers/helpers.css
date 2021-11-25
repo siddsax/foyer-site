@@ -37,7 +37,9 @@
 
 .DateTimeArea {
   display: flex;
-  width: 100%;
+  /* width: 100%; */
+  /* max-width: 170px; */
+  min-width: 160px;
   align-content: center;
   /* justify-content: flex-end; */
   align-items: center;

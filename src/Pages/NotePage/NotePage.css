@@ -138,6 +138,17 @@
   margin-bottom: 5px;
 }
 
+/* .NotesListArea {
+  margin-top: 20px;
+  display: flex;
+  height: 70vh;
+  flex-direction: column;
+  margin-bottom: 40px;
+
+  box-sizing: border-box;
+  overflow: auto;
+} */
+
 .linkedMeetingsListArea {
   display: flex;
   width: 100%;

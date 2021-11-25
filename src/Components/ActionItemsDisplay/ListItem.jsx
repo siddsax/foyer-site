@@ -5,6 +5,7 @@ import "./ActionItemsDisplay.css";
 import moment from "moment";
 import firebase from "../../firebase";
 import { width } from "@material-ui/system";
+import Cross from "../../assets/icons/Cross.svg";
 
 export const ListItem = (props) => {
   const { actionItem, setLoading, tooltip } = props;
@@ -20,12 +21,14 @@ export const ListItem = (props) => {
 
   const handleChange = async (props) => {
     if (setLoading) await setLoading(true);
-    const { actionItem } = props;
+    const { actionItem, action } = props;
 
     const docRef = db.collection("ActionItems").doc(actionItem.id);
-    await docRef.update({
-      status: !actionItem.data.status,
-    });
+    if (action === "delete") docRef.delete();
+    else
+      await docRef.update({
+        status: !actionItem.data.status,
+      });
     actionItem.data.status = !actionItem.data.status;
     console.log(actionItem.data.status, "========");
     if (setLoading) await setLoading(false);
@@ -54,7 +57,9 @@ export const ListItem = (props) => {
       >
         <Checkbox
           checked={actionItem.data.status}
-          onChange={() => handleChange({ actionItem: actionItem })}
+          onChange={() =>
+            handleChange({ actionItem: actionItem, action: "update" })
+          }
           inputProps={{ "aria-label": "controlled" }}
           sx={{
             color: getComputedStyle(document.documentElement).getPropertyValue(
@@ -72,6 +77,7 @@ export const ListItem = (props) => {
           style={{
             "margin-right": "4px",
             "font-size": "15px",
+            width: "90%",
           }}
         >
           {actionItem.data.title}
@@ -94,6 +100,15 @@ export const ListItem = (props) => {
             </>
           ))}
         </div>
+        <button
+          className="delete"
+          onClick={() =>
+            handleChange({ actionItem: actionItem, action: "delete" })
+          }
+        >
+          {" "}
+          <img src={Cross} />
+        </button>
       </div>
     </div>
   );

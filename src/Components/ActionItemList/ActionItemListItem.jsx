@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import calender from "../../assets/images/calendar.png";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { weekdays, ListItemBarComponent } from "../Helpers/GeneralHelpers";
-import Union from "../../assets/icons/Union.svg";
+import Cross from "../../assets/icons/Cross.svg";
 import firebase from "../../firebase";
 import "./ActionItemList.css";
 
@@ -85,7 +85,7 @@ const ActionItemListItem = (props) => {
             CustomTag="div"
             status={status}
             changeStatus={() => changeStatus("check")}
-            deleteIcon={Union}
+            deleteIcon={Cross}
             onClickDelete={() => changeStatus("delete")}
             // onClickDelete={onClickDelete}
           />
