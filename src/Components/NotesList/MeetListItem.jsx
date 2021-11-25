@@ -20,31 +20,33 @@ const MeetListItem = (props) => {
   }
 
   return (
-    <div className="NoteItemArea">
-      <div className={calendarDateAreaClass}>
-        {meet.firstOfDay ? (
-          <>
-            <div className="calendarDay">
-              {weekdays[new Date(meet.createdAt).getDay()]}
-            </div>
-            <div className="calendarDate">
-              {new Date(meet.createdAt).getDate()}
-            </div>
-          </>
-        ) : (
-          <></>
-        )}
-      </div>
+    <div className="fadeIn">
+      <div className="NoteItemArea">
+        <div className={calendarDateAreaClass}>
+          {meet.firstOfDay ? (
+            <>
+              <div className="calendarDay">
+                {weekdays[new Date(meet.createdAt).getDay()]}
+              </div>
+              <div className="calendarDate">
+                {new Date(meet.createdAt).getDate()}
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
+        </div>
 
-      <div className="NoteArea">
-        <ListItemBarComponent
-          item={meet}
-          className="buttonMeetingNote"
-          onClick={() => {
-            addMeetNote({ meet: meet, db: db, history: history, user: user });
-          }}
-          CustomTag="button"
-        />
+        <div className="NoteArea">
+          <ListItemBarComponent
+            item={meet}
+            className="buttonMeetingNote"
+            onClick={() => {
+              addMeetNote({ meet: meet, db: db, history: history, user: user });
+            }}
+            CustomTag="button"
+          />
+        </div>
       </div>
     </div>
   );

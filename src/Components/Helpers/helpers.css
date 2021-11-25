@@ -1,7 +1,7 @@
 .NoteTitleArea {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 60%;
   margin-left: 10px;
   /* align-content: center; */
 }
@@ -14,36 +14,28 @@
   display: -webkit-box;
 }
 
+.delete {
+  margin-right: 10px;
+}
+
+.DateTimeArea {
+  margin-left: 10px;
+  display: flex;
+  width: 45%;
+  /* min-width: 160px; */
+  align-content: center;
+  align-items: center;
+}
+
 @media only screen and (max-width: 500px) {
-  .NoteTitleText {
+  .NoteTitleText,
+  .DateTimeArea {
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-line-clamp: 2; /* number of lines to show */
     -webkit-box-orient: vertical;
     display: -webkit-box;
   }
-}
-/* 
-.DateArea {
-  display: flex;
-  align-items: center;
-  width: 40%;
-  min-width: 150px;
-} */
-
-.delete {
-  margin-right: 10px;
-}
-
-.DateTimeArea {
-  display: flex;
-  /* width: 100%; */
-  /* max-width: 170px; */
-  min-width: 160px;
-  align-content: center;
-  /* justify-content: flex-end; */
-  align-items: center;
-  /* font-weight: bold; */
 }
 
 .FullDateArea {

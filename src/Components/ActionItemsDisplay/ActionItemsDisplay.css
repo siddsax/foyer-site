@@ -7,15 +7,24 @@
 }
 
 .actionListAssignees {
-  /* background-color: saddlebrown; */
+  float: right;
   display: flex;
   flex-direction: row;
   margin-right: 10px;
-  float: left;
-  width: auto;
-  /* width: 30%; */
+  width: 150px;
   justify-content: flex-end;
-  /* width: 20%; */
+  overflow: scroll;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-box-direction: normal;
+}
+
+@media only screen and (max-width: 500px) {
+  .actionListAssignees {
+    width: 50px;
+  }
 }
 
 .memberCircle {
@@ -27,7 +36,9 @@
   display: flex;
   align-items: center;
   align-content: center;
-  margin-right: 3px;
+  margin: 3px;
+  /* margin-left: 3px;
+  margin-right: 3px; */
   justify-content: center;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
