@@ -9,7 +9,7 @@ import { override } from "../Helpers/GeneralHelpers";
 import { monthArray } from "../Helpers/GeneralHelpers";
 
 const NotesList = (props) => {
-  var { notes, loading } = props;
+  var { notes, loading, setRerender, setNotes, setLoading } = props;
   // let [color, setColor] = useState("#ffffff");
   let [color, setColor] = useState("#049be4");
 
@@ -54,7 +54,13 @@ const NotesList = (props) => {
                 {note.noNoteYet ? (
                   <MeetListItem meet={note} />
                 ) : (
-                  <NoteListItem note={note} />
+                  <NoteListItem
+                    note={note}
+                    setRerender={setRerender}
+                    setNotes={setNotes}
+                    setLoading={setLoading}
+                    indx={i}
+                  />
                 )}
               </div>
             </>

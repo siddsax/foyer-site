@@ -22,7 +22,6 @@ const NotesListPage = (props) => {
   var [notes, setNotes] = useState([]);
   const [meetings, setMeetings] = useState(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const [showNotes, setShowNotes] = useState(true);
   const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [loadingTop, setLoadingTop] = useState(false);
@@ -31,6 +30,8 @@ const NotesListPage = (props) => {
   var lastVisible = useRef(0);
   var scrollHeightOld = useRef(0);
   const paginateNumber = 7;
+
+  let [rerender, setRerender] = useState(0);
 
   const fillNotes = (querySnapshot) => {
     querySnapshot.forEach(async (doc) => {
@@ -162,6 +163,20 @@ const NotesListPage = (props) => {
     }
   }, [notes]);
 
+  useEffect(() => {
+    if (rerender) {
+      console.log(rerender, "__________&&&&&&&&&&&&&&&");
+      setFirstMonthNote({
+        notes: notes,
+        setNotes: setNotes,
+        loadingTop: false,
+        todayLine: true,
+      }).then((offset) => setScrolling(offset));
+      setLoading(false);
+      setRerender((preVal) => !preVal);
+    }
+  }, [rerender]);
+
   return (
     <div className="NotesListPage">
       <div className="newNote">
@@ -192,7 +207,13 @@ const NotesListPage = (props) => {
         ) : (
           <></>
         )}
-        <NotesList notes={notes} loading={loading} />
+        <NotesList
+          notes={notes}
+          loading={loading}
+          setRerender={setRerender}
+          setNotes={setNotes}
+          setLoading={setLoading}
+        />
       </div>
     </div>
   );

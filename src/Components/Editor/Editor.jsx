@@ -87,7 +87,10 @@ const EditorFoyer = (props) => {
               "+++++++++++++++++++++++++++++++++",
               note.body
             );
-            if (awareness.meta.size === 1) {
+            if (
+              awareness.meta.size === 1 &&
+              document.getElementsByClassName("ql-container ql-snow")[0]
+            ) {
               document.getElementsByClassName(
                 "ql-container ql-snow"
               )[0].childNodes[0].innerHTML = note.body;

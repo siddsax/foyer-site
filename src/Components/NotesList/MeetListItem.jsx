@@ -21,7 +21,7 @@ const MeetListItem = (props) => {
 
   return (
     <div className="NoteItemArea">
-      <div class={calendarDateAreaClass}>
+      <div className={calendarDateAreaClass}>
         {meet.firstOfDay ? (
           <>
             <div className="calendarDay">
@@ -43,6 +43,7 @@ const MeetListItem = (props) => {
           onClick={() => {
             addMeetNote({ meet: meet, db: db, history: history, user: user });
           }}
+          CustomTag="button"
         />
       </div>
     </div>

@@ -1,12 +1,12 @@
 import calender from "../../assets/images/calendar.png";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./NotesList.css";
 import { weekdays, ListItemBarComponent } from "../Helpers/GeneralHelpers";
 import trash from "../../assets/icons/trash.svg";
 import firebase from "../../firebase";
 
 const NoteListItem = (props) => {
-  const { note } = props;
+  const { note, setRerender, setNotes, setLoading, indx } = props;
   const db = firebase.firestore();
   const pageReload = () => {
     console.log(window.location.href.split("/"));
@@ -31,6 +31,12 @@ const NoteListItem = (props) => {
       .doc(note.id)
       .delete()
       .then(() => {
+        setNotes((preVal) => {
+          setLoading(true);
+          preVal.splice(indx, 1);
+          return preVal;
+        });
+        setRerender((preVal) => preVal + 1);
         console.log("Document successfully deleted!");
       })
       .catch((error) => {
@@ -38,31 +44,35 @@ const NoteListItem = (props) => {
       });
   };
   return (
-    <div className="NoteItemArea">
-      <div class={calendarDateAreaClass}>
-        {note.firstOfDay ? (
-          <>
-            <div className="calendarDay">
-              {weekdays[new Date(note.createdAt).getDay()]}
-            </div>
-            <div className="calendarDate">
-              {new Date(note.createdAt).getDate()}
-            </div>
-          </>
-        ) : (
-          <></>
-        )}
-      </div>
+    <div className="fadeIn">
+      <div className="NoteItemArea">
+        <div className={calendarDateAreaClass}>
+          {note.firstOfDay ? (
+            <>
+              <div className="calendarDay">
+                {weekdays[new Date(note.createdAt).getDay()]}
+              </div>
+              <div className="calendarDate">
+                {new Date(note.createdAt).getDate()}
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
+        </div>
 
-      <div className="NoteArea">
-        <ListItemBarComponent
-          item={note}
-          to={`/note-${note.id}`}
-          className="Note"
-          onClick={pageReload}
-          deleteIcon={trash}
-          onClickDelete={onClickDelete}
-        />
+        <div className="NoteArea">
+          <ListItemBarComponent
+            item={note}
+            to={`/note-${note.id}`}
+            className="Note"
+            onClick={pageReload}
+            deleteIcon={trash}
+            onClickDelete={onClickDelete}
+            CustomTag={Link}
+            assignees={note.access}
+          />
+        </div>
       </div>
     </div>
   );

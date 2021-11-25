@@ -13,7 +13,7 @@ const HomePage = (props) => {
       <Header />
       <div className="modeSelectorArea">
         <div className="buttonArea">
-          <label class="switch">
+          <label className="switch">
             <input
               type="checkbox"
               id="togBtn"
@@ -21,9 +21,9 @@ const HomePage = (props) => {
                 setShowNotes((prevValue) => !prevValue);
               }}
             />
-            <div class="slider round">
-              <span class="on">Notes</span>
-              <span class="off">Action Items</span>
+            <div className="slider round">
+              <span className="on">Notes</span>
+              <span className="off">Action Items</span>
             </div>
           </label>
         </div>

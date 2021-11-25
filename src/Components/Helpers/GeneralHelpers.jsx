@@ -2,6 +2,9 @@ import moment from "moment";
 import { css } from "@emotion/react";
 import "./helpers.css";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import Tooltip from "@mui/material/Tooltip";
+import Fade from "@mui/material/Fade";
+import Checkbox from "@mui/material/Checkbox";
 
 var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const monthArray = [
@@ -172,8 +175,18 @@ const setFirstMonthNote = async (props) => {
 };
 
 const ListItemBarComponent = (props) => {
-  const { item, to, className, onClick, deleteIcon, onClickDelete } = props;
-  const CustomTag = to ? "Link" : "button";
+  const {
+    item,
+    to,
+    className,
+    onClick,
+    deleteIcon,
+    onClickDelete,
+    assignees,
+    CustomTag,
+    status,
+    changeStatus,
+  } = props;
 
   return (
     <div className={className}>
@@ -185,6 +198,24 @@ const ListItemBarComponent = (props) => {
         style={{ textDecoration: "none" }}
       >
         <>
+          {changeStatus ? (
+            <Checkbox
+              checked={status}
+              onChange={changeStatus}
+              inputProps={{ "aria-label": "controlled" }}
+              sx={{
+                color: getComputedStyle(
+                  document.documentElement
+                ).getPropertyValue("--fourth-object-color"),
+                "&.Mui-checked": {
+                  color: getComputedStyle(
+                    document.documentElement
+                  ).getPropertyValue("--fourth-object-color"),
+                },
+              }}
+            />
+          ) : null}
+
           <div className="NoteTitleArea">
             <div className="NoteTitleText">{item.title}</div>
           </div>
@@ -222,6 +253,23 @@ const ListItemBarComponent = (props) => {
           </div>
         </>
       </CustomTag>
+      {assignees ? (
+        <div className="actionListAssignees">
+          {assignees.map((assignee, i) => (
+            <>
+              <Tooltip
+                placement="top"
+                title={assignee}
+                TransitionComponent={Fade}
+                TransitionProps={{ timeout: 600 }}
+              >
+                <div className="memberCircle">{assignee.substring(0, 2)}</div>
+              </Tooltip>
+            </>
+          ))}
+        </div>
+      ) : null}
+
       <button className="delete" onClick={onClickDelete}>
         {" "}
         <img src={deleteIcon} />
