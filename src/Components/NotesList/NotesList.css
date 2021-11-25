@@ -187,6 +187,15 @@
   overflow: hidden;
 }
 
+.ListItemBarComponent {
+  background-color: blue;
+  display: flex;
+  align-items: inherit;
+  color: inherit;
+  width: calc(100% - 20px);
+  height: 100%;
+}
+
 .buttonMeetingNote {
   color: var(--button-color);
 }

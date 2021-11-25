@@ -2,9 +2,12 @@ import calender from "../../assets/images/calendar.png";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import "./NotesList.css";
 import { weekdays, ListItemBarComponent } from "../Helpers/GeneralHelpers";
+import trash from "../../assets/icons/trash.svg";
+import firebase from "../../firebase";
 
 const NoteListItem = (props) => {
   const { note } = props;
+  const db = firebase.firestore();
   const pageReload = () => {
     console.log(window.location.href.split("/"));
     if (window.location.href.split("/").at(-1).split("-")[0] === "note") {
@@ -20,6 +23,20 @@ const NoteListItem = (props) => {
       calendarDateAreaClass = "calendarDateArea";
     }
   }
+
+  const onClickDelete = async () => {
+    console.log("clicked");
+    await db
+      .collection("Notes")
+      .doc(note.id)
+      .delete()
+      .then(() => {
+        console.log("Document successfully deleted!");
+      })
+      .catch((error) => {
+        console.error("Error removing document: ", error);
+      });
+  };
   return (
     <div className="NoteItemArea">
       <div class={calendarDateAreaClass}>
@@ -38,14 +55,14 @@ const NoteListItem = (props) => {
       </div>
 
       <div className="NoteArea">
-        <Link
+        <ListItemBarComponent
+          item={note}
           to={`/note-${note.id}`}
           className="Note"
-          style={{ textDecoration: "none" }}
           onClick={pageReload}
-        >
-          <ListItemBarComponent item={note} />
-        </Link>
+          deleteIcon={trash}
+          onClickDelete={onClickDelete}
+        />
       </div>
     </div>
   );

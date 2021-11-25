@@ -1,6 +1,8 @@
 import moment from "moment";
 import { css } from "@emotion/react";
 import "./helpers.css";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+
 var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const monthArray = [
   "January",
@@ -170,45 +172,61 @@ const setFirstMonthNote = async (props) => {
 };
 
 const ListItemBarComponent = (props) => {
-  const { item } = props;
+  const { item, to, className, onClick, deleteIcon, onClickDelete } = props;
+  const CustomTag = to ? "Link" : "button";
+
   return (
-    <>
-      <div className="NoteTitleArea">
-        <div className="NoteTitleText">{item.title}</div>
-      </div>
-      <div className="DateTimeArea">
+    <div className={className}>
+      <CustomTag
+        to={to}
+        className="ListItemBarComponent"
+        // className={className}
+        onClick={onClick}
+        style={{ textDecoration: "none" }}
+      >
         <>
-          {item.end ? (
-            <div className="DateTime">
-              {formatAMPM(new Date(item.createdAt))} {" - "}
-              {formatAMPM(new Date(item.end))}
-            </div>
-          ) : null}
+          <div className="NoteTitleArea">
+            <div className="NoteTitleText">{item.title}</div>
+          </div>
+          <div className="DateTimeArea">
+            <>
+              {item.end ? (
+                <div className="DateTime">
+                  {formatAMPM(new Date(item.createdAt))} {" - "}
+                  {formatAMPM(new Date(item.end))}
+                </div>
+              ) : null}
+            </>
+            <>
+              {item.date ? (
+                <div className="DateTime">
+                  {item.date.seconds
+                    ? moment(new Date(item.date.seconds * 1000)).calendar(
+                        null,
+                        {
+                          lastDay: "[Yest. at] LT",
+                          sameDay: "[Today at] LT",
+                          nextDay: "[Tom. at] LT",
+                          lastWeek: "[Last] ddd LT",
+                          nextWeek: "ddd LT",
+                          sameElse: "L",
+                        }
+                      )
+                    : moment(new Date(item.date)).calendar()}
+                </div>
+              ) : null}
+            </>
+          </div>
+          <div className="FullDateArea">
+            {moment(new Date(item.createdAt)).calendar()}
+          </div>
         </>
-        <>
-          {item.date ? (
-            <div className="DateTime">
-              {item.date.seconds
-                ? moment(new Date(item.date.seconds * 1000)).calendar(null, {
-                    lastDay: "[Yest. at] LT",
-                    sameDay: "[Today at] LT",
-                    nextDay: "[Tom. at] LT",
-                    lastWeek: "[Last] ddd LT",
-                    nextWeek: "ddd LT",
-                    sameElse: "L",
-                  })
-                : moment(new Date(item.date)).calendar()}
-            </div>
-          ) : null}
-        </>
-      </div>
-      <div className="FullDateArea">
-        {/* {item.date
-          ? moment(new Date(item.date.seconds * 1000)).calendar()
-          : item.date} */}
-        {moment(new Date(item.createdAt)).calendar()}
-      </div>
-    </>
+      </CustomTag>
+      <button className="delete" onClick={onClickDelete}>
+        {" "}
+        <img src={deleteIcon} />
+      </button>
+    </div>
   );
 };
 

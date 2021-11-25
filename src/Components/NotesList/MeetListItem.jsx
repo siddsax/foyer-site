@@ -37,14 +37,13 @@ const MeetListItem = (props) => {
       </div>
 
       <div className="NoteArea">
-        <button
+        <ListItemBarComponent
+          item={meet}
+          className="buttonMeetingNote"
           onClick={() => {
             addMeetNote({ meet: meet, db: db, history: history, user: user });
           }}
-          className="buttonMeetingNote"
-        >
-          <ListItemBarComponent item={meet} />
-        </button>
+        />
       </div>
     </div>
   );
