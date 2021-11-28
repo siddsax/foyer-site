@@ -1,4 +1,5 @@
 import { signOut } from "./GCalendarAPI";
+import moment from "moment-timezone";
 
 const listUpcomingEvents = (maxResults, setEvents, newDateObj) => {
   var timeoutTime = 100;
@@ -23,10 +24,21 @@ const listUpcomingEvents = (maxResults, setEvents, newDateObj) => {
       .then((response) => {
         console.log(response.status === 200, "^^^^^^^^^^^^^^^^^^");
         const events = response.result.items;
-        setEvents(events);
+        var eventsFiltered = [];
+        for (let i = 0; i < events.length; i++) {
+          if (events[i].description) {
+            var newStr = events[i].description.replace(/(^\s+|\s+$)/g, "");
+
+            if (newStr != "Foyer Reminder") {
+              eventsFiltered.push(events[i]);
+            }
+            console.log(newStr);
+          } else eventsFiltered.push(events[i]);
+        }
+        setEvents(eventsFiltered);
       })
       .catch((error) => {
-        if (error.status === 401) {
+        if (error.status === 401 || error.status === 403) {
           console.log("Unauthorized Error, Signing Out");
           signOut();
         }
@@ -77,4 +89,45 @@ const getMeetDetails = (props) => {
     setEvent(null);
   }
 };
-export { listUpcomingEvents, getMeetDetails };
+
+const setReminderMeeting = (props) => {
+  const { actionItem } = props;
+  var attendees = [{ email: actionItem.creatorEmail }];
+  for (let i = 0; i < actionItem.assignees.length; i++) {
+    attendees.push({ email: actionItem.assignees[i] });
+  }
+  var event = {
+    summary: "Action Item Reminder :" + actionItem.title,
+    description: "Foyer Reminder",
+    start: {
+      dateTime: actionItem.date,
+    },
+    end: {
+      dateTime: new Date(actionItem.date.getTime() + 5 * 60 * 1000),
+    },
+    attendees: attendees,
+    reminders: {
+      useDefault: true,
+      // overrides: [
+      //   { method: "email", minutes: 24 * 60 },
+      //   { method: "popup", minutes: 10 },
+      // ],
+    },
+  };
+
+  console.log(event);
+  if (window.$gapi) {
+    window.$gapi.client.load("calendar", "v3", () => {
+      var request = window.$gapi.client.calendar.events.insert({
+        calendarId: "primary",
+        resource: event,
+      });
+      request.execute(function (event) {
+        console.log("Event Created: " + event.htmlLink);
+      });
+    });
+  } else {
+    console.log("Error: gapi not loaded");
+  }
+};
+export { listUpcomingEvents, getMeetDetails, setReminderMeeting };

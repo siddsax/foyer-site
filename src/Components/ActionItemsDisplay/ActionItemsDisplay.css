@@ -21,6 +21,10 @@
   -webkit-box-direction: normal;
 }
 
+.actionListAssignees::-webkit-scrollbar {
+  display: none;
+}
+
 @media only screen and (max-width: 500px) {
   .actionListAssignees {
     width: 50px;

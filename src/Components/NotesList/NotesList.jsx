@@ -13,11 +13,6 @@ const NotesList = (props) => {
   // let [color, setColor] = useState("#ffffff");
   let [color, setColor] = useState("#049be4");
 
-  useEffect(() => {
-    console.log(loading, "++++++");
-    console.log(notes);
-  }, [loading]);
-
   return (
     <div className="allNotesPage">
       {loading ? (

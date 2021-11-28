@@ -20,9 +20,6 @@ const GCalendarAPI = (props) => {
     script.src = "https://apis.google.com/js/api.js";
     document.body.appendChild(script);
     script.onload = () => setupGapi();
-    // script.onload = () => {
-    //   window["gapi"].load("client:auth2", initClient);
-    // };
   };
 
   const setupGapi = () => {
@@ -47,14 +44,22 @@ const GCalendarAPI = (props) => {
     const auth2 = gapi.auth2.getAuthInstance();
     const currentUser = auth2.currentUser.get();
     const authResponse = currentUser.getAuthResponse(true);
+    if (authResponse) {
+      console.log(authResponse.scope, "++++++++++++");
+      if (
+        authResponse.scope
+          .split(" ")
+          .indexOf("https://www.googleapis.com/auth/calendar") < 0
+      ) {
+        console.log("Logging out coz right permissions not there!!!");
+        return signOut();
+      }
+    }
     const credentials = firebase.auth.GoogleAuthProvider.credential(
       authResponse.id_token,
       authResponse.access_token
     );
     firebase.auth().signInWithCredential(credentials);
-
-    // await setUser(currentUser.getBasicProfile());
-    // setLoading(false);
   };
 
   const initClient = () => {

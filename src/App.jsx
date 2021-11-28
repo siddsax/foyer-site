@@ -14,6 +14,7 @@ function App() {
   const loading_db = useRef(false);
 
   const { gapi, signOut, signIn } = GCalendarAPI();
+  console.log("%%%%%%%");
 
   window.$gapi = gapi;
 
@@ -27,6 +28,8 @@ function App() {
           .get()
           .then((doc) => {
             if (doc.exists) {
+              user.actionItemShareMethod = doc.data().actionItemShareMethod;
+              user.actionItemTime = doc.data().actionItemTime;
             } else {
               db.collection("Users")
                 .doc(`${user.uid}`)

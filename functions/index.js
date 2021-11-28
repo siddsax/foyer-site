@@ -33,8 +33,8 @@ exports.genericMail = functions.https.onCall(async (props) => {
 exports.sendMailActionItem = functions.firestore
   .document("ActionItems/{actionItemID}")
   .onCreate((snapshot, context) => {
-    // Grab the current value of what was written to the Realtime Database.
     const original = snapshot.data();
+    if (!original.sendMail) return 0;
     let emailRecievers = [
       ...new Set(original.assignees.concat(original.creatorEmail)),
     ];
@@ -48,13 +48,6 @@ exports.sendMailActionItem = functions.firestore
         " by " +
         original.creatorEmail,
       html: original.assignMailCode,
-      // template_id: "d-9b05b6219fee4e9b9a6943168f13e785",
-      // dynamic_template_data: {
-      //   guest: "Jane Doe",
-      //   partysize: "4",
-      //   english: true,
-      //   date: "April 1st, 2021",
-      // },
     };
 
     functions.logger.log("Hello from info. Here's an object:", original);
@@ -88,6 +81,7 @@ const getActionItemSendMail = async (props) => {
 
   reminders.forEach((snapshot) => {
     const reminderData = snapshot.data();
+    if (!reminderData.sendMail) return;
     let emailRecievers = [
       ...new Set(reminderData.assignees.concat(reminderData.creatorEmail)),
     ];

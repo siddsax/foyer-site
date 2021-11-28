@@ -38,7 +38,7 @@ const ActionItemListPage = (props) => {
       setActionItems: setActionItems,
       noteId: null,
       userId: !mine ? user.uid : null,
-      assigneeID: mine ? user.uid : null,
+      assigneeID: mine ? user.email : null,
       completed: completed,
     });
 

@@ -40,7 +40,6 @@ const EditorFoyer = (props) => {
     const bindings = ["H", "U"];
     const formats = ["header", "underline"];
     for (let i = 0; i < bindings.length; i++) {
-      console.log(formats[i], bindings[i]);
       quill.keyboard.addBinding(
         {
           key: bindings[i],
@@ -80,13 +79,6 @@ const EditorFoyer = (props) => {
 
         provider.on("sync", (status) => {
           if (status) {
-            console.log(status);
-            console.log(
-              awareness.meta.size,
-              awareness.meta,
-              "+++++++++++++++++++++++++++++++++",
-              note.body
-            );
             if (
               awareness.meta.size === 1 &&
               document.getElementsByClassName("ql-container ql-snow")[0]
