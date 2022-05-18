@@ -15,6 +15,7 @@ import EmailTemplate from "../EmailTemplate/EmailTemplate";
 import "react-datepicker/dist/react-datepicker.css";
 import ReactDOMServer from "react-dom/server";
 import { setReminderMeeting } from "../GCalendarAPI/APIHelpers";
+
 const PopupActionItem = (props) => {
   const {
     noteId,
@@ -26,7 +27,7 @@ const PopupActionItem = (props) => {
     setActionItems,
   } = props;
 
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState(new Date());
   const [assignees, setAssignees] = useState(null);
   const [title, setTitle] = useState("");
   const [time, setTime] = useState(new Date("01-01-1970 17:00:00"));
@@ -111,7 +112,7 @@ const PopupActionItem = (props) => {
       shareMethod.indexOf("Calendar")
     );
     if (shareMethod.indexOf("Calendar") > -1) {
-      setReminderMeeting({ actionItem: newActionItem });
+      setReminderMeeting({ actionItem: newActionItem, colorID: "2" });
     }
 
     setAssignees(null);

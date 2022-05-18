@@ -46,14 +46,14 @@ const GCalendarAPI = (props) => {
     const authResponse = currentUser.getAuthResponse(true);
     if (authResponse) {
       console.log(authResponse.scope, "++++++++++++");
-      if (
-        authResponse.scope
-          .split(" ")
-          .indexOf("https://www.googleapis.com/auth/calendar") < 0
-      ) {
-        console.log("Logging out coz right permissions not there!!!");
-        return signOut();
-      }
+      // if (
+      //   authResponse.scope
+      //     .split(" ")
+      //     .indexOf("https://www.googleapis.com/auth/calendar.events") < 0
+      // ) {
+      //   console.log("Logging out coz right permissions not there!!!");
+      //   return signOut();
+      // }
     }
     const credentials = firebase.auth.GoogleAuthProvider.credential(
       authResponse.id_token,

@@ -1,4 +1,4 @@
-const dev = 0;
+const dev = 1;
 var firebaseConfig;
 
 var firebaseConfigProd = {

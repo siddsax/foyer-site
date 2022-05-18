@@ -22,7 +22,6 @@ const listUpcomingEvents = (maxResults, setEvents, newDateObj) => {
         orderBy: "startTime",
       })
       .then((response) => {
-        console.log(response.status === 200, "^^^^^^^^^^^^^^^^^^");
         const events = response.result.items;
         var eventsFiltered = [];
         for (let i = 0; i < events.length; i++) {
@@ -91,20 +90,21 @@ const getMeetDetails = (props) => {
 };
 
 const setReminderMeeting = (props) => {
-  const { actionItem } = props;
+  const { actionItem, colorID } = props;
   var attendees = [{ email: actionItem.creatorEmail }];
   for (let i = 0; i < actionItem.assignees.length; i++) {
     attendees.push({ email: actionItem.assignees[i] });
   }
   var event = {
-    summary: "Action Item Reminder :" + actionItem.title,
+    summary: actionItem.title,
     description: "Foyer Reminder",
     start: {
       dateTime: actionItem.date,
     },
     end: {
-      dateTime: new Date(actionItem.date.getTime() + 5 * 60 * 1000),
+      dateTime: new Date(actionItem.date.getTime() + 1 * 60 * 1000),
     },
+    backgroundColor: "#AB0000",
     attendees: attendees,
     reminders: {
       useDefault: true,
@@ -130,4 +130,32 @@ const setReminderMeeting = (props) => {
     console.log("Error: gapi not loaded");
   }
 };
+
+function listConnectionNames(pageToken) {
+  window.$gapi.people.connections.list(
+    {
+      resourceName: "people/me",
+      pageSize: 10,
+      personFields: "names,emailAddresses, photos",
+      pageToken: pageToken ? pageToken : null,
+    },
+    (err, res) => {
+      if (err) return console.error("The API returned an error: " + err);
+      const connections = res.data.connections;
+      if (connections) {
+        console.log("Connections:");
+        connections.forEach((person) => {
+          if (person.names && person.names.length > 0) {
+            console.log(person.names[0].displayName);
+          } else {
+            console.log("No display name found for connection.");
+          }
+        });
+      } else {
+        console.log("No connections found.");
+      }
+    }
+  );
+}
+
 export { listUpcomingEvents, getMeetDetails, setReminderMeeting };
